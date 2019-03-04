@@ -7,7 +7,9 @@ const UserSchema = new mongoose.Schema({
   password: { type: String },
   name: String,
   phone: String,
-  status: Number
+  status: Number,
+  createdAt: Number,
+  updatedAt: Number,
 });
 
 //check for user existence

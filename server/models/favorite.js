@@ -9,7 +9,9 @@ const Favorite = new Schema({
     item: {
         type: Schema.Types.ObjectId,
         ref: 'Item'
-    } 
+    },
+   createdAt: Number,
+   updatedAt: Number,
 });
 
 module.exports = Favorite;

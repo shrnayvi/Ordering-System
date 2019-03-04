@@ -7,7 +7,9 @@ const Item = new Schema({
     category: {
         type: Schema.Types.ObjectId,
         ref: 'Category'
-    } 
+    },
+   createdAt: Number,
+   updatedAt: Number,
 });
 
 module.exports = Item;
