@@ -1,7 +1,9 @@
 const _ = require('lodash');
-const Joi = require('joi');
+
 const { generateToken } = require('@utils/JWT');
 const user = require('@server/services/user');
+const validateRegisterInput = require('@server_validations/user/register');
+const validateLoginInput = require('@server_validations/user/login');
 
 module.exports = {
    get: (params, isSingle) => {
@@ -10,21 +12,21 @@ module.exports = {
       return user.get(query, isSingle);
    },
 
-   create: (data) => {
-      const schema = {
-         username: Joi.string().alphanum().min(3).max(30).required(), 
-         email: Joi.string().email({ minDomainAtoms: 2 }).required(),
-         password: Joi.string().required(),
-         name: Joi.string(),
-         phone: Joi.number().max(10),
-      }
-
-      let { username, email, password, name, phone } = data;
-      const { error }= Joi.validate({ username, email, password, name, phone }, schema);
+   register: async (data) => {
+      const { error } = validateRegisterInput(data);
       if(error) {
          return Promise.reject(error);
       } else {
-         return user.create(data);
+         try {
+            let findUser = await user.get({ email }, true);
+            if(findUser) {
+               return Promise.reject({ emailExists: true });
+            } else {
+               return user.create(data);
+            }
+         } catch(e) {
+            return e;
+         }
       }
    },
 
@@ -37,19 +39,30 @@ module.exports = {
    },
 
    login: async (data) => {
-      let userDoc = await user.get({ email: data.email }, true);
-      let canLogin = userDoc.comparePassword(data.password, userDoc.password);
-      if (canLogin) {
-         const payload = {
-            exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
-            context: {
-               userId: userDoc._id
+      try {
+         const { error } = validateLoginInput(data);
+         if(error) {
+            return Promise.reject(error);
+         } else {
+            let userDoc = await user.get({ email: data.email }, true);
+            let canLogin = userDoc.comparePassword(data.password, userDoc.password);
+            if (canLogin) {
+               const payload = {
+                  exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
+                  context: {
+                     userId: userDoc._id
+                  }
+               };
+               const token = generateToken(payload);
+               return { user: userDoc, token, canLogin: true };
+            } else {
+               // return { canLogin: false, message: 'Invalid Password' };
+               return Promise.reject({ canLogin: false, message: 'Invalid Password' });
+
             }
-         };
-         const token = generateToken(payload);
-         return { user: userDoc, token, canLogin: true };
-      } else {
-         return { canLogin: false, message: 'Invalid Password' };
+         }
+      } catch(e) {
+         return e
       }
    },
 }
