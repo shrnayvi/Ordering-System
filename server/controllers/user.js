@@ -1,9 +1,9 @@
 const _ = require('lodash');
 
-const { generateToken } = require('@utils/JWT');
-const user = require('@server/services/user');
-const validateRegisterInput = require('@server_validations/user/register');
-const validateLoginInput = require('@server_validations/user/login');
+const { generateToken }       = require('@utils/JWT');
+const user                    = require('@server/services/user');
+const validateRegisterInput   = require('@server_validations/user/register');
+const validateLoginInput      = require('@server_validations/user/login');
 
 module.exports = {
    get: (params, isSingle) => {
@@ -18,14 +18,14 @@ module.exports = {
          return Promise.reject(error);
       } else {
          try {
-            let findUser = await user.get({ email }, true);
+            let findUser = await user.get({ email: data.email }, true);
             if(findUser) {
                return Promise.reject({ emailExists: true });
             } else {
                return user.create(data);
             }
          } catch(e) {
-            return e;
+            return Promise.reject(e);
          }
       }
    },
@@ -47,22 +47,14 @@ module.exports = {
             let userDoc = await user.get({ email: data.email }, true);
             let canLogin = userDoc.comparePassword(data.password, userDoc.password);
             if (canLogin) {
-               const payload = {
-                  exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
-                  context: {
-                     userId: userDoc._id
-                  }
-               };
-               const token = generateToken(payload);
+               const token = generateToken({ _id: userDoc._id });
                return { user: userDoc, token, canLogin: true };
             } else {
-               // return { canLogin: false, message: 'Invalid Password' };
                return Promise.reject({ canLogin: false, message: 'Invalid Password' });
-
             }
          }
       } catch(e) {
-         return e
+         return Promise.reject(e);
       }
    },
 }

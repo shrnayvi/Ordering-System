@@ -9,8 +9,11 @@ const app 		 		= module.exports = express();
 
 const database 		= require('./database');
 const connection 		= database.url();
-
 mongoose.Promise 		= global.Promise;
+
+const passport 		= require('@server/middlewares/passport');
+
+app.use(passport.initialize());
 mongoose.connect(connection, { useNewUrlParser: true });
 
 mongoose.connection

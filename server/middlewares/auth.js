@@ -7,10 +7,10 @@ async function checkToken(req, res, next) {
          await verifyToken(token);
          next();
       } catch(e) {
-         res.send({ status: 400, message: 'Invalid Token' });
+         res.send({ status: 403, message: 'Invalid Token' });
       }
    } else {
-      res.send({ status: 400, message: 'No Token Provided' })
+      res.send({ status: 403, message: 'No Token Provided' })
    }
 }
 
