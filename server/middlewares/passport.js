@@ -1,5 +1,6 @@
-const passport 		= module.exports = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const passport 		   = module.exports = require('passport');
+// const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GoogleStrategy    = require('passport-google-plus-token');
 
 const { generateToken }                      = require('@utils/JWT');
 const { get: getUser, create: createUser }   = require('@server/services/user')
@@ -9,7 +10,7 @@ passport.use(
 	new GoogleStrategy({
 		clientID: googleClientID,
 		clientSecret: googleClientSecret,
-		callbackURL: '/oauth/google/callback'
+		// callbackURL: '/oauth/google/callback'
 	}, async (accessToken, refreshToken, profile, done) => {
       try {
          const { displayName, id, emails }  = profile;
