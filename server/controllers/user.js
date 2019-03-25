@@ -55,18 +55,15 @@ module.exports = {
          res.send({ status: 400, message: error.name, error: error.details });
       } else {
          try {
-            let findUser = await user.get({ email: req.body.email }, true);
-            if (findUser) {
-               return res.send({ status: 400, message: 'Email already registered' });
-            } 
-            let data = {
-               ...req.body,
-               method: 'local',
-            }
-            let newUser = await user.create(data);
+            let data = { ...req.body, method: 'local'},
+               newUser = await user.create(data);
             res.send({ status: 200, message: 'User Created Sucessfully', data: newUser });
          } catch (e) {
-            res.send({ status: 500, message: e.message });
+            let status = 500;
+            if('exists' in e && e.exists) {
+               status = 400;
+            }
+            res.send({ status: status, message: e.message });
          }
       }
    },

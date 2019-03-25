@@ -13,9 +13,6 @@ module.exports = {
 
    create: (data) => {
       let userDoc = new User(data);
-      if(data.method === 'local'){
-         userDoc.password = userDoc.generateHash(data.password);
-      }
       return userDoc.save();
    },
 

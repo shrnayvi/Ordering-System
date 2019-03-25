@@ -20,8 +20,17 @@ const UserSchema = new mongoose.Schema({
    updatedAt: Number,
 });
 
-//check for user existence
-// UserSchema.pre("save", function(next) { });
+
+UserSchema.pre("save", async function() {
+   let user = await this.constructor.findOne({ email: this.email });
+   if(user) {
+      return Promise.reject({ exists: true, message: 'User Already Exists' });
+   }
+
+   if(this.method === 'local') {
+      this.password = this.generateHash(this.password);
+   }
+});
 
 UserSchema.methods.generateHash = function (password) {
    return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
