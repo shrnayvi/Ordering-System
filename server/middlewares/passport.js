@@ -1,5 +1,4 @@
 const passport 		   = module.exports = require('passport');
-// const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const GoogleStrategy    = require('passport-google-plus-token');
 
 const { generateToken }                      = require('@utils/JWT');
@@ -10,7 +9,6 @@ passport.use(
 	new GoogleStrategy({
 		clientID: googleClientID,
 		clientSecret: googleClientSecret,
-		// callbackURL: '/oauth/google/callback'
 	}, async (accessToken, refreshToken, profile, done) => {
       try {
          const { displayName, id, emails }  = profile;
@@ -20,7 +18,7 @@ passport.use(
             return done(null, { user, token });
          } 
          try{
-            const newUser = await createUser({ googleId: id, name: displayName, email: emails[0].value, socialLogin: true });
+            const newUser = await createUser({ googleId: id, name: displayName, email: emails[0].value, method: 'google' });
             let token = generateToken({ _id: newUser._id });
             done(null, { user: newUser, token });
          } catch(e) {
