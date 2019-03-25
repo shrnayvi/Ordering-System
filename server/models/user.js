@@ -1,7 +1,13 @@
 const bcrypt   = require('bcrypt');
 const mongoose = require('mongoose');
 
+const { SOCIAL_LOGIN: method } = require('@config/constants');
+
 const UserSchema = new mongoose.Schema({
+   method: {
+      type: String,
+      enum: method,
+   },
    email: String,
    username: String,
    password: String,
