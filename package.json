@@ -26,11 +26,12 @@
   "_moduleAliases": {
     "@server": "server",
     "@config": "server/config",
-    "@client": "client",
     "@utils": "server/utils",
-    "@server_validations": "server/validations"
+    "@validations": "server/validations",
+    "@client": "client"
   },
   "devDependencies": {
+    "eslint": "^5.16.0",
     "prettier": "^1.16.4"
   }
 }

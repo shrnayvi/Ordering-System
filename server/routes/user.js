@@ -9,5 +9,7 @@ router.get('/', userController.get);
 router.get('/:_id', userController.get);
 router.post('/login', userController.login);
 router.post('/register', userController.register);
+router.put('/forgot-password', userController.forgotPassword);
+router.put('/reset-password', userController.resetPassword);
 router.put('/:_id', checkToken, userController.update);
-router.delete('/:_id', checkToken, userController.delete);
+router.delete('/:_id', checkToken, userController.remove);
