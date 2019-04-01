@@ -14,7 +14,7 @@ mongoose.Promise 		= global.Promise;
 const passport 		= require('@server/middlewares/passport');
 
 app.use(passport.initialize());
-mongoose.connect(connection, { useNewUrlParser: true });
+mongoose.connect(connection, { useNewUrlParser: true, useFindAndModify: false });
 
 mongoose.connection
 .once('open', () => console.log('Database connected'))

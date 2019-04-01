@@ -20,7 +20,7 @@ module.exports = {
       return User.findOneAndUpdate(query, data, { new: true });
    },
 
-   delete: (query) => {
+   remove: (query) => {
       return User.findOneAndRemove(query);
    },
 }
