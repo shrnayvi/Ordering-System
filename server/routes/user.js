@@ -2,7 +2,8 @@ const express = require('express');
 
 const router = module.exports = express.Router();
 
-const checkToken = require('@server/middlewares/auth');
+const authorize = require('@server/middlewares/authorize');
+const checkToken = require('@server/middlewares/authenticate');
 const userController = require('@server/controllers/user');
 
 router.get('/', userController.get);
@@ -12,4 +13,8 @@ router.post('/register', userController.register);
 router.put('/forgot-password', userController.forgotPassword);
 router.put('/reset-password', userController.resetPassword);
 router.put('/:_id', checkToken, userController.update);
-router.delete('/:_id', checkToken, userController.remove);
+router.delete(
+   '/:_id', 
+   [checkToken, authorize(cap['delete_user'])], 
+   userController.remove
+);

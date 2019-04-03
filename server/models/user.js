@@ -1,13 +1,20 @@
 const bcrypt   = require('bcrypt');
 const mongoose = require('mongoose');
 
-const { SOCIAL_LOGIN: method } = require('@config/constants');
+const { 
+   SOCIAL_LOGIN: method,
+   ROLES: roles
+} = require('@config/constants');
 
 const UserSchema = new mongoose.Schema(
    {
       method: {
          type: String,
          enum: method,
+      },
+      role: {
+         type: String,
+         enum: roles,
       },
       googleId: String,
       email: String,
@@ -16,7 +23,6 @@ const UserSchema = new mongoose.Schema(
       name: String,
       phone: String,
       status: Number,
-      role: String,
       resetPasswordToken: String,
       resetPasswordExpires: Date,
    }, 
@@ -43,7 +49,7 @@ UserSchema.pre('findOneAndUpdate', function() {
    const password = this._update.password;
    if(password) {
       try {
-         this._update.password= this.schema.methods.generateHash(password);
+         this._update.password = this.schema.methods.generateHash(password);
       } catch(e) {
          return Promise.reject({ message: e.message });
       }

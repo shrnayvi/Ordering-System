@@ -1,11 +1,12 @@
 const jwt = require('jsonwebtoken');
 const { SECRET_KEY: secret, JWT_EXPIRATION: exp } = require('@config/constants');
 
-function generateToken({ _id }) {
+function generateToken({ _id, role }) {
    const payload = {
       exp,
       context: { 
-         userId: _id 
+         role,
+         userId: _id,
       }
    };
    return jwt.sign(payload, secret);

@@ -9,6 +9,7 @@ const app 		 		= module.exports = express();
 
 const database 		= require('./database');
 const connection 		= database.url();
+global.cap 				= require('./capabilities');
 mongoose.Promise 		= global.Promise;
 
 const passport 		= require('@server/middlewares/passport');

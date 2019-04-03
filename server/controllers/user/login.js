@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
          let canLogin = userDoc.comparePassword(req.body.password, userDoc.password || '');
 
          if (canLogin) {
-            const token = generateToken({ _id: userDoc._id });
+            const token = generateToken({ _id: userDoc._id, role: userDoc.role });
             return res.send({ status: 200, message:'Successfully Login', data: { user: userDoc, token }});
          } 
       }
