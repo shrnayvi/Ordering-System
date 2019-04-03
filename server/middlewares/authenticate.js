@@ -4,7 +4,8 @@ async function checkToken(req, res, next) {
    const token = req.headers.token;
    if(token) {
       try { 
-         await verifyToken(token);
+         const { context } = await verifyToken(token);
+         req.role = context.role;
          next();
       } catch(e) {
          res.send({ status: 403, message: 'Invalid Token' });
