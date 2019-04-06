@@ -1,9 +1,8 @@
-const crypto                           = require('crypto');
 const { update }                       = require('@server/services/user');
 const { validateResetPasswordInput }   = require('@validations/user/forgot-password');
 
 module.exports = async (req, res) => {
-   const { error, value } = validateResetPasswordInput(req.body);
+   const { error } = validateResetPasswordInput(req.body);
    if (error) {
       return res.send({ status: 400, message: error.name, error: error.details });
    }
