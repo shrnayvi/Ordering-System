@@ -1,3 +1,7 @@
+/**
+ * Middleware for authorizing users in using particular resource.
+ * @param {(String|String[])} roles - User role/roles accessing resource
+ */
 function authorize(roles = []) {
    if(typeof roles === 'string') {
       roles = [roles];

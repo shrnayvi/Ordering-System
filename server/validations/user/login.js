@@ -1,6 +1,9 @@
 const Joi = require('joi');
 
-module.exports = function validateRegisterInput(data) {
+/**
+ * @param {Object} data - data for validation
+ */
+module.exports = function validateLoginInput(data) {
    const schema = {
       email: Joi.string().email({ minDomainAtoms: 2 }).required(),
       password: Joi.string().required(),
