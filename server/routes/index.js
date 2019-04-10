@@ -1,7 +1,9 @@
-const app       = module.exports = require('express')();
-const user      = require('./user');
-const oauth     = require('./oauth');
+const app           = module.exports = require('express')();
+const attachment    = require('./attachment');
+const user          = require('./user');
+const oauth         = require('./oauth');
 
+app.use('/attachment', attachment);
 app.use('/users', user);
 app.use('/oauth', oauth);
 

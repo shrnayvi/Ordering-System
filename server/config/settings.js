@@ -27,5 +27,6 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({limit : '500kb','extended': 'true'}));
 app.use(bodyParser.json({limit : '500kb'}));
 app.use(express.static(path.join(__dirname, '../../client')));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 app.use(cookieParser());
