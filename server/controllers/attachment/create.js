@@ -1,9 +1,10 @@
-const multer   = require('multer');
 const crypto   = require('crypto');
+const Jimp     = require('jimp');
+const multer   = require('multer');
 
 const { create }  = require('@server/services/attachment');
 const extension   = require('@utils/extension');
-const { images }  = require('@config/images');
+const images = require('@config/images');
 const { 
    UPLOAD_PATH: dest 
 } = require('@config/constants');
@@ -43,9 +44,30 @@ module.exports = (req, res) => {
          let data = { filename, originalname, size, status: 1, mimetype},
             attachment = await create(data);
 
-         return res.send({ status: 200, message: 'Attachment Created Sucessfully', data: attachment });
+         const allowedResize = ['jpeg', 'png'];
+         const ext = extension(mimetype);
+         res.send({ status: 200, message: 'Attachment created successfully', data: attachment });
+
+         /* Resize only if image */
+         if(allowedResize.includes(ext)) {
+            for(let key in images) {
+               Jimp.read(`${dest}${filename}`)
+                  .then(image => {
+                     return image
+                        .resize(images[key].width, images[key].height)
+                        .quality(70)
+                        .write(`${dest}${key}-${filename}.${ext}`)
+                  })
+                  .catch(e => {
+                     log(`Resizing Error: ${e.message}`);
+                  })
+                  
+            }
+         }
+
       } catch (e) {
-         return res.send({ status: status, message: e.message });
+         return res.send({ status: 500, message: e.message });
+         // console.log(e.message)
       }
    });
 }
