@@ -13,6 +13,10 @@ global.cap 				= require('./capabilities');
 mongoose.Promise 		= global.Promise;
 
 const passport 		= require('@server/middlewares/passport');
+const { log } 			= require('@utils/logs');
+
+/** Global variables */
+global.log				= log;
 
 app.use(passport.initialize());
 mongoose.connect(connection, { useNewUrlParser: true, useFindAndModify: false });

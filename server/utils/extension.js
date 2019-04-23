@@ -8,8 +8,8 @@ function getExtension(mimetype) {
          return 'pdf';
       case 'image/jpeg':
          return 'jpeg';
-      // case 'image/png':
-      //    return 'png';
+      case 'image/png':
+         return 'png';
       case 'image/gif':
          return 'gif';
       default:

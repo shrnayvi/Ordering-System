@@ -13,7 +13,7 @@ module.exports = {
       return attachment.save();
    },
 
-   delete: (query) => {
+   remove: (query) => {
       return Attachment.findOneAndRemove(query);
    },
 }
