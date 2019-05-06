@@ -15,19 +15,25 @@ mongoose.Promise 		= global.Promise;
 const passport 		= require('@server/middlewares/passport');
 const { log } 			= require('@utils/logs');
 
-/** Global variables */
+const { dataPerPage }	= require('@config/config');
+
+/* Global variables */
 global.log				= log;
+global.dataPerPage 	= dataPerPage;
 
 app.use(passport.initialize());
-mongoose.connect(connection, { useNewUrlParser: true, useFindAndModify: false });
 
+/* Connect to mongodb */
+mongoose.connect(connection, { useNewUrlParser: true, useFindAndModify: false });
 mongoose.connection
 .once('open', () => console.log('Database connected'))
 .on('error', (error) => {
  	console.log(error,'error');
 });
 
+/* Logger */
 app.use(morgan('dev'));
+
 app.use(bodyParser.urlencoded({limit : '500kb','extended': 'true'}));
 app.use(bodyParser.json({limit : '500kb'}));
 app.use(express.static(path.join(__dirname, '../../client')));
