@@ -3,12 +3,11 @@ const User = require('@server/models/user');
 module.exports = {
    model: User,
 
-   get: (query, single) => {
+   get: (query, single = true) => {
       if (single) {
          return User.findOne(query);
-      } else {
-         return User.find(query);
-      }
+      } 
+      return User.find(query);
    },
 
    create: (data) => {

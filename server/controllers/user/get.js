@@ -3,7 +3,7 @@ module.exports = async (req, res) => {
    let users;
    try {
       if(req.params._id) {
-         users = await get({ _id: req.params._id }, true);
+         users = await get({ _id: req.params._id });
       } else {
          users = await get({}, false);
       }
