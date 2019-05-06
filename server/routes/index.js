@@ -1,11 +1,13 @@
 const app           = module.exports = require('express')();
 const attachment    = require('./attachment');
-const user          = require('./user');
+const category      = require('./category');
 const oauth         = require('./oauth');
+const user          = require('./user');
 
 app.use('/attachment', attachment);
-app.use('/users', user);
+app.use('/categories', category);
 app.use('/oauth', oauth);
+app.use('/users', user);
 
 app.use('*', (req, res, next) => {
     res.send({ status: 404, messaege: 'Endpoint not found'});
