@@ -8,10 +8,10 @@ async function checkToken(req, res, next) {
          req.role = context.role;
          next();
       } catch(e) {
-         res.send({ status: 403, message: 'Invalid Token' });
+         return apiResponse.invalidToken(res);
       }
    } else {
-      res.send({ status: 403, message: 'No Token Provided' })
+      return apiResponse.invalidToken(res);
    }
 }
 

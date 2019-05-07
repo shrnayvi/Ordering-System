@@ -10,7 +10,7 @@ function authorize(roles = []) {
       if(roles.length && roles.includes(req.role)) {
          next();
       } else {
-         return res.send({ status: 403, message: 'Unauthorized' });
+         return apiResponse.unauthorized(res);
       }
    }
 }
