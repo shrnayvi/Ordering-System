@@ -8,18 +8,18 @@ router.get('/:slug', categoryController.getBySlug);
 router.get('/', categoryController.get);
 
 router.post('/', 
-   [checkToken, authorize(cap['create_category'])], 
+   [checkToken, authorize(cap['add_category'])], 
    categoryController.create
 );
 
 router.put(
    '/:_id', 
-   [checkToken, authorize(cap['update_category'])], 
+   [checkToken, authorize(cap['edit_category'])], 
    categoryController.update
 );
 
 router.delete(
    '/:_id', 
-   [checkToken, authorize(cap['delete_category'])], 
+   [checkToken, authorize(cap['remove_category'])], 
    categoryController.remove
 );

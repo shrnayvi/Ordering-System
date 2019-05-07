@@ -5,7 +5,7 @@ const Joi = require('joi');
  * @param {string} data.name - category name
  * @param {string} data.description - Category description
  */
-module.exports = function validateCategoryInput(data) {
+module.exports = function (data) {
    const schema = {
       name: Joi.string().required(),
       description: Joi.string().required(),

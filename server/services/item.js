@@ -1,27 +1,24 @@
-const mongoose = require('mongoose');
-const itemSchema =  require('@server/pp/models/item');
-const Item = mongoose.model('User', itemSchema);
+const Item = require('@server/models/item');
 
 module.exports = {
-    model: Item,
+   get: (query, single = true) => {
+      if (single) {
+         return Item.findOne(query);
+      }
 
-    get: (query, single) => { 
-        if(single) {
-            return Item.findOne(query);
-        } else {
-            return Item.find(query);
-        }
-    },
-    create: (data) => {
-        let item = new Item(data);
-        return item.save();
-    },
+      return Item.find(query);
+   },
 
-    update: (query, data) => {
-        return Item.findOneAndUpdate(query, data, { new: true });
-    },
+   create: (data) => {
+      let item = new Item(data);
+      return item.save();
+   },
 
-    delete: (query) => {
-        return Item.findOneAndRemove(query);
-    },
+   update: (query, data) => {
+      return Item.findOneAndUpdate(query, data, { new: true });
+   },
+
+   remove: (query) => {
+      return Item.findOneAndRemove(query);
+   },
 }

@@ -7,7 +7,12 @@ module.exports = {
    'remove_attachment': ['admin'],
    
    /* Category Resource*/
-   'create_category': ['admin'],
-   'update_category': ['admin'],
+   'add_category': ['admin'],
+   'edit_category': ['admin'],
    'remove_category': ['admin'],
+
+   /* Item Resource*/
+   'add_item': ['admin'],
+   'edit_item': ['admin'],
+   'remove_item': ['admin'],
 }
