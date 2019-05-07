@@ -1,4 +1,5 @@
 const { get } = require('@server/services/attachment');
+const pagination = require('@utils/pagination');
 
 module.exports = async (req, res) => {
    let attachment;
@@ -8,7 +9,11 @@ module.exports = async (req, res) => {
       } else if(req.params.name) {
          attachment = await get({ filename: req.params.name }, true);
       } else {
-         attachment = await get({}, false);
+         const { skip, limit } = pagination(req.query);
+         attachment = await get({}, false)
+            .skip(skip)
+            .limit(limit)
+            .sort({ createdAt: 'desc' });
       }
       return apiResponse.success(res, { message: 'fetched_attachment', data: attachment});
    } catch(e) {

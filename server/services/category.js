@@ -22,31 +22,28 @@ module.exports = {
    },
 
    /**
-    * Gets the list of categories with the depth level of 0 (i.e. categories with their first children)
-    * @param {Object} [query] - Query to match the document
-    * @param {Object} [opts] - Fields for the graphlookup
-    * @return {promise} - Returns list of categories with first level children
+    * Aggregation query
+    * @param {Object} [opts] - Aggregation Pipeline(if not provided then gets the list of categories with the depth level of 0 (i.e. categories with their first children))
+    * @return {promise} - Returns aggregated result
     */
-   graphLookUp: (query = {}, opts = {}) => {
-      if(!Object.keys(query).length) {
-         query = { $match: { parent: { $exists: false } } };
+   aggregation: (opts = []) => {
+      if(!opts.length) {
+         opts = [
+            { $sort: { createdAt: -1 } },
+            { $match: { parent: { $exists: false } } },
+            {
+               $graphLookup: {
+                  from: 'categories',
+                  startWith: '$_id',
+                  connectFromField: '_id',
+                  connectToField: 'parent',
+                  as: 'children',
+                  maxDepth: 0,
+               }
+            }
+         ];
       }
 
-      if(!Object.keys(opts).length) {
-         opts = {
-            from: 'categories',
-            startWith: '$_id',
-            connectFromField: '_id',
-            connectToField: 'parent',
-            as: 'children',
-            maxDepth: 0,
-         }
-      }
-
-      return Category
-         .aggregate([
-            query,
-            { $graphLookup: { ...opts } },
-         ])
+      return Category.aggregate(opts);
    }
 }
