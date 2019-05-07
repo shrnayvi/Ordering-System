@@ -10,6 +10,6 @@ router.get('/:name', attachmentController.get);
 router.post('/', attachmentController.create)
 router.delete(
    '/:_id', 
-   [checkToken, authorize(cap['delete_attachment'])], 
+   [checkToken, authorize(cap['remove_attachment'])], 
    attachmentController.remove
 );

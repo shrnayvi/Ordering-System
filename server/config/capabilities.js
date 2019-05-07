@@ -4,5 +4,10 @@ module.exports = {
    'edit_user': ['admin', 'customer'],
 
    /* User Resource */
-   'delete_attachment': ['admin'],
+   'remove_attachment': ['admin'],
+   
+   /* Category Resource*/
+   'create_category': ['admin'],
+   'update_category': ['admin'],
+   'remove_category': ['admin'],
 }
