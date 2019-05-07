@@ -6,12 +6,12 @@ module.exports = async (req, res) => {
    try {
       const { error } = validateLoginInput(req.body);
       if (error) {
-         return res.send({ status: 400, message: error.name, error: error.details });
+         return apiResponse.badRequest(res, { data: error.details });
       } 
 
       let userDoc = await get({ email: req.body.email }, true);
       if(!userDoc) {
-         return res.send({ status: 404, message: 'User Not Found' });
+         return apiResponse.notFound(res);
       }
 
       if(userDoc.method === 'local') {
@@ -19,13 +19,13 @@ module.exports = async (req, res) => {
 
          if (canLogin) {
             const token = generateToken({ _id: userDoc._id, role: userDoc.role });
-            return res.send({ status: 200, message:'Successfully Login', data: { user: userDoc, token }});
+            return apiResponse.success(res, { message: 'login_successfull', data: { user: userDoc, token }});
          } 
       }
 
-      return res.send({ status: 400, message: 'Invalid Password' });
+      return apiResponse.badRequest(res, { message: 'password_invalid' });
 
    } catch (e) {
-      return res.send({ status: 500, message: e.message });
+      return apiResponse.serverError(res, { data: e.message });
    }
 }

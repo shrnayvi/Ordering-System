@@ -46,7 +46,7 @@ module.exports = (req, res) => {
 
          const allowedResize = ['jpeg', 'png'];
          const ext = extension(mimetype);
-         res.send({ status: 200, message: 'Attachment created successfully', data: attachment });
+         apiResponse.success(res, { message: 'created_attachment', data: attachment });
 
          /* Resize only if image */
          if(allowedResize.includes(ext)) {
@@ -61,13 +61,10 @@ module.exports = (req, res) => {
                   .catch(e => {
                      log(`Resizing Error: ${e.message}`);
                   })
-                  
             }
          }
-
       } catch (e) {
-         return res.send({ status: 500, message: e.message });
-         // console.log(e.message)
+         return apiResponse.serverError(res, { data: e.message });
       }
    });
 }

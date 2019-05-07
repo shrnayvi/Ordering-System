@@ -1,6 +1,11 @@
-const { get } = require('@server/services/category');
-const { graphLookUp } = require('@server/services/category');
+const { get }           = require('@server/services/category');
+const { graphLookUp }   = require('@server/services/category');
 
+/**
+ * Fetch the categories with/without the hierarchy(upto 3 level deep)
+ * @param {Object} req - Request object
+ * @param {string} [req.query.get] - Query paramter for hierarchy('/category?get = hierarchical')
+ */
 exports.get = async (req, res) => {
    try {
       let category;
@@ -19,18 +24,17 @@ exports.get = async (req, res) => {
          category = await get({}, false);
       }
 
-      return res.send({ status: 200, message: 'Fetched category', data: category });
+      return apiResponse.success(res, { message: 'fetched_category',data: category });
    } catch(e) {
-      return res.send({ status: 500, message: 'Server Error', error: e.message });
+      return apiResponse.serverError(res, { data: e.message });
    }
 };
 
 exports.getBySlug = async (req, res) => {
    try {
-      console.log(req.params.slug);
       let category = await get({ slug: req.params.slug });
-      return res.send({ status: 200, message: 'Category Fetched', data: category });
+      return apiResponse.success(res, { message: 'fetched_category',data: category });
    } catch(e) {
-      return res.send({ status: 500, message: 'Server Error', error: e.message });
+      return apiResponse.serverError(res, { data: e.message });
    }
 };

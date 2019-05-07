@@ -10,8 +10,8 @@ module.exports = async (req, res) => {
       } else {
          attachment = await get({}, false);
       }
-      return res.send({ status: 200, message: 'Fetched Attachment(s)', data: attachment });
+      return apiResponse.success(res, { message: 'fetched_attachment', data: attachment});
    } catch(e) {
-      return res.send({ status: 500, message: e.message });
+      return apiResponse.serverError(res, { data: e.message });
    }
 }

@@ -17,10 +17,10 @@ module.exports = async (req, res) => {
       );
 
       if(!user) {
-         return res.send({ status: 400, message: 'Token Expired', error: []});
+         return apiResponse.badRequest(res, { message: 'token_expired' });
       }
-      return res.send({ status: 200, message: 'Reset Password Successfully', data: user });
+      return apiResponse.success(res, { message: 'reset_password', data: user });
    } catch(e) {
-      return res.send({ status: 500, message: 'Server Error', error: e.message });
+      return apiResponse.serverError(res, { data: e.message });
    }
 }

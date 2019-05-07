@@ -16,10 +16,12 @@ const passport 		= require('@server/middlewares/passport');
 const { log } 			= require('@utils/logs');
 
 const { dataPerPage }	= require('@config/config');
+const response				= require('@server/responses/');
 
 /* Global variables */
-global.log				= log;
-global.dataPerPage 	= dataPerPage;
+global.log					= log;
+global.dataPerPage 		= dataPerPage;
+global.apiResponse		= response;
 
 app.use(passport.initialize());
 

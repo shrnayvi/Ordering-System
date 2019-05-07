@@ -7,8 +7,8 @@ module.exports = async (req, res) => {
       } else {
          users = await get({}, false);
       }
-      return res.send({ status: 200, message: 'Fetched Users', data: users });
+      return apiResponse.success(res, { message: 'fetched_user', data: users });
    } catch(e) {
-      return res.send({ status: 500, message: 'Server Error' });
+      return apiResponse.serverError(res, { data: category });
    }
 }

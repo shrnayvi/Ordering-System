@@ -15,11 +15,11 @@ module.exports = async (req, res) => {
       if(user) {
          let emailResponse = await sendToken({ email: req.body.email, token });
          if('error' in emailResponse) {
-            return res.send({ status: 500, message: emailResponse.error });
+            return apiResponse.serverError(res, { data: e.message });
          }
-         return res.send({ status: 200, message: 'Token Sent' });
+         return apiResponse.success(res, { message: 'token_sent' });
       }
    } catch(e) {
-      return res.send({ status: 500, message: 'Server Error', error: e.message });
+      return apiResponse.serverError(res, { data: e.message });
    }
 }

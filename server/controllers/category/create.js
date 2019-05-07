@@ -6,13 +6,13 @@ module.exports = async (req, res) => {
 
    const { error } = validateCategoryInput(data);
    if(error) {
-      return res.send({ status: 400, message: 'Bad Request', error });
+      return apiResponse.badRequest(res, { data: error});
    } 
    try {
       const category = await create(data);
-      return res.send({ status: 200, message: 'Category Added', data: category });
+      return apiResponse.success(res, { message: 'added_category',data: category });
    } catch(e) {
-      return res.send({ status: 500, message: 'Server Error', error: e.message });
+      return apiResponse.serverError(res, { data: e.message });
    }
 
 } 

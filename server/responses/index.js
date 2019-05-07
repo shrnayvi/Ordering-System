@@ -11,6 +11,13 @@ module.exports = {
       return res.send({ status: 401, message, error: data });
    },
 
+   notFound: (res, opts = {}) => {
+      const message = opts.message || 'not_found';
+      const data = opts.data || {};
+      return res.send({ status: 404, message, error: data });
+
+   },
+
    serverError: (res, opts = {}) => {
       const message = opts.message || 'server_error';
       const data = opts.data || {};
@@ -22,7 +29,6 @@ module.exports = {
       const data = opts.data || {};
       return res.send({ status: 200, message, data });
    },
-
 
    unauthorized: (res, opts = {}) => {
       const message = opts.message || 'unauthorized';

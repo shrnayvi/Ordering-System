@@ -4,10 +4,10 @@ module.exports = async (req, res) => {
    try {
       let users = await update({ _id: req.params._id }, req.body);
       if (!users) {
-         return res.send({ status: 404, message: 'User Not Found', data: [] });
+         return apiResponse.notFound(res);
       }
-      return res.send({ status: 200, message: 'User Updated Successfully', data: users });
+      return apiResponse.success(res, { message: 'updated_user', data: users });
    } catch (e) {
-      return res.send({ status: 500, message: 'Server Error', error: e.message });
+      return apiResponse.serverError(res, { data: e.message });
    }
 }

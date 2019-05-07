@@ -5,9 +5,9 @@ module.exports = async (req, res) => {
    try {
       let attachment = await remove({ _id: req.params._id });
       if (!attachment) {
-         return res.send({ status: 404, message: 'Attachment Not Found', data: [] });
+         return apiResponse.notFound(res);
       }
-      res.send({ status: 200, message: 'Attachment Deleted Successfully', data: attachment });
+      apiResponse.success(res, { message: 'deleted_attachment', data: attachment });
 
       /** Remove the file if exists */
       const {
@@ -20,6 +20,6 @@ module.exports = async (req, res) => {
       });
 
    } catch (e) {
-      return res.send({ status: 500, message: e.message });
+      return apiResponse.serverError(res, { data: e.message });
    }
 }

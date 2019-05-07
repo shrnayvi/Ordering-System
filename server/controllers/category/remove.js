@@ -3,8 +3,8 @@ const { remove } = require('@server/services/category');
 module.exports = async (req, res) => {
    try {
       const category = await remove({ _id: req.params._id });
-      return res.send({ status: 200, message: 'Category Deleted', data: category })
+      return apiResponse.success(res, { message: 'deleted_category', data: category });
    } catch(e) {
-      return res.send({ status: 500, message: 'Server Error', error: e.message })
+      return apiResponse.serverError(res, { data: e.message });
    }
 }

@@ -10,15 +10,12 @@ module.exports = async (req, res) => {
          let data = { ...req.body, method: 'local'},
             newUser = await create(data);
 
-         return res.send({ status: 200, message: 'User Created Sucessfully', data: newUser });
+         return apiResponse.success(res, { message: 'created_user', data: newUser });
       } catch (e) {
-         let status = 500,
-            message = 'Server Error';
          if('exists' in e && e.exists) {
-            status = 400;
-            message = e.message;
+            return apiResponse.badRequest(res, { data: e.message });
          }
-         return res.send({ status: status, message, error: e.message });
+         return apiResponse.serverError(res, { data: e.message });
       }
    }
 }
