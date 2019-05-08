@@ -4,7 +4,9 @@ const authorize = require('@server/middlewares/authorize');
 const checkToken = require('@server/middlewares/authenticate');
 const itemController = require('@server/controllers/item');
 
+router.get('/:slug', itemController.getBySlug);
 router.get('/', itemController.get);
+
 router.post('/', 
    [checkToken, authorize(cap['add_item'])], 
    itemController.create

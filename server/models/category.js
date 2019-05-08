@@ -1,8 +1,9 @@
-const crypto = require('crypto');
 const mongoose = require('mongoose');
+const randomstring = require('randomstring');
+const slugify = require('@utils/slugify');
+
 const Schema = mongoose.Schema;
 
-const slugify = require('@utils/slugify');
 
 const CategorySchema = new Schema({
    name: String,
@@ -20,7 +21,7 @@ CategorySchema.pre('save', async function() {
       const slug = slugify(this.name);
       const category = await this.constructor.findOne({ slug });
       if(category) {
-         const rand = crypto.randomBytes(3).toString('hex');
+         const rand = randomstring.generate(5);
          this.slug = `${slug}-${rand}`;
       } else {
          this.slug = slug;

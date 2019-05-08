@@ -3,6 +3,7 @@ const Item = require('@server/models/item');
 module.exports = {
    get: (query, single = true) => {
       if (single) {
+         console.log(query);
          return Item.findOne(query);
       }
 

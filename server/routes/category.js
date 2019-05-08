@@ -4,6 +4,7 @@ const authorize = require('@server/middlewares/authorize');
 const checkToken = require('@server/middlewares/authenticate');
 const categoryController = require('@server/controllers/category');
 
+router.get('/:slug/items', categoryController.getMenuItems);
 router.get('/:slug', categoryController.getBySlug);
 router.get('/', categoryController.get);
 

@@ -1,5 +1,6 @@
 const { aggregation }   = require('@server/services/category');
 const { get }           = require('@server/services/category');
+const { get: getItems }           = require('@server/services/item');
 const pagination        = require('@utils/pagination');
 
 /**
@@ -61,3 +62,16 @@ exports.getBySlug = async (req, res) => {
       return apiResponse.serverError(res, { data: e.message });
    }
 };
+
+
+
+/**
+ * Get items related to particular category
+ * @param {pbject} req - Request Object
+ * @param {string} req.params.slug Category Slug 
+ */
+exports.getMenuItems = async (req, res) => {
+   const slug = req.params.slug;
+   const items = await getItems({ category: slug }, false);
+   return apiResponse.success(res, {  data: items });
+}
