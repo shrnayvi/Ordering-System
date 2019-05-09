@@ -1,6 +1,12 @@
 const { get }     = require('@server/services/favorite');
 const pagination  = require('@utils/pagination');
 
+
+/**
+ * @param {Object} [req.query] - Query Object
+ * @param {String} [req.query.page] - Page Number Query parameter
+ * @param {String} [req.query.size] - Number of data to fetch
+ */
 exports.get = async (req, res) => {
    try {
       let { skip, limit } = pagination(req.query);
@@ -17,6 +23,13 @@ exports.get = async (req, res) => {
    }
 }
 
+
+/**
+ * @param {Object} [req.query] - Query Object
+ * @param {String} [req.query.page] - Page Number Query parameter
+ * @param {String} [req.query.size] - Number of data to fetch
+ * @param {String} [req.query.size] - Number of data to fetch
+ */
 exports.getByUser = async (req, res) => {
    try {
       let { skip, limit } = pagination(req.query);

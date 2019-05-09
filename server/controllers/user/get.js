@@ -3,8 +3,8 @@ const pagination = require('@utils/pagination');
 
 /**
  * @param {Object} [req.query] - Query Object
- * @param {string} [req.query.page] - Page Number Query parameter
- * @param {string} [req.query.size] - Number of data to fetch
+ * @param {String} [req.query.page] - Page Number Query parameter
+ * @param {String} [req.query.size] - Number of data to fetch
  */
 module.exports = async (req, res) => {
    let users;

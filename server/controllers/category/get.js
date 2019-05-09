@@ -9,7 +9,7 @@ const {
 /**
  * Fetch the categories with/without the hierarchy(upto 3 level deep)
  * @param {Object} req.query - Query parameter
- * @param {string} [req.query.get] - Query paramter for hierarchy('/category?get = hierarchical')
+ * @param {String} [req.query.get] - Query paramter for hierarchy('/category?get = hierarchical')
  * @param {string|number} [req.query.page] - Page Number
  * @param {string|number} [req.query.size] - Number of data to fetch
  */
@@ -70,7 +70,7 @@ exports.getBySlug = async (req, res) => {
 /**
  * Get items related to particular category and also the child categories if exists
  * @param {Object} req - Request Object
- * @param {string} req.params._id Category ID 
+ * @param {String} req.params._id Category ID 
  */
 exports.getMenuItems = async (req, res) => {
    try {

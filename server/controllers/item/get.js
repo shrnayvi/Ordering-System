@@ -3,8 +3,8 @@ const pagination = require('@utils/pagination');
 
 /**
  * @param {Object} [req.query] - Query Object
- * @param {string} [req.query.page] - Page Number Query parameter
- * @param {string} [req.query.size] - Number of data to fetch
+ * @param {String} [req.query.page] - Page Number Query parameter
+ * @param {String} [req.query.size] - Number of data to fetch
  */
 exports.get = async(req, res) => {
    try {
@@ -25,7 +25,7 @@ exports.get = async(req, res) => {
 /**
  * Get the item by slug
  * @param {Object} [req.param] - Query Object
- * @param {string} [req.params.slug] - Food Item slug
+ * @param {String} [req.params.slug] - Food Item slug
  */
 exports.getBySlug = async(req, res) => {
    try {

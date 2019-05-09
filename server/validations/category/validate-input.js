@@ -2,8 +2,8 @@ const Joi = require('joi');
 
 /**
  * @param {Object} data - data for validation
- * @param {string} data.name - category name
- * @param {string} data.description - Category description
+ * @param {String} data.name - category name
+ * @param {String} data.description - Category description
  */
 module.exports = function (data) {
    const schema = {

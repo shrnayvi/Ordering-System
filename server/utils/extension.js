@@ -1,6 +1,6 @@
 /**
  * Get the extension of the attachment from the mimetype 
- * @param {string} mimetype
+ * @param {String} mimetype
  */
 function getExtension(mimetype) {
    switch(mimetype) {
