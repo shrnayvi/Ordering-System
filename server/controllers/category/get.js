@@ -1,7 +1,10 @@
 const { aggregation }   = require('@server/services/category');
-const { get }           = require('@server/services/category');
-const { get: getItems }           = require('@server/services/item');
+const { get, distinct }           = require('@server/services/category');
 const pagination        = require('@utils/pagination');
+const { 
+   get: getItems, 
+   aggregation: itemAggregation 
+} = require('@server/services/item');
 
 /**
  * Fetch the categories with/without the hierarchy(upto 3 level deep)
@@ -66,12 +69,20 @@ exports.getBySlug = async (req, res) => {
 
 
 /**
- * Get items related to particular category
- * @param {pbject} req - Request Object
- * @param {string} req.params.slug Category Slug 
+ * Get items related to particular category and also the child categories if exists
+ * @param {Object} req - Request Object
+ * @param {string} req.params._id Category ID 
  */
 exports.getMenuItems = async (req, res) => {
-   const slug = req.params.slug;
-   const items = await getItems({ category: slug }, false);
-   return apiResponse.success(res, {  data: items });
+   const _id = req.params._id;
+   const items = await getItems({ category: _id }, false)
+      .populate('category', 'name');
+
+   let children = await distinct('_id', { parent: _id });
+
+   let childItems = await getItems({ category: { $in: children } }, false)
+      .populate('category', 'name');
+
+   return apiResponse.success(res, { message: 'fetched_category_item',  data: [...items, ...childItems ] });
 }
+

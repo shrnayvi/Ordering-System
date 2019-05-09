@@ -22,4 +22,13 @@ module.exports = {
    remove: (query) => {
       return Item.findOneAndRemove(query);
    },
+
+   /**
+    * Aggregation query
+    * @param {Object} [opts] - Aggregation Pipeline
+    * @return {promise} - Returns aggregated result
+    */
+   aggregation: (opts) => {
+      return Item.aggregate(opts);
+   }
 }

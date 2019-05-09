@@ -8,6 +8,10 @@ module.exports = {
       return Category.find(query);
    },
 
+   distinct: (field, query) => {
+      return Category.distinct(field, query);
+   },
+
    create: (data) => {
       let category = new Category(data);
       return category.save();
