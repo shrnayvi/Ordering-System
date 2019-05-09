@@ -1,17 +1,14 @@
-const mongoose = require('mongoose');
-const favoriteSchema =  require('@server/models/favorite');
-const Favorite = mongoose.model('User', favoriteSchema);
+const Favorite =  require('@server/models/favorite');
 
 module.exports = {
-    model: Favorite,
-
-    get: (query, single) => { 
+    get: (query, single = true) => { 
         if(single) {
             return Favorite.findOne(query);
         } else {
             return Favorite.find(query);
         }
     },
+
     create: (data) => {
         let favorite = new Favorite(data);
         return favorite.save();

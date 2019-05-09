@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Favorite = new Schema({
+const FavoriteSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
@@ -10,8 +10,20 @@ const Favorite = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Item'
     },
-   createdAt: Number,
-   updatedAt: Number,
-});
+}, { timestamps: true });
 
-module.exports = Favorite;
+FavoriteSchema.pre('save', async function(){
+    try {
+        const favorite = await this.constructor.findOne({ 
+            user: this.user,
+            item: this.item,
+         });
+         if(favorite) {
+            return Promise.reject({ error: 'favorite_exists' });
+         }
+    } catch(e) {
+        return Promise.reject(e);
+    }
+}); 
+
+module.exports = mongoose.model('Favorite', FavoriteSchema);

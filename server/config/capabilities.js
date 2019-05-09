@@ -15,4 +15,9 @@ module.exports = {
    'add_item': ['admin'],
    'edit_item': ['admin'],
    'remove_item': ['admin'],
-}
+
+   /* Favorite Resource*/
+   'get_favorite': ['admin', 'customer'],
+   'add_favorite': ['admin', 'customer'],
+   'remove_favorite': ['admin', 'customer'],
+};
