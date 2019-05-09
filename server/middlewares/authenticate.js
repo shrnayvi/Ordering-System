@@ -5,6 +5,7 @@ async function checkToken(req, res, next) {
    if(token) {
       try { 
          const { context } = await verifyToken(token);
+         req.userId = context.userId;
          req.role = context.role;
          next();
       } catch(e) {
