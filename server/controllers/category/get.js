@@ -67,22 +67,26 @@ exports.getBySlug = async (req, res) => {
 };
 
 
-
 /**
  * Get items related to particular category and also the child categories if exists
  * @param {Object} req - Request Object
  * @param {string} req.params._id Category ID 
  */
 exports.getMenuItems = async (req, res) => {
-   const _id = req.params._id;
-   const items = await getItems({ category: _id }, false)
-      .populate('category', 'name');
+   try {
 
-   let children = await distinct('_id', { parent: _id });
+      const _id = req.params._id;
+      const items = await getItems({ category: _id }, false)
+         .populate('category', 'name');
 
-   let childItems = await getItems({ category: { $in: children } }, false)
-      .populate('category', 'name');
+      let children = await distinct('_id', { parent: _id });
 
-   return apiResponse.success(res, { message: 'fetched_category_item',  data: [...items, ...childItems ] });
+      let childItems = await getItems({ category: { $in: children } }, false)
+         .populate('category', 'name');
+
+      return apiResponse.success(res, { message: 'fetched_category_item',  data: [...items, ...childItems ] });
+   } catch(e) {
+      return apiResponse.serverError(res, { data: e.message });
+   }
 }
 
