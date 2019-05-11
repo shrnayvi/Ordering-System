@@ -44,6 +44,10 @@ UserSchema.pre('save', async function() {
       if(this.method === 'local' && this.password) {
          this.password = this.generateHash(this.password);
       }
+
+      if(!this.username) {
+         this.username = this.email.split('@')[0];
+      }
    } catch(e) {
       return Promise.reject({ message: e.message });
    }

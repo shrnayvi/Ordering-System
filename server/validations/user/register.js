@@ -1,11 +1,11 @@
 const Joi = require('joi');
 
 /**
+ * Validate the user registration
  * @param {Object} data - data for validation
  */
 module.exports = function validateRegisterInput(data) {
    const schema = {
-      username: Joi.string().alphanum().min(3).max(30).required(), 
       email: Joi.string().email({ minDomainAtoms: 2 }).required(),
       password: Joi.string().required(),
       name: Joi.string(),

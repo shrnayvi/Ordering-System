@@ -1,17 +1,13 @@
-const mongoose = require('mongoose');
-const orderSchema =  require('@server/models/order');
-const Order = mongoose.model('Order', orderSchema);
+const Order =  require('@server/models/order');
 
 module.exports = {
-    model: Order,
-
-    get: (query, single) => { 
+    get: (query, single = true) => { 
         if(single) {
             return Order.findOne(query);
-        } else {
-            return Order.find(query);
-        }
+        } 
+        return Order.find(query);
     },
+
     create: (data) => {
         let order= new Order(data);
         return order.save();
@@ -21,7 +17,7 @@ module.exports = {
         return Order.findOneAndUpdate(query, data, { new: true });
     },
 
-    delete: (query) => {
+    remove: (query) => {
         return Order.findOneAndRemove(query);
     },
 }

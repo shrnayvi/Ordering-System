@@ -1,7 +1,7 @@
 const { verifyToken } = require('@utils/JWT');
 
 async function checkToken(req, res, next) {
-   const token = req.headers.token;
+   const token = req.headers.access_token;
    if(token) {
       try { 
          const { context } = await verifyToken(token);

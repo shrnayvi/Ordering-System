@@ -12,7 +12,7 @@ router.get('/',
 router.get(
    '/:user', 
    [checkToken, authorize(cap['get_favorite'])], 
-   favoriteController.getByUser
+   favoriteController.get
 );
 
 router.post('/', 

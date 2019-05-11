@@ -20,4 +20,9 @@ module.exports = {
    'get_favorite': ['admin', 'customer'],
    'add_favorite': ['admin', 'customer'],
    'remove_favorite': ['admin', 'customer'],
+
+   /* Order Resource*/
+   'get_order': ['admin', 'customer'],
+   'add_order': ['admin', 'customer'],
+   'update_order': ['admin', 'customer'],
 };

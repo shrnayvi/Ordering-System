@@ -1,9 +1,9 @@
-const { get, getBySlug, getByCategory } = require('./get');
+const { get, getBySlug, getMenuItems} = require('./get');
 
 module.exports = {
    get,
    getBySlug,
-   getByCategory,
+   getMenuItems,
    create: require('./create'),
    update: require('./update'),
    remove: require('./remove'),

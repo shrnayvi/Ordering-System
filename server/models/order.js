@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Order = new Schema({
+/**
+ * statuses: { pending; -1, cancelled: 0, confirmed: 1, delivered: 2 }
+ */
+const OrderSchema = new Schema({
    user: {
       type: Schema.Types.ObjectId,
       ref: 'User',
@@ -10,12 +13,12 @@ const Order = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Item',
    },
-   occassion: {
-      type: Schema.Types.ObjectId,
-      ref: 'Occasssion'
+   status: {
+      type: Number,
+      enum: [-1, 0, 1, 2],
    },
-   createdAt: Number,
-   updatedAt: Number,
-});
+   orderNumber: String,
 
-module.exports = Order;
+}, { timestamps: true });
+
+module.exports = mongoose.model('Order', OrderSchema);

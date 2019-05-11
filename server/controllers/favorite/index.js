@@ -1,8 +1,5 @@
-const { get, getByUser } = require('./get');
-
 module.exports = {
-   get,
-   getByUser,
+   get: require('./get'),
    create: require('./create'),
    remove: require('./remove'),
 }
