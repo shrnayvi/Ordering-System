@@ -2,7 +2,7 @@ const crypto   = require('crypto');
 const Jimp     = require('jimp');
 const multer   = require('multer');
 
-const { create }  = require('@server/services/attachment');
+const { create }  = require('@services/attachment');
 const extension   = require('@utils/extension');
 const images = require('@config/images');
 const { 

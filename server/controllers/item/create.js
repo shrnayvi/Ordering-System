@@ -1,4 +1,4 @@
-const { create } = require('@server/services/item');
+const { create } = require('@services/item');
 const validateInput = require('@validations/item/validate-input');
 
 module.exports = async (req, res) => {

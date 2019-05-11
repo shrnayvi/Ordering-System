@@ -1,4 +1,4 @@
-const { get } = require('@server/services/user');
+const { get } = require('@services/user');
 const pagination = require('@utils/pagination');
 
 /**

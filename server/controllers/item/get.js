@@ -1,5 +1,5 @@
-const { get } = require('@server/services/item');
-const { distinct: distinctCategory } = require('@server/services/category');
+const { get } = require('@services/item');
+const { distinct: distinctCategory } = require('@services/category');
 const pagination = require('@utils/pagination');
 
 /**

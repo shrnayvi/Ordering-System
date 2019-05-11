@@ -1,4 +1,4 @@
-const { update } = require('@server/services/category');
+const { update } = require('@services/category');
 const validateCategoryInput = require('@validations/category/validate-input');
 
 module.exports = async (req, res) => {

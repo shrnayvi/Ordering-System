@@ -30,12 +30,14 @@
     "slugify": "^1.3.4"
   },
   "_moduleAliases": {
-    "@server": "server",
-    "@utils": "server/utils",
-    "@config": "server/config",
-    "@emails": "server/emails",
-    "@validations": "server/validations",
-    "@client": "client"
+    "@server": ".",
+    "@utils": "utils",
+    "@config": "config",
+    "@emails": "emails",
+    "@services": "services",
+    "@validations": "validations",
+    "@controllers": "controllers",
+    "@middlewares": "middlewares"
   },
   "devDependencies": {
     "eslint": "^5.16.0",

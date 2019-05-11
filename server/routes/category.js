@@ -1,9 +1,9 @@
 const router = module.exports = require('express').Router();
 
-const authorize = require('@server/middlewares/authorize');
-const checkToken = require('@server/middlewares/authenticate');
-const categoryController = require('@server/controllers/category');
-const { getMenuItems }= require('@server/controllers/item');
+const authorize = require('@middlewares/authorize');
+const checkToken = require('@middlewares/authenticate');
+const categoryController = require('@controllers/category');
+const { getMenuItems }= require('@controllers/item');
 
 /* Get items related to particular category */
 router.get('/:_id/items', getMenuItems);

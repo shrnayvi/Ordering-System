@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { remove } = require('@server/services/attachment');
+const { remove } = require('@services/attachment');
 
 module.exports = async (req, res) => {
    try {

@@ -1,4 +1,4 @@
-const { create }              = require('@server/services/user');
+const { create }              = require('@services/user');
 const validateRegisterInput   = require('@validations/user/register');
 
 module.exports = async (req, res) => {

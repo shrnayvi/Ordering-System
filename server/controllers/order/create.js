@@ -1,4 +1,4 @@
-const { create } = require('@server/services/order');
+const { create } = require('@services/order');
 const validateOrder = require('@validations/order/create');
 const randomstring = require('randomstring');
 

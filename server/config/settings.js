@@ -12,7 +12,7 @@ const connection 		= database.url();
 global.cap 				= require('./capabilities');
 mongoose.Promise 		= global.Promise;
 
-const passport 		= require('@server/middlewares/passport');
+const passport 		= require('@middlewares/passport');
 const { log } 			= require('@utils/logs');
 
 const { dataPerPage }	= require('@config/config');

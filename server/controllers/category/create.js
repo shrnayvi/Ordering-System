@@ -1,4 +1,4 @@
-const { create } = require('@server/services/category');
+const { create } = require('@services/category');
 const validateCategoryInput = require('@validations/category/validate-input');
 
 module.exports = async (req, res) => {

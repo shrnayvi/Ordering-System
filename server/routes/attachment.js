@@ -1,9 +1,9 @@
 const express  = require('express');
 const router = module.exports = express.Router();
 
-const authorize = require('@server/middlewares/authorize');
-const checkToken = require('@server/middlewares/authenticate');
-const attachmentController = require('@server/controllers/attachment');
+const authorize = require('@middlewares/authorize');
+const checkToken = require('@middlewares/authenticate');
+const attachmentController = require('@controllers/attachment');
 
 router.get('/', attachmentController.get);
 router.get('/:name', attachmentController.get);

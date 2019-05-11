@@ -1,4 +1,4 @@
-const { remove } = require('@server/services/item');
+const { remove } = require('@services/item');
 
 module.exports = async(req, res) => {
    try {

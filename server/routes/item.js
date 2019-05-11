@@ -1,8 +1,8 @@
 const router = module.exports = require('express').Router();
 
-const authorize = require('@server/middlewares/authorize');
-const checkToken = require('@server/middlewares/authenticate');
-const itemController = require('@server/controllers/item');
+const authorize = require('@middlewares/authorize');
+const checkToken = require('@middlewares/authenticate');
+const itemController = require('@controllers/item');
 
 router.get('/:slug', itemController.getBySlug);
 router.get('/', itemController.get);

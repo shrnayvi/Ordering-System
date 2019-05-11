@@ -1,4 +1,4 @@
-const { update }                       = require('@server/services/user');
+const { update }                       = require('@services/user');
 const { validateResetPasswordInput }   = require('@validations/user/forgot-password');
 
 module.exports = async (req, res) => {

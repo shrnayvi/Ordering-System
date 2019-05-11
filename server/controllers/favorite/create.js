@@ -1,4 +1,4 @@
-const { create } = require('@server/services/favorite');
+const { create } = require('@services/favorite');
 
 module.exports = async (req, res) => {
    try {

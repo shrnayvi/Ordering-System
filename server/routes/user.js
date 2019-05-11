@@ -2,10 +2,10 @@ const express = require('express');
 
 const router = module.exports = express.Router();
 
-const authorize = require('@server/middlewares/authorize');
-const checkToken = require('@server/middlewares/authenticate');
-const userController = require('@server/controllers/user');
-const { get: getOrder } = require('@server/controllers/order');
+const authorize = require('@middlewares/authorize');
+const checkToken = require('@middlewares/authenticate');
+const userController = require('@controllers/user');
+const { get: getOrder } = require('@controllers/order');
 
 router.get('/', userController.get);
 router.get('/:_id', userController.get);

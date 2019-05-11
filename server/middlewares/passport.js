@@ -2,7 +2,7 @@ const passport 		   = module.exports = require('passport');
 const GoogleStrategy    = require('passport-google-plus-token');
 
 const { generateToken }                      = require('@utils/JWT');
-const { get: getUser, create: createUser }   = require('@server/services/user')
+const { get: getUser, create: createUser }   = require('@services/user')
 const { googleClientID, googleClientSecret } = require('@config/keys');
 
 passport.use(

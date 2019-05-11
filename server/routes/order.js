@@ -1,8 +1,8 @@
 const router = module.exports = require('express').Router();
 
-const orderController = require('@server/controllers/order');
-const checkToken = require('@server/middlewares/authenticate');
-const authorize = require('@server/middlewares/authorize');
+const orderController = require('@controllers/order');
+const checkToken = require('@middlewares/authenticate');
+const authorize = require('@middlewares/authorize');
 
 router.get( '/', 
    [checkToken, authorize(cap['get_order'])],

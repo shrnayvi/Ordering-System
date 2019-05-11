@@ -1,4 +1,4 @@
-const { update } = require('@server/services/user');
+const { update } = require('@services/user');
 
 module.exports = async (req, res) => {
    try {

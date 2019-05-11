@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const { update } = require('@server/services/user');
+const { update } = require('@services/user');
 const sendToken = require('@emails/user/forgot-password');
 const { validateForgotPasswordInput } = require('@validations/user/forgot-password');
 

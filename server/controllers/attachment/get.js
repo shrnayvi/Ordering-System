@@ -1,4 +1,4 @@
-const { get } = require('@server/services/attachment');
+const { get } = require('@services/attachment');
 const pagination = require('@utils/pagination');
 
 module.exports = async (req, res) => {

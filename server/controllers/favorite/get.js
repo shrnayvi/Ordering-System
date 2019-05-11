@@ -1,4 +1,4 @@
-const { get }     = require('@server/services/favorite');
+const { get }     = require('@services/favorite');
 const pagination  = require('@utils/pagination');
 
 

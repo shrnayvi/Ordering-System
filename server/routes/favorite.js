@@ -1,8 +1,8 @@
 const router = module.exports = require('express').Router();
 
-const authorize            = require('@server/middlewares/authorize');
-const checkToken           = require('@server/middlewares/authenticate');
-const favoriteController   = require('@server/controllers/favorite');
+const authorize            = require('@middlewares/authorize');
+const checkToken           = require('@middlewares/authenticate');
+const favoriteController   = require('@controllers/favorite');
 
 router.get('/', 
    [ checkToken, authorize(cap['get_favorite'])],
