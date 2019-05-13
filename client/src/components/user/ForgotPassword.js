@@ -5,28 +5,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 export default class ForgotPassword extends Component {
-   constructor(props) {
-      super(props);
-
-      this.state = {
-         email: '',
-      };
-
-      this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
-   }
-
-   handleChange(e) {
-      const { name, value } = e.target;
-      this.setState({[name]: value });
-   }
-
-   handleSubmit(e) {
-      e.preventDefault();
-      const data = this.state;
-      console.log(data);
-   }
-
    render() {
       return (
          <Container>
