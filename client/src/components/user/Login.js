@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { loginUser } from '../../actions/userActions';
 
 class Login extends Component {
    constructor(props) {
@@ -22,12 +24,22 @@ class Login extends Component {
       this.setState({ [name]: value });
    }
 
-   handleSubmit(e) {
+   async handleSubmit(e) {
       e.preventDefault();
-      console.log(this.state);
+      const { email, password } = this.state;
+      this.props.loginUser({ email, password });
    }
 
    render() {
+      const {
+         // isLogging,
+         isLoggedIn
+      } = this.props;
+      const { history } = this.props;
+      if(isLoggedIn) {
+         history.push('/dashboard');
+      }
+
       return (
          <Container>
             <Row>
@@ -63,4 +75,7 @@ class Login extends Component {
    }
 }
 
-export default Login; 
+const mapStateToProps = ({ auth }) => auth;
+const mapDispatchToProps = { loginUser };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
