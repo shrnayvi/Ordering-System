@@ -1,5 +1,6 @@
 const bodyParser 		= require('body-parser');
 const cookieParser  	= require('cookie-parser')
+const cors 				= require('cors')
 const express 			= require('express');
 const mongoose 		= require('mongoose');
 const morgan 			= require('morgan');
@@ -23,6 +24,7 @@ global.log					= log;
 global.dataPerPage 		= dataPerPage;
 global.apiResponse		= response;
 
+app.use(cors());
 app.use(passport.initialize());
 
 /* Connect to mongodb */
