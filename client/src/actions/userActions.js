@@ -1,5 +1,5 @@
 import { USER } from '../constants/actionTypes';
-import { setCookie } from '../helpers/cookie';
+import { setCookie, destroyCookie } from '../helpers/cookie';
 import * as userService from '../services/userService';
 
 export const fetchUser = () => async (dispatch) => {
@@ -16,9 +16,16 @@ export const loginUser = ({ email, password }) => async (dispatch) => {
 
    try {
       const { data: { data } } =  await userService.login({ email, password });
-      setCookie('order', data.token);
+      setCookie('order', data.token, { path: '/' });
       dispatch({ type: USER.LOGIN_SUCCESS, payload: data });
    } catch(e) {
       dispatch({ type: USER.LOGIN_FAILURE, payload: e.message });
    }
+}
+
+export const logoutUser = () => async (dispatch) => {
+   dispatch({ type: USER.LOGOUT_REQUEST });
+
+   destroyCookie('order');
+   dispatch({ type: USER.LOGOUT_SUCCESS });
 }
