@@ -46,3 +46,20 @@ export const registerUser = (userData) => async (dispatch) => {
    }
 
 }
+
+export const forgotPassword = ({ email }) => async (dispatch) => {
+   dispatch({ type: USER.FORGOT_PASSWORD_REQUEST});
+
+   try {
+      const { data: response } = await userService.forgotPassword({ email });
+      if(response.status === 200) {
+         dispatch({ type: USER.FORGOT_PASSWORD_SUCCESS, payload: response.status });
+      } else {
+         dispatch({ type: USER.FORGOT_PASSWORD_ERROR, payload: { status: response.status, error: response.message } });
+      }
+
+   } catch(e) {
+      dispatch({ type: USER.FORGOT_PASSWORD_FAILURE });
+   }
+
+}

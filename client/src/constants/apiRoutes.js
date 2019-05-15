@@ -3,6 +3,6 @@ export const USER = {
    REGISTER: '/users/register', 
    BY_ID: _id => `/users/${_id}`,
    EDIT: _id => `/users/${_id}`,
-   RESET_PASSWORD: '/reset_password',
-   FORGOT_PASSWORD: '/forgot_password', 
+   RESET_PASSWORD: '/users/reset-password',
+   FORGOT_PASSWORD: '/users/forgot-password', 
 };
