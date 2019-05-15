@@ -7,6 +7,11 @@ export const USER =  {
    LOGOUT_SUCCESS: 'logout_success',
    LOGOUT_FAILURE: 'logout_failure',
 
+   REGISTER_REQUEST: 'register_request',
+   REGISTER_SUCCESS: 'register_success',
+   REGISTER_ERROR: 'register_error',
+   REGISTER_FAILURE: 'register_failure',
+
    FETCH_USER: 'fetch_user',
    EDIT_USER: 'edit_user',
    RESET_PASSWORD: 'reset_password',

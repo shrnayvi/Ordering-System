@@ -29,3 +29,20 @@ export const logoutUser = () => async (dispatch) => {
    destroyCookie('order');
    dispatch({ type: USER.LOGOUT_SUCCESS });
 }
+
+export const registerUser = (userData) => async (dispatch) => {
+   dispatch({ type: USER.REGISTER_REQUEST });
+
+   try {
+      const { data: response } = await userService.register(userData);
+      if(response.status === 200) {
+         dispatch({ type: USER.REGISTER_SUCCESS });
+      } else {
+         dispatch({ type: USER.REGISTER_ERROR, payload: response.error });
+      }
+
+   } catch(e) {
+      dispatch({ type: USER.REGISTER_FAILURE });
+   }
+
+}

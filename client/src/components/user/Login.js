@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { loginUser } from '../../actions/userActions';
+import { headerMenu } from '../../constants/menu';
 
 class Login extends Component {
    constructor(props) {
@@ -32,7 +34,6 @@ class Login extends Component {
 
    render() {
       const {
-         // isLogging,
          isLoggedIn
       } = this.props;
       const { history } = this.props;
@@ -65,9 +66,13 @@ class Login extends Component {
                      />
                   </Form.Group>
 
-                  <Button variant="primary" type="submit">
-                     Submit
-                  </Button>
+                  <Row>
+                     <Button variant="primary" type="submit">
+                        Submit
+                     </Button>
+                     <Link to={headerMenu.REGISTER}>Register</Link>
+                  </Row>
+
                </Form>
             </Row>
          </Container>

@@ -3,8 +3,10 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { connect } from 'react-redux';
+import { registerUser } from '../../actions/userActions';
 
-export default class Register extends Component {
+class Register extends Component {
    constructor(props) {
       super(props);
 
@@ -31,7 +33,7 @@ export default class Register extends Component {
    handleSubmit(e) {
       e.preventDefault();
       const data = this.state.formData;
-      console.log(data);
+      this.props.registerUser(data);
    }
 
    render() {
@@ -74,7 +76,7 @@ export default class Register extends Component {
                      <Form.Label>Phone Number</Form.Label>
                      <Form.Control 
                         onChange={this.handleChange}
-                        type="text" 
+                        type="number" 
                         placeholder="Phone" 
                         name="phone"
                      />
@@ -89,3 +91,8 @@ export default class Register extends Component {
       )
    }
 }
+
+
+const mapStateToProps = ({ register }) => register;
+const mapDispatchToProps = { registerUser };
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
