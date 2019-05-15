@@ -9,9 +9,9 @@ module.exports = function validateRegisterInput(data) {
       email: Joi.string().email({ minDomainAtoms: 2 }).required(),
       password: Joi.string().required(),
       name: Joi.string(),
-      phone: Joi.number().max(10),
+      phone: Joi.number(),
    }
 
-   let { username, email, password, name, phone } = data;
-   return Joi.validate({ username, email, password, name, phone }, schema);
+   let { email, password, name, phone } = data;
+   return Joi.validate({ email, password, name, phone }, schema);
 }
