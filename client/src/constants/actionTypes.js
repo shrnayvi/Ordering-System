@@ -13,3 +13,8 @@ export const USER =  {
    FORGOT_PASSWORD: 'forgot_password', 
    FETCH_ERROR: 'fetch_error', 
 }
+
+export const MENU =  {
+   CHANGE_MENU: 'change_menu', 
+   INITIALIZE_MENU: 'initialize_menu', 
+}

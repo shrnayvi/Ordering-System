@@ -1,18 +1,14 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 
 import Navbar from './Navbar';
 
-class Header extends Component {
-   render() {
-      return (
-         <Container>
-            <Navbar isLoggedIn={this.props.isLoggedIn} />
-         </Container>
-      )
-   }
+const Header = (props) => {
+   return (
+      <Container>
+         <Navbar />
+      </Container>
+   )
 }
 
-const mapStateToProps = ({ auth }) => (auth);
-export default connect(mapStateToProps)(Header);
+export default Header;

@@ -10,7 +10,7 @@ import ForgotPassword from './components/user/ForgotPassword';
 import ResetPassword from './components/user/ResetPassword';
 import Profile from './components/user/Profile';
 
-const App = () => {
+const App = (props) => {
    return (
       <div>
          <BrowserRouter>
