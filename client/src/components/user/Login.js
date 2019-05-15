@@ -21,6 +21,16 @@ class Login extends Component {
       this.handleSubmit = this.handleSubmit.bind(this);
    }
 
+   componentDidUpdate() {
+      const {
+         isLoggedIn
+      } = this.props;
+      const { history } = this.props;
+      if(isLoggedIn) {
+         history.push('/dashboard');
+      }
+   }
+
    handleChange(e) {
       const { name, value } = e.target;
       this.setState({ [name]: value });
@@ -33,13 +43,6 @@ class Login extends Component {
    }
 
    render() {
-      const {
-         isLoggedIn
-      } = this.props;
-      const { history } = this.props;
-      if(isLoggedIn) {
-         history.push('/dashboard');
-      }
 
       return (
          <Container>
