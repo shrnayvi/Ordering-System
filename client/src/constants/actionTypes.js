@@ -32,4 +32,5 @@ export const USER =  {
 export const MENU =  {
    CHANGE_MENU: 'change_menu', 
    INITIALIZE_MENU: 'initialize_menu', 
+   REMOVE_MENU: 'remove_menu', 
 }

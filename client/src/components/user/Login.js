@@ -24,11 +24,9 @@ class Login extends Component {
    }
 
    componentDidUpdate() {
-      const {
-         isLoggedIn
-      } = this.props;
-
+      const { isLoggedIn } = this.props;
       const { history } = this.props;
+
       if(isLoggedIn) {
          history.push('/dashboard');
       }

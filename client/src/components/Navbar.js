@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import Logout from './user/Logout';
 import { connect } from 'react-redux';
-import { changeMenu, initializeMenu } from '../actions/menuActions';
+import { changeMenu, initializeMenu, removeCurrentMenu } from '../actions/menuActions';
 import { headerMenu } from '../constants/menu';
 
 class Navbar extends Component {
@@ -16,7 +16,18 @@ class Navbar extends Component {
       this.props.initializeMenu({
          [pathname]: 'active'
       });
-      
+   }
+
+   componentDidUpdate() {
+      const { pathname } = this.props.location;
+      const { currentMenu } = this.props.menu
+      let menu = Object.keys(currentMenu);
+      if(menu.length) {
+         menu = menu[0];
+         if(pathname !== menu) {
+            this.props.removeCurrentMenu();
+         }
+      }
    }
 
    handleClick(e) {
@@ -34,6 +45,7 @@ class Navbar extends Component {
       } = headerMenu;
 
       const { currentMenu } = this.props.menu;
+      console.log(this.props);
 
       return (
          <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -66,5 +78,6 @@ const mapStateToProps = ({ menu, auth }) => ({ menu, isLoggedIn: auth.isLoggedIn
 const mapDispatchToProps = {
    changeMenu,
    initializeMenu,
+   removeCurrentMenu,
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

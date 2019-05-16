@@ -9,6 +9,8 @@ export default (state = initialState, action) => {
          return { currentMenu: action.payload };
       case MENU.CHANGE_MENU:
          return { currentMenu: action.payload };
+      case MENU.REMOVE_MENU:
+         return { currentMenu: {} };
       default: 
          return state;
    }

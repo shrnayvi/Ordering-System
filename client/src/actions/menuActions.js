@@ -13,3 +13,7 @@ export const initializeMenu = (menu) => {
       payload: menu
    };
 };
+
+export const removeCurrentMenu = () => {
+   return { type: MENU.REMOVE_MENU };
+};
