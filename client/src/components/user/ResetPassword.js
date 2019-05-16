@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { resetPassword } from '../../actions/userActions';
 
-class Login extends Component {
+class ResetPassword extends Component {
    constructor(props) {
       super(props);
 
@@ -26,6 +28,7 @@ class Login extends Component {
    handleSubmit(e) {
       e.preventDefault();
       console.log(this.state);
+      // this.props.resetPassword(this.state);
    }
 
    render() {
@@ -40,7 +43,7 @@ class Login extends Component {
                         onChange={this.handleChange}
                         type="text" 
                         placeholder="resetPasswordToken" 
-                        name="password"
+                        name="resetPasswordToken"
                      />
                   </Form.Group>
 
@@ -74,4 +77,8 @@ class Login extends Component {
    }
 }
 
-export default Login; 
+const mapStateToProps = ({ resetPassword }) => resetPassword
+const mapDispatchToProps = {
+   resetPassword
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword); 

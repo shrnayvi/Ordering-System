@@ -12,6 +12,11 @@ export const USER =  {
    FORGOT_PASSWORD_ERROR: 'forgot_password_error',
    FORGOT_PASSWORD_FAILURE: 'forgot_password_failure',
 
+   RESET_PASSWORD_REQUEST: 'reset_password_request',
+   RESET_PASSWORD_SUCCESS: 'reset_password_success',
+   RESET_PASSWORD_ERROR: 'reset_password_error',
+   RESET_PASSWORD_FAILURE: 'reset_password_failure',
+
    REGISTER_REQUEST: 'register_request',
    REGISTER_SUCCESS: 'register_success',
    REGISTER_ERROR: 'register_error',

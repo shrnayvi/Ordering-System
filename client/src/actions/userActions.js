@@ -61,5 +61,21 @@ export const forgotPassword = ({ email }) => async (dispatch) => {
    } catch(e) {
       dispatch({ type: USER.FORGOT_PASSWORD_FAILURE });
    }
+}
 
+export const resetPassword = (resetData) => async (dispatch) => {
+   console.log(resetData, 'reset')
+   dispatch({ type: USER.RESET_PASSWORD_REQUEST});
+
+   try {
+      const { data: response } = await userService.resetPassword(resetData);
+      if(response.status === 200) {
+         dispatch({ type: USER.RESET_PASSWORD_SUCCESS, payload: response.status });
+      } else {
+         dispatch({ type: USER.RESET_PASSWORD_ERROR, payload: { status: response.status, error: response.message } });
+      }
+
+   } catch(e) {
+      dispatch({ type: USER.FORGOT_PASSWORD_FAILURE });
+   }
 }
