@@ -13,7 +13,7 @@ class ResetPassword extends Component {
       this.state = {
          password: '',
          confirmPassword: '',
-         resetPasswordToken: ''
+         token: ''
       };
 
       this.handleChange = this.handleChange.bind(this);
@@ -27,8 +27,7 @@ class ResetPassword extends Component {
 
    handleSubmit(e) {
       e.preventDefault();
-      console.log(this.state);
-      // this.props.resetPassword(this.state);
+      this.props.resetPassword(this.state);
    }
 
    render() {
@@ -42,8 +41,8 @@ class ResetPassword extends Component {
                      <Form.Control 
                         onChange={this.handleChange}
                         type="text" 
-                        placeholder="resetPasswordToken" 
-                        name="resetPasswordToken"
+                        placeholder="Token" 
+                        name="token"
                      />
                   </Form.Group>
 

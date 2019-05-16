@@ -74,6 +74,7 @@ class Login extends Component {
                         Submit
                      </Button>
                      <Link to={headerMenu.REGISTER}>Register</Link>
+                     <Link to={headerMenu.FORGOT_PASSWORD}>Forgot Password</Link>
                   </Row>
 
                </Form>

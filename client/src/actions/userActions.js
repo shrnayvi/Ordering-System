@@ -64,7 +64,6 @@ export const forgotPassword = ({ email }) => async (dispatch) => {
 }
 
 export const resetPassword = (resetData) => async (dispatch) => {
-   console.log(resetData, 'reset')
    dispatch({ type: USER.RESET_PASSWORD_REQUEST});
 
    try {
