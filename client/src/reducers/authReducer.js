@@ -20,6 +20,9 @@ export default (state = initialState, action) => {
       case USER.LOGIN_FAILURE:
          return {
             isLogging: false,
+            loginFailure: true,
+            status: action.payload.status,
+            message: action.payload.message
          };
       case USER.LOGOUT_REQUEST:
          return {

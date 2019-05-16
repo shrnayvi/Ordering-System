@@ -8,13 +8,10 @@ export default (state = initialState, action) => {
          return { isRequesting: true }
          
       case USER.FORGOT_PASSWORD_SUCCESS:
-         return { isRequested: true, status: action.payload }
-
-      case USER.FORGOT_PASSWORD_ERROR:
-         return { isRequested: true, status: action.payload.status, error: action.payload.error }
+         return { hasRequested: true, status: action.payload }
 
       case USER.FORGOT_PASSWORD_FAILURE:
-         return { isRequested: true, error: action.payload }
+         return { hasRequested: true, status: action.payload.status, message: action.payload.message }
 
       default: 
          return state;

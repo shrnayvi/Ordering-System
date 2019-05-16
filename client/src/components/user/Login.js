@@ -5,6 +5,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
+import Alert from 'react-bootstrap/Alert';
 import { loginUser } from '../../actions/userActions';
 import { headerMenu } from '../../constants/menu';
 
@@ -25,6 +27,7 @@ class Login extends Component {
       const {
          isLoggedIn
       } = this.props;
+
       const { history } = this.props;
       if(isLoggedIn) {
          history.push('/dashboard');
@@ -36,14 +39,19 @@ class Login extends Component {
       this.setState({ [name]: value });
    }
 
-   async handleSubmit(e) {
+   handleSubmit(e) {
       e.preventDefault();
       const { email, password } = this.state;
       this.props.loginUser({ email, password });
    }
 
    render() {
-
+      const {
+         status, 
+         message,
+         loginFailure,
+         isLogging,
+      } = this.props;
       return (
          <Container>
             <Row>
@@ -53,9 +61,10 @@ class Login extends Component {
                      <Form.Label>Email address</Form.Label>
                      <Form.Control 
                         onChange={this.handleChange}
-                        type="email" 
+                        type="text" 
                         placeholder="Enter email" 
                         name="email"
+                        required
                      />
                   </Form.Group>
 
@@ -69,11 +78,29 @@ class Login extends Component {
                      />
                   </Form.Group>
 
+                  {
+                     loginFailure && status !== 200 ?
+                        <Alert variant="danger">{message}</Alert>
+                        : ''
+                  }
+
                   <Row>
                      <Button variant="primary" type="submit">
-                        Submit
+                        {
+                           isLogging ?
+                           <Spinner
+                              as="span"
+                              animation="border"
+                              size="sm"
+                              role="status"
+                              aria-hidden="true"
+                           /> : `Login`
+
+                        }
                      </Button>
                      <Link to={headerMenu.REGISTER}>Register</Link>
+                  </Row>
+                  <Row>
                      <Link to={headerMenu.FORGOT_PASSWORD}>Forgot Password</Link>
                   </Row>
 

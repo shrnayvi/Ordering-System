@@ -4,6 +4,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
+import Alert from 'react-bootstrap/Alert';
 import { forgotPassword } from '../../actions/userActions';
 import { headerMenu } from '../../constants/menu';
 
@@ -34,6 +36,7 @@ class ForgotPassword extends Component {
    }
 
    render() {
+      const { status, isRequesting, hasRequested } = this.props;
       return (
          <Container>
             <Row>
@@ -50,8 +53,23 @@ class ForgotPassword extends Component {
                   </Form.Group>
 
                   <Button variant="primary" type="submit">
-                     Submit
+                     {
+                        isRequesting ?
+                           <Spinner
+                              as="span"
+                              animation="border"
+                              size="sm"
+                              role="status"
+                              aria-hidden="true"
+                           /> :
+                        `Forgot Password`
+                     }
                   </Button>
+                  {
+                     hasRequested && status !== 200 ?
+                        <Alert variant="danger">{this.props.message}</Alert>
+                        : ''
+                  }
                </Form>
             </Row>
          </Container>

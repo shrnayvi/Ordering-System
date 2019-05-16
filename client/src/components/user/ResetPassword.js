@@ -4,7 +4,10 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
+import Alert from 'react-bootstrap/Alert';
 import { resetPassword } from '../../actions/userActions';
+import { headerMenu } from '../../constants/menu';
 
 class ResetPassword extends Component {
    constructor(props) {
@@ -20,6 +23,13 @@ class ResetPassword extends Component {
       this.handleSubmit = this.handleSubmit.bind(this);
    }
 
+   componentDidUpdate() {
+      const { status } = this.props;
+      if(status === 200) {
+         this.props.history.push(headerMenu.LOGIN);
+      }
+   }
+
    handleChange(e) {
       const { name, value } = e.target;
       this.setState({ [name]: value });
@@ -31,6 +41,7 @@ class ResetPassword extends Component {
    }
 
    render() {
+      const { isResetting, hasRequested, status, message } = this.props;
       return (
          <Container>
             <Row>
@@ -67,8 +78,24 @@ class ResetPassword extends Component {
                   </Form.Group>
 
                   <Button variant="primary" type="submit">
-                     Submit
+                     {
+                        isResetting ?
+                           <Spinner
+                              as="span"
+                              animation="border"
+                              size="sm"
+                              role="status"
+                              aria-hidden="true"
+                           /> :
+                        `Reset`
+                     }
+
                   </Button>
+                  {
+                     hasRequested && status !== 200 ?
+                        <Alert variant="danger">{message}</Alert>
+                        : ''
+                  }
                </Form>
             </Row>
          </Container>
