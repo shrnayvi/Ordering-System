@@ -15,9 +15,13 @@ export const loginUser = ({ email, password }) => async (dispatch) => {
    dispatch({ type: USER.LOGIN_REQUEST });
 
    try {
-      const { data: { data } } =  await userService.login({ email, password });
-      setCookie('order', data.token, { path: '/' });
-      dispatch({ type: USER.LOGIN_SUCCESS, payload: data });
+      const { data: { status, data, message }} =  await userService.login({ email, password });
+      if(status === 200) {
+         setCookie('order', data.token, { path: '/' });
+         dispatch({ type: USER.LOGIN_SUCCESS, payload: { status, message }});
+      } else {
+         dispatch({ type: USER.LOGIN_FAILURE, payload: { status, message } });
+      }
    } catch(e) {
       dispatch({ type: USER.LOGIN_FAILURE, payload: e.message });
    }
@@ -38,13 +42,12 @@ export const registerUser = (userData) => async (dispatch) => {
       if(response.status === 200) {
          dispatch({ type: USER.REGISTER_SUCCESS });
       } else {
-         dispatch({ type: USER.REGISTER_ERROR, payload: response.error });
+         dispatch({ type: USER.REGISTER_FAILURE, payload: response });
       }
 
    } catch(e) {
-      dispatch({ type: USER.REGISTER_FAILURE });
+      dispatch({ type: USER.REGISTER_FAILURE, payload: { status: 500, message: e.message }});
    }
-
 }
 
 export const forgotPassword = ({ email }) => async (dispatch) => {
@@ -55,16 +58,14 @@ export const forgotPassword = ({ email }) => async (dispatch) => {
       if(response.status === 200) {
          dispatch({ type: USER.FORGOT_PASSWORD_SUCCESS, payload: response.status });
       } else {
-         dispatch({ type: USER.FORGOT_PASSWORD_ERROR, payload: { status: response.status, error: response.message } });
+         dispatch({ type: USER.FORGOT_PASSWORD_FAILURE, payload: { status: response.status, message: response.message } });
       }
-
    } catch(e) {
-      dispatch({ type: USER.FORGOT_PASSWORD_FAILURE });
+         dispatch({ type: USER.FORGOT_PASSWORD_FAILURE, payload: { status: 500, message: e.message } });
    }
 }
 
 export const resetPassword = (resetData) => async (dispatch) => {
-   console.log(resetData, 'reset')
    dispatch({ type: USER.RESET_PASSWORD_REQUEST});
 
    try {
@@ -72,10 +73,10 @@ export const resetPassword = (resetData) => async (dispatch) => {
       if(response.status === 200) {
          dispatch({ type: USER.RESET_PASSWORD_SUCCESS, payload: response.status });
       } else {
-         dispatch({ type: USER.RESET_PASSWORD_ERROR, payload: { status: response.status, error: response.message } });
+         dispatch({ type: USER.RESET_PASSWORD_FAILURE, payload: { status: response.status, message: response.message } });
       }
 
    } catch(e) {
-      dispatch({ type: USER.FORGOT_PASSWORD_FAILURE });
+      dispatch({ type: USER.RESET_PASSWORD_FAILURE, payload: { status: 500, message: e.message } });
    }
 }

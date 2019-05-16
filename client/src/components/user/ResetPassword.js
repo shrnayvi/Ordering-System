@@ -4,7 +4,10 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
+import Alert from 'react-bootstrap/Alert';
 import { resetPassword } from '../../actions/userActions';
+import { headerMenu } from '../../constants/menu';
 
 class ResetPassword extends Component {
    constructor(props) {
@@ -13,11 +16,18 @@ class ResetPassword extends Component {
       this.state = {
          password: '',
          confirmPassword: '',
-         resetPasswordToken: ''
+         token: ''
       };
 
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+   }
+
+   componentDidUpdate() {
+      const { status } = this.props;
+      if(status === 200) {
+         this.props.history.push(headerMenu.LOGIN);
+      }
    }
 
    handleChange(e) {
@@ -27,11 +37,11 @@ class ResetPassword extends Component {
 
    handleSubmit(e) {
       e.preventDefault();
-      console.log(this.state);
-      // this.props.resetPassword(this.state);
+      this.props.resetPassword(this.state);
    }
 
    render() {
+      const { isResetting, hasRequested, status, message } = this.props;
       return (
          <Container>
             <Row>
@@ -42,8 +52,8 @@ class ResetPassword extends Component {
                      <Form.Control 
                         onChange={this.handleChange}
                         type="text" 
-                        placeholder="resetPasswordToken" 
-                        name="resetPasswordToken"
+                        placeholder="Token" 
+                        name="token"
                      />
                   </Form.Group>
 
@@ -68,8 +78,24 @@ class ResetPassword extends Component {
                   </Form.Group>
 
                   <Button variant="primary" type="submit">
-                     Submit
+                     {
+                        isResetting ?
+                           <Spinner
+                              as="span"
+                              animation="border"
+                              size="sm"
+                              role="status"
+                              aria-hidden="true"
+                           /> :
+                        `Reset`
+                     }
+
                   </Button>
+                  {
+                     hasRequested && status !== 200 ?
+                        <Alert variant="danger">{message}</Alert>
+                        : ''
+                  }
                </Form>
             </Row>
          </Container>

@@ -3,6 +3,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
+import Alert from 'react-bootstrap/Alert';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/userActions';
 
@@ -37,6 +39,13 @@ class Register extends Component {
    }
 
    render() {
+      const { 
+         isRegistering, 
+         hasRequested, 
+         status, 
+         message 
+      } = this.props;
+
       return (
          <Container>
             <Row>
@@ -82,9 +91,25 @@ class Register extends Component {
                      />
                   </Form.Group>
 
+                  {
+                     hasRequested && status !== 200 ?
+                        <Alert variant="danger">{message}</Alert>
+                        : ''
+                  }
+
                   <Button variant="primary" type="submit">
-                     Submit
+                     {
+                        isRegistering ?
+                           <Spinner 
+                              as="span"
+                              animation="border"
+                              size="sm"
+                              role="status"
+                              aria-hidden="true"
+                           /> : 'Register'
+                     }
                   </Button>
+                  
                </Form>
             </Row>
          </Container>

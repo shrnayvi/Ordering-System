@@ -5,11 +5,9 @@ export default (state = {}, action) => {
       case USER.RESET_PASSWORD_REQUEST:
          return { isResetting: true };
       case USER.RESET_PASSWORD_SUCCESS:
-         return { status: action.payload };
-      case USER.RESET_PASSWORD_ERROR:
-         return { status: action.payload.status, error: action.payload.error };
+         return { hasRequested: true, status: action.payload };
       case USER.RESET_PASSWORD_FAILURE:
-         return {};
+         return { hasRequested: true, status: action.payload.status, message: action.payload.message};
       default: 
          return state;
    }

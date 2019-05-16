@@ -37,7 +37,6 @@ export const get = (url, headers = {}, params = {}) => {
  * @param {Object} headers Headers to send
  */
 export const post = (url, data, headers = {}) => {
-   console.log(data);
    let config = {
       url,
       method: 'post',
