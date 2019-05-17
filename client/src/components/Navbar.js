@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import Logout from './user/Logout';
 import { connect } from 'react-redux';
 import { changeMenu, initializeMenu, removeCurrentMenu } from '../actions/menuActions';
-import { headerMenu } from '../constants/menu';
+import routes from '../constants/routes';
 
 class Navbar extends Component {
    constructor(props) {
@@ -22,6 +21,7 @@ class Navbar extends Component {
       const { pathname } = this.props.location;
       const { currentMenu } = this.props.menu
       let menu = Object.keys(currentMenu);
+
       if(menu.length) {
          menu = menu[0];
          if(pathname !== menu) {
@@ -41,11 +41,11 @@ class Navbar extends Component {
       const { 
          HOME,
          PROFILE,
-         LOGIN
-      } = headerMenu;
+         LOGIN,
+         LOGOUT,
+      } = routes;
 
       const { currentMenu } = this.props.menu;
-      console.log(this.props);
 
       return (
          <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -59,10 +59,10 @@ class Navbar extends Component {
                   </li>
                   {
                      this.props.isLoggedIn ? 
-                        <li>
-                           <Logout />
-                        </li> : 
                         <li className={`nav-item ${currentMenu[LOGIN]}`}>
+                           <Link className="nav-link" to={LOGOUT}>Logout</Link>
+                        </li> 
+                        : <li className={`nav-item ${currentMenu[LOGIN]}`}>
                            <Link className="nav-link" to={LOGIN} onClick={this.handleClick}>Login</Link>
                         </li> 
                   }

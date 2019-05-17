@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert';
 import { loginUser } from '../../actions/userActions';
-import { headerMenu } from '../../constants/menu';
+import routes from '../../constants/routes';
 
 class Login extends Component {
    constructor(props) {
@@ -96,10 +96,10 @@ class Login extends Component {
 
                         }
                      </Button>
-                     <Link to={headerMenu.REGISTER}>Register</Link>
+                     <Link to={routes.REGISTER}>Register</Link>
                   </Row>
                   <Row>
-                     <Link to={headerMenu.FORGOT_PASSWORD}>Forgot Password</Link>
+                     <Link to={routes.FORGOT_PASSWORD}>Forgot Password</Link>
                   </Row>
 
                </Form>

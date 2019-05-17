@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert';
 import { forgotPassword } from '../../actions/userActions';
-import { headerMenu } from '../../constants/menu';
+import routes from '../../constants/routes';
 
 class ForgotPassword extends Component {
    constructor(props) {
@@ -22,7 +22,7 @@ class ForgotPassword extends Component {
    componentDidUpdate() {
       const { status } = this.props;
       if(status === 200) {
-         this.props.history.push(headerMenu.RESET_PASSWORD);
+         this.props.history.push(routes.RESET_PASSWORD);
       }
    }
 
