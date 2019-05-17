@@ -18,26 +18,14 @@ class Login extends Component {
          email: '',
          password: ''
       };
-
-      this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
    }
 
-   componentDidUpdate() {
-      const { isLoggedIn } = this.props;
-      const { history } = this.props;
-
-      if(isLoggedIn) {
-         history.push('/dashboard');
-      }
-   }
-
-   handleChange(e) {
+   handleChange = (e) => {
       const { name, value } = e.target;
       this.setState({ [name]: value });
    }
 
-   handleSubmit(e) {
+   handleSubmit = (e) => {
       e.preventDefault();
       const { email, password } = this.state;
       this.props.loginUser({ email, password });

@@ -1,6 +1,8 @@
 import { USER } from '../constants/actionTypes';
 import { setCookie, destroyCookie } from '../helpers/cookie';
 import * as userService from '../services/userService';
+import history from '../helpers/history';
+import routes from '../constants/routes';
 
 export const fetchUser = () => async (dispatch) => {
    try {
@@ -19,6 +21,7 @@ export const loginUser = ({ email, password }) => async (dispatch) => {
       if(status === 200) {
          setCookie('order', data.token, { path: '/' });
          dispatch({ type: USER.LOGIN_SUCCESS, payload: { status, message }});
+         history.push(routes.DASHBOARD);
       } else {
          dispatch({ type: USER.LOGIN_FAILURE, payload: { status, message } });
       }
@@ -57,6 +60,7 @@ export const forgotPassword = ({ email }) => async (dispatch) => {
       const { data: response } = await userService.forgotPassword({ email });
       if(response.status === 200) {
          dispatch({ type: USER.FORGOT_PASSWORD_SUCCESS, payload: response.status });
+         history.push(routes.RESET_PASSWORD);
       } else {
          dispatch({ type: USER.FORGOT_PASSWORD_FAILURE, payload: { status: response.status, message: response.message } });
       }
@@ -72,6 +76,7 @@ export const resetPassword = (resetData) => async (dispatch) => {
       const { data: response } = await userService.resetPassword(resetData);
       if(response.status === 200) {
          dispatch({ type: USER.RESET_PASSWORD_SUCCESS, payload: response.status });
+         history.push(routes.LOGIN);
       } else {
          dispatch({ type: USER.RESET_PASSWORD_FAILURE, payload: { status: response.status, message: response.message } });
       }

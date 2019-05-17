@@ -59,8 +59,8 @@ class Navbar extends Component {
                   </li>
                   {
                      this.props.isLoggedIn ? 
-                        <li className={`nav-item ${currentMenu[LOGIN]}`}>
-                           <Link className="nav-link" to={LOGOUT}>Logout</Link>
+                        <li className="nav-item">
+                           <Link className="nav-link" to={LOGOUT} >Logout</Link>
                         </li> 
                         : <li className={`nav-item ${currentMenu[LOGIN]}`}>
                            <Link className="nav-link" to={LOGIN} onClick={this.handleClick}>Login</Link>

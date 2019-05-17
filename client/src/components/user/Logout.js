@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/userActions';
 import routes from '../../constants/routes';
@@ -15,8 +14,5 @@ class Logout extends Component {
    }
 }
 
-const mapDispatchToProps = {
-   logoutUser
-};
-
-export default withRouter(connect(null, mapDispatchToProps)(Logout));
+const mapDispatchToProps = { logoutUser };
+export default connect(null, mapDispatchToProps)(Logout);

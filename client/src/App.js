@@ -1,20 +1,21 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 
 import Routes from './routes';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import history from './helpers/history';
 
-const App = (props) => {
+const App = () => {
    return (
       <div>
-         <BrowserRouter>
+         <Router history={history}>
             <div>
                <Header />
                <Routes />
                <Footer />
             </div>
-         </BrowserRouter>
+         </Router>
       </div>
    )
 };
