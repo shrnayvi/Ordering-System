@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
@@ -14,15 +12,13 @@ class ForgotPassword extends Component {
       this.state = {
          email: '',
       }
-      this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
    }
 
-   handleChange(e) {
+   handleChange = (e) => {
       this.setState({ email: e.target.value });
    }
 
-   handleSubmit(e) {
+   handleSubmit = (e) => {
       e.preventDefault();
       this.props.forgotPassword(this.state);
    }
@@ -30,41 +26,39 @@ class ForgotPassword extends Component {
    render() {
       const { status, isRequesting, hasRequested } = this.props;
       return (
-         <Container>
-            <Row>
-               <h2>Forgot Password</h2>
-               <Form onSubmit={this.handleSubmit}>
-                  <Form.Group controlId="email">
-                     <Form.Label>Email address</Form.Label>
-                     <Form.Control 
-                        onChange={this.handleChange}
-                        type="email" 
-                        placeholder="Enter email" 
-                        name="email"
-                     />
-                  </Form.Group>
+         <div>
+            <h2>Forgot Password</h2>
+            <Form onSubmit={this.handleSubmit}>
+               <Form.Group controlId="email">
+                  <Form.Label>Email address</Form.Label>
+                  <Form.Control 
+                     onChange={this.handleChange}
+                     type="email" 
+                     placeholder="Enter email" 
+                     name="email"
+                  />
+               </Form.Group>
 
-                  <Button variant="primary" type="submit">
-                     {
-                        isRequesting ?
-                           <Spinner
-                              as="span"
-                              animation="border"
-                              size="sm"
-                              role="status"
-                              aria-hidden="true"
-                           /> :
-                        `Forgot Password`
-                     }
-                  </Button>
+               <Button variant="primary" type="submit">
                   {
-                     hasRequested && status !== 200 ?
-                        <Alert variant="danger">{this.props.message}</Alert>
-                        : ''
+                     isRequesting ?
+                        <Spinner
+                           as="span"
+                           animation="border"
+                           size="sm"
+                           role="status"
+                           aria-hidden="true"
+                        /> :
+                     `Forgot Password`
                   }
-               </Form>
-            </Row>
-         </Container>
+               </Button>
+               {
+                  hasRequested && status !== 200 ?
+                     <Alert variant="danger">{this.props.message}</Alert>
+                     : ''
+               }
+            </Form>
+         </div>
       )
    }
 }

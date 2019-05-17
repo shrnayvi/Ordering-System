@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
@@ -39,8 +37,7 @@ class Login extends Component {
          isLogging,
       } = this.props;
       return (
-         <Container>
-            <Row>
+         <div>
                <h2>Login</h2>
                <Form onSubmit={this.handleSubmit}>
                   <Form.Group controlId="email">
@@ -70,29 +67,24 @@ class Login extends Component {
                         : ''
                   }
 
-                  <Row>
-                     <Button variant="primary" type="submit">
-                        {
-                           isLogging ?
-                           <Spinner
-                              as="span"
-                              animation="border"
-                              size="sm"
-                              role="status"
-                              aria-hidden="true"
-                           /> : `Login`
+                  <Button variant="primary" type="submit">
+                     {
+                        isLogging ?
+                        <Spinner
+                           as="span"
+                           animation="border"
+                           size="sm"
+                           role="status"
+                           aria-hidden="true"
+                        /> : `Login`
 
-                        }
-                     </Button>
-                     <Link to={routes.REGISTER}>Register</Link>
-                  </Row>
-                  <Row>
-                     <Link to={routes.FORGOT_PASSWORD}>Forgot Password</Link>
-                  </Row>
+                     }
+                  </Button>
+                  <Link to={routes.REGISTER}>Register</Link>
+                  <Link to={routes.FORGOT_PASSWORD}>Forgot Password</Link>
 
                </Form>
-            </Row>
-         </Container>
+         </div>
       )
    }
 }

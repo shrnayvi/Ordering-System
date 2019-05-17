@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
@@ -21,18 +19,16 @@ class Register extends Component {
          }
       };
 
-      this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
    }
 
-   handleChange(e) {
+   handleChange = (e) => {
       const { name, value } = e.target;
       this.setState({
          formData: { ...this.state.formData, [name]: value }
       });
    }
 
-   handleSubmit(e) {
+   handleSubmit = (e) => {
       e.preventDefault();
       const data = this.state.formData;
       this.props.registerUser(data);
@@ -47,8 +43,7 @@ class Register extends Component {
       } = this.props;
 
       return (
-         <Container>
-            <Row>
+         <div>
                <h2>Register</h2>
                <Form onSubmit={this.handleSubmit}>
                   <Form.Group controlId="email">
@@ -111,8 +106,7 @@ class Register extends Component {
                   </Button>
                   
                </Form>
-            </Row>
-         </Container>
+         </div>
       )
    }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
 
 import Routes from './routes';
 import Header from './components/Header';
@@ -8,7 +9,7 @@ import history from './helpers/history';
 
 const App = () => {
    return (
-      <div>
+      <Container fluid={true}>
          <Router history={history}>
             <div>
                <Header />
@@ -16,7 +17,7 @@ const App = () => {
                <Footer />
             </div>
          </Router>
-      </div>
+      </Container>
    )
 };
 
