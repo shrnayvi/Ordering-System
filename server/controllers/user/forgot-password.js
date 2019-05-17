@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
       if(user) {
          let emailResponse = await sendToken({ email: req.body.email, token });
          if('error' in emailResponse) {
-            return apiResponse.serverError(res, { data: e.message });
+            return apiResponse.serverError(res, { data: emailResponse.error });
          }
          return apiResponse.success(res, { message: 'token_sent' });
       }
