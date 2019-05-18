@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
@@ -15,20 +13,31 @@ class Login extends Component {
       super(props);
 
       this.state = {
-         email: '',
-         password: ''
+         formData: {
+            email: '',
+            password: ''
+         },
+         validated: false,
       };
    }
 
    handleChange = (e) => {
       const { name, value } = e.target;
-      this.setState({ [name]: value });
+      this.setState({ formData: { ...this.state.formData, [name]: value } }); 
    }
 
    handleSubmit = (e) => {
       e.preventDefault();
-      const { email, password } = this.state;
-      this.props.loginUser({ email, password });
+      const form = e.currentTarget;
+      const { formData: { email, password } } = this.state;
+
+      if(form.checkValidity()) {
+         this.props.loginUser({ email, password });
+      } else {
+         e.stopPropagation();
+      }
+
+      this.setState({ validated: true });
    }
 
    render() {
@@ -38,11 +47,12 @@ class Login extends Component {
          loginFailure,
          isLogging,
       } = this.props;
+
+      const { validated } = this.state;
       return (
-         <Container>
-            <Row>
+         <div>
                <h2>Login</h2>
-               <Form onSubmit={this.handleSubmit}>
+               <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
                   <Form.Group controlId="email">
                      <Form.Label>Email address</Form.Label>
                      <Form.Control 
@@ -52,6 +62,9 @@ class Login extends Component {
                         name="email"
                         required
                      />
+                     <Form.Control.Feedback type="invalid">
+                        Please provide email
+                     </Form.Control.Feedback>
                   </Form.Group>
 
                   <Form.Group controlId="password">
@@ -61,7 +74,11 @@ class Login extends Component {
                         type="password" 
                         placeholder="Password" 
                         name="password"
+                        required
                      />
+                     <Form.Control.Feedback type="invalid">
+                        Please provide password 
+                     </Form.Control.Feedback>
                   </Form.Group>
 
                   {
@@ -70,29 +87,24 @@ class Login extends Component {
                         : ''
                   }
 
-                  <Row>
-                     <Button variant="primary" type="submit">
-                        {
-                           isLogging ?
-                           <Spinner
-                              as="span"
-                              animation="border"
-                              size="sm"
-                              role="status"
-                              aria-hidden="true"
-                           /> : `Login`
+                  <Button variant="primary" type="submit">
+                     {
+                        isLogging ?
+                        <Spinner
+                           as="span"
+                           animation="border"
+                           size="sm"
+                           role="status"
+                           aria-hidden="true"
+                        /> : `Login`
 
-                        }
-                     </Button>
-                     <Link to={routes.REGISTER}>Register</Link>
-                  </Row>
-                  <Row>
-                     <Link to={routes.FORGOT_PASSWORD}>Forgot Password</Link>
-                  </Row>
+                     }
+                  </Button>
+                  <Link to={routes.REGISTER}>Register</Link>
+                  <Link to={routes.FORGOT_PASSWORD}>Forgot Password</Link>
 
                </Form>
-            </Row>
-         </Container>
+         </div>
       )
    }
 }
