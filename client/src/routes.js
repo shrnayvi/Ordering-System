@@ -21,7 +21,7 @@ class Routes extends Component {
             <Route path="/register" component={Register} />
             <Route path="/forgot-password" component={ForgotPassword} />
             <Route path="/reset-password" component={ResetPassword} />
-            <ProtectedRoutes component={Profile} />
+            <ProtectedRoutes path="/profile" component={Profile} />
             {/* <Route path="/profile" component={Profile} /> */}
             <Route path="/logout" component={Logout} />
          </div>
