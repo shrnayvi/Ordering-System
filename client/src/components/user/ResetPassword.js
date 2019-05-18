@@ -11,9 +11,12 @@ class ResetPassword extends Component {
       super(props);
 
       this.state = {
-         password: '',
-         confirmPassword: '',
-         token: ''
+         formData: {
+            password: '',
+            confirmPassword: '',
+            token: ''
+         },
+         validated: false,
       };
 
    }
@@ -25,15 +28,24 @@ class ResetPassword extends Component {
 
    handleSubmit = (e) => {
       e.preventDefault();
-      this.props.resetPassword(this.state);
+      const form = e.currentTarget;
+
+      if(form.checkValidity()) {
+         this.props.resetPassword(this.state);
+      } else {
+         e.stopPropagation();
+      }
+
+      this.setState({ validated: true });
    }
 
    render() {
       const { isResetting, hasRequested, status, message } = this.props;
+      const { validated } = this.state;
       return (
          <div>
             <h2>Reset Password</h2>
-            <Form onSubmit={this.handleSubmit}>
+            <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
                <Form.Group controlId="password">
                   <Form.Label>Token</Form.Label>
                   <Form.Control 
@@ -41,7 +53,11 @@ class ResetPassword extends Component {
                      type="text" 
                      placeholder="Token" 
                      name="token"
+                     required
                   />
+                  <Form.Control.Feedback type="invalid">
+                     Please provide token
+                  </Form.Control.Feedback>
                </Form.Group>
 
                <Form.Group controlId="password">
@@ -51,7 +67,11 @@ class ResetPassword extends Component {
                      type="password" 
                      placeholder="Password" 
                      name="password"
+                     required
                   />
+                  <Form.Control.Feedback type="invalid">
+                     Please provide password
+                  </Form.Control.Feedback>
                </Form.Group>
 
                <Form.Group controlId="confirmPassword">
@@ -61,7 +81,11 @@ class ResetPassword extends Component {
                      type="password" 
                      placeholder="Password" 
                      name="confirmPassword"
+                     required
                   />
+                  <Form.Control.Feedback type="invalid">
+                     Confirm Password is required 
+                  </Form.Control.Feedback>
                </Form.Group>
 
                <Button variant="primary" type="submit">

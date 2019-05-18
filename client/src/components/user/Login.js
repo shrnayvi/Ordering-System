@@ -13,20 +13,31 @@ class Login extends Component {
       super(props);
 
       this.state = {
-         email: '',
-         password: ''
+         formData: {
+            email: '',
+            password: ''
+         },
+         validated: false,
       };
    }
 
    handleChange = (e) => {
       const { name, value } = e.target;
-      this.setState({ [name]: value });
+      this.setState({ formData: { ...this.state.formData, [name]: value } }); 
    }
 
    handleSubmit = (e) => {
       e.preventDefault();
-      const { email, password } = this.state;
-      this.props.loginUser({ email, password });
+      const form = e.currentTarget;
+      const { formData: { email, password } } = this.state;
+
+      if(form.checkValidity()) {
+         this.props.loginUser({ email, password });
+      } else {
+         e.stopPropagation();
+      }
+
+      this.setState({ validated: true });
    }
 
    render() {
@@ -36,10 +47,12 @@ class Login extends Component {
          loginFailure,
          isLogging,
       } = this.props;
+
+      const { validated } = this.state;
       return (
          <div>
                <h2>Login</h2>
-               <Form onSubmit={this.handleSubmit}>
+               <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
                   <Form.Group controlId="email">
                      <Form.Label>Email address</Form.Label>
                      <Form.Control 
@@ -49,6 +62,9 @@ class Login extends Component {
                         name="email"
                         required
                      />
+                     <Form.Control.Feedback type="invalid">
+                        Please provide email
+                     </Form.Control.Feedback>
                   </Form.Group>
 
                   <Form.Group controlId="password">
@@ -58,7 +74,11 @@ class Login extends Component {
                         type="password" 
                         placeholder="Password" 
                         name="password"
+                        required
                      />
+                     <Form.Control.Feedback type="invalid">
+                        Please provide password 
+                     </Form.Control.Feedback>
                   </Form.Group>
 
                   {

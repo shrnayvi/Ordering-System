@@ -16,7 +16,8 @@ class Register extends Component {
             password: '',
             name: '',
             phone: '',
-         }
+         },
+         validated: false,
       };
 
    }
@@ -30,8 +31,16 @@ class Register extends Component {
 
    handleSubmit = (e) => {
       e.preventDefault();
-      const data = this.state.formData;
-      this.props.registerUser(data);
+      const form = e.currentTarget,
+         data = this.state.formData;
+
+      if(form.checkValidity()) {
+         this.props.registerUser(data);
+      } else {
+         e.stopPropagation();
+      }
+
+      this.setState({ validated: true });
    }
 
    render() {
@@ -42,10 +51,12 @@ class Register extends Component {
          message 
       } = this.props;
 
+      const { validated } = this.state;
+
       return (
          <div>
                <h2>Register</h2>
-               <Form onSubmit={this.handleSubmit}>
+               <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
                   <Form.Group controlId="email">
                      <Form.Label>Email address</Form.Label>
                      <Form.Control 
@@ -53,7 +64,11 @@ class Register extends Component {
                         type="email" 
                         placeholder="Enter email" 
                         name="email"
+                        required
                      />
+                     <Form.Control.Feedback type="invalid">
+                        Please provide email 
+                     </Form.Control.Feedback>
                   </Form.Group>
 
                   <Form.Group controlId="password">
@@ -63,7 +78,11 @@ class Register extends Component {
                         type="password" 
                         placeholder="Password" 
                         name="password"
+                        required
                      />
+                     <Form.Control.Feedback type="invalid">
+                        Please provide password
+                     </Form.Control.Feedback>
                   </Form.Group>
 
                   <Form.Group controlId="name">
@@ -73,7 +92,11 @@ class Register extends Component {
                         type="text" 
                         placeholder="Name" 
                         name="name"
+                        required
                      />
+                     <Form.Control.Feedback type="invalid">
+                        Please provide name 
+                     </Form.Control.Feedback>
                   </Form.Group>
 
                   <Form.Group controlId="phone">
@@ -83,7 +106,11 @@ class Register extends Component {
                         type="number" 
                         placeholder="Phone" 
                         name="phone"
+                        required
                      />
+                     <Form.Control.Feedback type="invalid">
+                        Please provide phone number 
+                     </Form.Control.Feedback>
                   </Form.Group>
 
                   {

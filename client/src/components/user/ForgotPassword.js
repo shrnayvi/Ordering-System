@@ -11,6 +11,7 @@ class ForgotPassword extends Component {
       super(props);
       this.state = {
          email: '',
+         validated: false,
       }
    }
 
@@ -20,15 +21,24 @@ class ForgotPassword extends Component {
 
    handleSubmit = (e) => {
       e.preventDefault();
-      this.props.forgotPassword(this.state);
+      const form = e.currentTarget;
+
+      if(form.checkValidity()) {
+         const { email } = this.state;
+         this.props.forgotPassword({ email });
+      } else {
+         e.stopPropagation();
+      }
+      this.setState({ validated: true });
    }
 
    render() {
       const { status, isRequesting, hasRequested } = this.props;
+      const { validated } = this.state;
       return (
          <div>
             <h2>Forgot Password</h2>
-            <Form onSubmit={this.handleSubmit}>
+            <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
                <Form.Group controlId="email">
                   <Form.Label>Email address</Form.Label>
                   <Form.Control 
@@ -36,7 +46,11 @@ class ForgotPassword extends Component {
                      type="email" 
                      placeholder="Enter email" 
                      name="email"
+                     required
                   />
+                  <Form.Control.Feedback type="invalid">
+                     Email is required
+                  </Form.Control.Feedback>
                </Form.Group>
 
                <Button variant="primary" type="submit">
