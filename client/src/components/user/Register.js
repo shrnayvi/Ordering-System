@@ -5,6 +5,12 @@ import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/userActions';
+import ErrorMessage from '../validations/ErrorMessage';
+
+const emailRequired = 'Email is required',
+   passwordRequired = 'Password is required',
+   nameRequired = 'Name is required',
+   phoneRequired = 'Phone number is required';
 
 class Register extends Component {
    constructor(props) {
@@ -66,9 +72,8 @@ class Register extends Component {
                         name="email"
                         required
                      />
-                     <Form.Control.Feedback type="invalid">
-                        Please provide email 
-                     </Form.Control.Feedback>
+
+                     <ErrorMessage message={emailRequired} />
                   </Form.Group>
 
                   <Form.Group controlId="password">
@@ -80,9 +85,7 @@ class Register extends Component {
                         name="password"
                         required
                      />
-                     <Form.Control.Feedback type="invalid">
-                        Please provide password
-                     </Form.Control.Feedback>
+                     <ErrorMessage message={passwordRequired} />
                   </Form.Group>
 
                   <Form.Group controlId="name">
@@ -94,9 +97,7 @@ class Register extends Component {
                         name="name"
                         required
                      />
-                     <Form.Control.Feedback type="invalid">
-                        Please provide name 
-                     </Form.Control.Feedback>
+                     <ErrorMessage message={nameRequired} />
                   </Form.Group>
 
                   <Form.Group controlId="phone">
@@ -108,9 +109,7 @@ class Register extends Component {
                         name="phone"
                         required
                      />
-                     <Form.Control.Feedback type="invalid">
-                        Please provide phone number 
-                     </Form.Control.Feedback>
+                     <ErrorMessage message={phoneRequired} />
                   </Form.Group>
 
                   {

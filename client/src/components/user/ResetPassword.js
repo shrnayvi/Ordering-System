@@ -4,7 +4,12 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert';
+import ErrorMessage from '../validations/ErrorMessage';
 import { resetPassword } from '../../actions/userActions';
+
+const tokenRequired = 'Token is required',
+   passwordRequired = 'Token is required',
+   confirmPasswordRequired = 'Token is required';
 
 class ResetPassword extends Component {
    constructor(props) {
@@ -55,9 +60,7 @@ class ResetPassword extends Component {
                      name="token"
                      required
                   />
-                  <Form.Control.Feedback type="invalid">
-                     Please provide token
-                  </Form.Control.Feedback>
+                  <ErrorMessage message={tokenRequired} />
                </Form.Group>
 
                <Form.Group controlId="password">
@@ -69,9 +72,7 @@ class ResetPassword extends Component {
                      name="password"
                      required
                   />
-                  <Form.Control.Feedback type="invalid">
-                     Please provide password
-                  </Form.Control.Feedback>
+                  <ErrorMessage message={passwordRequired} />
                </Form.Group>
 
                <Form.Group controlId="confirmPassword">
@@ -83,9 +84,7 @@ class ResetPassword extends Component {
                      name="confirmPassword"
                      required
                   />
-                  <Form.Control.Feedback type="invalid">
-                     Confirm Password is required 
-                  </Form.Control.Feedback>
+                  <ErrorMessage message={confirmPasswordRequired} />
                </Form.Group>
 
                <Button variant="primary" type="submit">

@@ -5,6 +5,9 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert';
 import { forgotPassword } from '../../actions/userActions';
+import ErrorMessage from '../validations/ErrorMessage';
+
+const emailRequired = 'Email Required';
 
 class ForgotPassword extends Component {
    constructor(props) {
@@ -48,9 +51,7 @@ class ForgotPassword extends Component {
                      name="email"
                      required
                   />
-                  <Form.Control.Feedback type="invalid">
-                     Email is required
-                  </Form.Control.Feedback>
+                  <ErrorMessage message={emailRequired} />
                </Form.Group>
 
                <Button variant="primary" type="submit">

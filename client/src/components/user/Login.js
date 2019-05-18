@@ -7,6 +7,10 @@ import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert';
 import { loginUser } from '../../actions/userActions';
 import routes from '../../constants/routes';
+import ErrorMessage from '../validations/ErrorMessage';
+
+const emailRequired = 'Email is required',
+   passwordRequired = 'Password is required';
 
 class Login extends Component {
    constructor(props) {
@@ -62,9 +66,7 @@ class Login extends Component {
                         name="email"
                         required
                      />
-                     <Form.Control.Feedback type="invalid">
-                        Please provide email
-                     </Form.Control.Feedback>
+                     <ErrorMessage message={emailRequired} />
                   </Form.Group>
 
                   <Form.Group controlId="password">
@@ -76,9 +78,7 @@ class Login extends Component {
                         name="password"
                         required
                      />
-                     <Form.Control.Feedback type="invalid">
-                        Please provide password 
-                     </Form.Control.Feedback>
+                     <ErrorMessage message={passwordRequired} />
                   </Form.Group>
 
                   {
