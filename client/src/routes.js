@@ -13,7 +13,7 @@ import Logout from './components/user/Logout';
 
 class Routes extends Component {
    render() {
-      console.log(this.props);
+      const { isLoggedIn } = this.props;
       return (
          <div>
             <Route exact path="/" component={Home} />
@@ -21,7 +21,7 @@ class Routes extends Component {
             <Route path="/register" component={Register} />
             <Route path="/forgot-password" component={ForgotPassword} />
             <Route path="/reset-password" component={ResetPassword} />
-            <ProtectedRoutes path="/profile" component={Profile} />
+            <ProtectedRoutes isLoggedIn={isLoggedIn} path="/profile" component={Profile} />
             {/* <Route path="/profile" component={Profile} /> */}
             <Route path="/logout" component={Logout} />
          </div>
@@ -30,5 +30,5 @@ class Routes extends Component {
    }
 };
 
-const mapStateToProps = ({ isLoggedIn }) =>  ({ isLoggedIn });
+const mapStateToProps = ({ auth }) =>  ({ isLoggedIn: auth.isLoggedIn });
 export default connect(mapStateToProps)(Routes);
