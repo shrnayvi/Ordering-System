@@ -7,8 +7,17 @@ const checkToken = require('@middlewares/authenticate');
 const userController = require('@controllers/user');
 const { get: getOrder } = require('@controllers/order');
 
-router.get('/', userController.get);
-router.get('/:_id', userController.get);
+router.get(
+   '/', 
+   [checkToken, authorize(cap['get_user'])], 
+   userController.get
+);
+
+router.get(
+   '/:_id', 
+   [checkToken, authorize(cap['get_user'])], 
+   userController.get
+);
 
 /* Fetch the orders of a particular user */
 router.get(
@@ -21,7 +30,12 @@ router.post('/login', userController.login);
 router.post('/register', userController.register);
 router.post('/forgot-password', userController.forgotPassword);
 router.post('/reset-password', userController.resetPassword);
-router.put('/:_id', checkToken, userController.update);
+
+router.put(
+   '/:_id', 
+   [checkToken, authorize(cap['update_user'])],
+   userController.update
+);
 
 router.delete(
    '/:_id', 
