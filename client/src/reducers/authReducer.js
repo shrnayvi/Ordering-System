@@ -1,10 +1,11 @@
 import { USER } from '../constants/actionTypes';
-import { getCookie } from '../helpers/cookie';
+import authHeader from '../helpers/authHeader';
 
-const token = getCookie('order');
+const { token, user } = authHeader();
 
 const initialState = {
    isLoggedIn: token ? true : false,
+   user: user ? user : false,
 }
 
 export default (state = initialState, action) => {
@@ -16,6 +17,7 @@ export default (state = initialState, action) => {
       case USER.LOGIN_SUCCESS:
          return {
             isLoggedIn: true,
+            user: action.payload.user,
          }
       case USER.LOGIN_FAILURE:
          return {

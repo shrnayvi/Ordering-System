@@ -43,7 +43,7 @@ class Navigation extends Component {
    }
 }
 
-const mapStateToProps = ({ menu, auth }) => ({ menu, isLoggedIn: auth.isLoggedIn });
+const mapStateToProps = ({ menu, auth }) => ({ menu, isLoggedIn: auth.isLoggedIn, user: auth.user });
 const mapDispatchToProps = {
    changeMenu,
    initializeMenu,

@@ -23,10 +23,14 @@ export const USER =  {
    REGISTER_FAILURE: 'register_failure',
 
    FETCH_USER: 'fetch_user',
-   EDIT_USER: 'edit_user',
+   EDIT_SUCCESS: 'edit_success',
    RESET_PASSWORD: 'reset_password',
    FORGOT_PASSWORD: 'forgot_password', 
    FETCH_ERROR: 'fetch_error', 
+   EDIT_REQUEST: 'edit_request',
+   EDIT_FAILURE: 'edit_failure',
+
+   HANDLE_INPUT_CHANGE: 'handle_input_change', 
 }
 
 export const MENU =  {

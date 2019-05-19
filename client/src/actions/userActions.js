@@ -4,13 +4,61 @@ import * as userService from '../services/userService';
 import history from '../helpers/history';
 import routes from '../constants/routes';
 
-export const fetchUser = () => async (dispatch) => {
+export const fetchUser = _id => async (dispatch) => {
    try {
-      const { data: { data } } =  await userService.getById('5ca4efe333131835798342e9');
-      dispatch({ type: USER.FETCH_USER, payload: data});
+      const { data: response } =  await userService.getById(_id);
+      const { status, data } = response;
+      if(status === 200) {
+         const {
+            email,
+            username,
+            phone,
+            name,
+         } = data
+
+         dispatch({ 
+            type: USER.FETCH_USER, 
+            payload: { email, username, phone, name } 
+         });
+      } else {
+         dispatch({ type: USER.FETCH_FAILURE });
+      }
    } catch(e) {
       dispatch({ type: USER.FETCH_ERROR, payload: e.message });
    }
+}
+
+export const editUser = (_id, userData) => async dispatch => {
+   dispatch({ type: USER.EDIT_REQUEST });
+   try {
+      const { data: response } =  await userService.update(_id, userData);
+      const { status, message, data } = response;
+      if(status === 200) {
+         const {
+            email,
+            username,
+            phone,
+            name,
+         } = data
+
+         dispatch({ 
+            type: USER.EDIT_SUCCESS, 
+            payload: { 
+               status,
+               message,
+               information: { email, username, phone, name },
+            }
+         });
+      } else {
+         dispatch({ type: USER.EDIT_FAILURE, payload: { status, message } });
+      }
+   } catch(e) {
+      dispatch({ type: USER.EDIT_FAILURE, payload: { message: e.message } });
+   }
+}
+
+export const handleInputChange = data => async dispatch => {
+   dispatch({ type: USER.HANDLE_INPUT_CHANGE, payload: data });
 }
 
 export const loginUser = ({ email, password }) => async (dispatch) => {
@@ -19,8 +67,11 @@ export const loginUser = ({ email, password }) => async (dispatch) => {
    try {
       const { data: { status, data, message }} =  await userService.login({ email, password });
       if(status === 200) {
-         setCookie('order', data.token, { path: '/' });
-         dispatch({ type: USER.LOGIN_SUCCESS, payload: { status, message }});
+         let { token, user } = data;
+         console.log(user._id);
+         let cookieValue = JSON.stringify({ token, user });
+         setCookie('order', cookieValue, { path: '/' });
+         dispatch({ type: USER.LOGIN_SUCCESS, payload: { user }});
          history.push(routes.DASHBOARD);
       } else {
          dispatch({ type: USER.LOGIN_FAILURE, payload: { status, message } });
