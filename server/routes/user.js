@@ -10,7 +10,7 @@ const { get: getOrder } = require('@controllers/order');
 
 router.get(
    '/', 
-   [checkToken, authorize(cap['get_user'])], 
+   [checkToken, authorize(cap['get_users'])], 
    userController.get
 );
 
@@ -34,18 +34,18 @@ router.post('/reset-password', userController.resetPassword);
 
 router.put(
    '/profile', 
-   [checkToken, authorize(cap['update_user'])],
+   [checkToken, authorize(cap['edit_user']), restrictUser],
    userController.update
 );
 
 router.put(
    '/:_id', 
-   [checkToken, authorize(cap['update_user'])],
+   [checkToken, authorize(cap['edit_user']), restrictUser],
    userController.update
 );
 
 router.delete(
    '/:_id', 
-   [checkToken, authorize(cap['delete_user'])], 
+   [checkToken, authorize(cap['delete_user']), restrictUser], 
    userController.remove
 );

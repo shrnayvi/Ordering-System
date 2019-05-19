@@ -1,10 +1,11 @@
 module.exports = {
    /* User Resource */
+   'get_users': ['admin'],
    'get_user': ['admin', 'customer'],
    'edit_user': ['admin', 'customer'],
    'delete_user': ['admin', 'customer'],
 
-   /* User Resource */
+   /* Attachment Resource */
    'remove_attachment': ['admin'],
    
    /* Category Resource*/

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
+import Spinner from 'react-bootstrap/Spinner';
 import { fetchUser, editUser, handleInputChange } from '../../actions/userActions';
 import ErrorMessage from '../validations/ErrorMessage';
 
@@ -49,7 +50,11 @@ class Profile extends Component {
          phone,
       } = this.props.user.information;
 
-      const { message, status } = this.props.user;
+      const { 
+         message, 
+         status,
+         isEditing,
+      } = this.props.user;
 
       const{ validated } = this.state;
       return (
@@ -115,7 +120,16 @@ class Profile extends Component {
                   }
 
                <Button variant="primary" type="submit">
-                  Submit
+                  {
+                     isEditing ? 
+                        <Spinner
+                           as="span"
+                           animation="border"
+                           size="sm"
+                           role="status"
+                           aria-hidden="true"
+                        /> : 'Update'
+                  }
                </Button>
             </Form>
          </div>
