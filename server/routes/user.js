@@ -4,6 +4,7 @@ const router = module.exports = express.Router();
 
 const authorize = require('@middlewares/authorize');
 const checkToken = require('@middlewares/authenticate');
+const restrictUser = require('@middlewares/restrict-user');
 const userController = require('@controllers/user');
 const { get: getOrder } = require('@controllers/order');
 
@@ -15,7 +16,7 @@ router.get(
 
 router.get(
    '/:_id', 
-   [checkToken, authorize(cap['get_user'])], 
+   [checkToken, authorize(cap['get_user']), restrictUser], 
    userController.get
 );
 
@@ -30,6 +31,12 @@ router.post('/login', userController.login);
 router.post('/register', userController.register);
 router.post('/forgot-password', userController.forgotPassword);
 router.post('/reset-password', userController.resetPassword);
+
+router.put(
+   '/profile', 
+   [checkToken, authorize(cap['update_user'])],
+   userController.update
+);
 
 router.put(
    '/:_id', 

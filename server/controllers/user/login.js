@@ -18,8 +18,9 @@ module.exports = async (req, res) => {
          let canLogin = userDoc.comparePassword(req.body.password, userDoc.password || '');
 
          if (canLogin) {
-            const token = generateToken({ _id: userDoc._id, role: userDoc.role });
-            return apiResponse.success(res, { message: 'login_successfull', data: { user: userDoc, token }});
+            let { _id, role } = userDoc;
+            const token = generateToken({ _id, role });
+            return apiResponse.success(res, { message: 'login_successful', data: { user: { _id, role }, token }});
          } 
       }
 

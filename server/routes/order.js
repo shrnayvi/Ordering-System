@@ -23,4 +23,4 @@ router.post( '/',
 router.put( '/:_id', 
    [checkToken, authorize(cap['update_order'])],
    orderController.update
-)
+);
