@@ -28,7 +28,7 @@ class ResetPassword extends Component {
 
    handleChange = (e) => {
       const { name, value } = e.target;
-      this.setState({ [name]: value });
+      this.setState({ formData: { ...this.state.formData, [name]: value } });
    }
 
    handleSubmit = (e) => {
@@ -36,7 +36,8 @@ class ResetPassword extends Component {
       const form = e.currentTarget;
 
       if(form.checkValidity()) {
-         this.props.resetPassword(this.state);
+         const { formData } = this.state;
+         this.props.resetPassword(formData);
       } else {
          e.stopPropagation();
       }
@@ -51,7 +52,7 @@ class ResetPassword extends Component {
          <div>
             <h2>Reset Password</h2>
             <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
-               <Form.Group controlId="password">
+               <Form.Group controlId="token">
                   <Form.Label>Token</Form.Label>
                   <Form.Control 
                      onChange={this.handleChange}

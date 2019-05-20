@@ -1,22 +1,34 @@
 import axios from 'axios';
+import authHeader from '../helpers/authHeader';
 const baseURL = 'http://localhost:8000';
+
+const { token } = authHeader();
 
 const instance = axios.create({
   baseURL,
   responseType: 'json',
 });
 
+
 /**
  * Get Request
  * @param {String} url Server URL
  * @param {Object} headers Headers to send
  * @param {Object} params Query parameters
+ * @param {Boolean} setToken Whether to send the token or not
  */
-export const get = (url, headers = {}, params = {}) => {
+export const get = (url, setToken = true, headers = {}, params = {}) => {
    let config = {
       url,
       method: 'get',
    };
+
+   if(setToken) {
+      headers = {
+         ...headers,
+         Authorization: `Bearer ${token}`,
+      }
+   }
 
    if(Object.keys(headers).length) {
       config['headers'] = headers;
@@ -35,34 +47,21 @@ export const get = (url, headers = {}, params = {}) => {
  * @param {String} url Server URL
  * @param {Object} data Post data
  * @param {Object} headers Headers to send
+ * @param {Boolean} setToken Whether to send the token or not
  */
-export const post = (url, data, headers = {}) => {
+export const post = (url, data, setToken = true, headers = {}) => {
    let config = {
       url,
       method: 'post',
       data,
    };
 
-   if(Object.keys(headers).length) {
-      config['headers'] = headers;
+   if(setToken) {
+      headers = {
+         ...headers,
+         Authorization: `Bearer ${token}`,
+      }
    }
-
-   return instance(config);
-}
-
-
-/**
- * Put Request
- * @param {String} url Server URL
- * @param {Object} data Post data
- * @param {Object} headers Headers to send
- */
-export const put = (url, data, headers = {}) => {
-   let config = {
-      url,
-      method: 'put',
-      data,
-   };
 
    if(Object.keys(headers).length) {
       config['headers'] = headers;
@@ -77,13 +76,50 @@ export const put = (url, data, headers = {}) => {
  * @param {String} url Server URL
  * @param {Object} data Post data
  * @param {Object} headers Headers to send
+ * @param {Boolean} setToken Whether to send the token or not
  */
-export const remove = (url, data = {}, headers = {}) => {
+export const put = (url, data, setToken = true, headers = {}) => {
    let config = {
       url,
       method: 'put',
       data,
    };
+
+   if(setToken) {
+      headers = {
+         ...headers,
+         Authorization: `Bearer ${token}`,
+      }
+   }
+
+   if(Object.keys(headers).length) {
+      config['headers'] = headers;
+   }
+
+   return instance(config);
+}
+
+
+/**
+ * Put Request
+ * @param {String} url Server URL
+ * @param {Object} data Post data
+ * @param {Object} headers Headers to send
+ * @param {Boolean} setToken Whether to send the token or not
+ */
+export const remove = (url, setToken = true, data = {}, headers = {}) => {
+   let config = {
+      url,
+      method: 'put',
+      data,
+   };
+
+   if(setToken) {
+      headers = {
+         ...headers,
+         Authorization: `Bearer ${token}`,
+      }
+   }
 
    if(Object.keys(headers).length) {
       config['headers'] = headers;
