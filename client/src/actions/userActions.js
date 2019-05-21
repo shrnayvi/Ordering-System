@@ -80,6 +80,25 @@ export const loginUser = ({ email, password }) => async (dispatch) => {
    }
 }
 
+export const loginWithGoogle = accessToken => async (dispatch) => {
+   dispatch({ type: USER.LOGIN_REQUEST });
+
+   try {
+      const { data: { status, data, message }} =  await userService.loginWithGoogle({ access_token: accessToken });
+      if(status === 200) {
+         let { token, user } = data;
+         let cookieValue = JSON.stringify({ token, user });
+         setCookie('order', cookieValue, { path: '/' });
+         dispatch({ type: USER.LOGIN_SUCCESS, payload: { user }});
+         history.push(routes.DASHBOARD);
+      } else {
+         dispatch({ type: USER.LOGIN_FAILURE, payload: { status, message } });
+      }
+   } catch(e) {
+      dispatch({ type: USER.LOGIN_FAILURE, payload: e.message });
+   }
+}
+
 export const logoutUser = () => async (dispatch) => {
    dispatch({ type: USER.LOGOUT_REQUEST });
 

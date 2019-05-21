@@ -9,6 +9,7 @@ import qs from 'querystring';
 import { loginUser, emailVerification } from '../../actions/userActions';
 import routes from '../../constants/routes';
 import ErrorMessage from '../validations/ErrorMessage';
+import Google from './GoogleLogin';
 
 const emailRequired = 'Email is required',
    passwordRequired = 'Password is required';
@@ -126,21 +127,28 @@ class Login extends Component {
                         : ''
                   }
 
-                  <Button variant="primary" type="submit">
-                     {
-                        isLogging ?
-                        <Spinner
-                           as="span"
-                           animation="border"
-                           size="sm"
-                           role="status"
-                           aria-hidden="true"
-                        /> : `Login`
+                  <div>
+                     <Button variant="primary" type="submit">
+                        {
+                           isLogging ?
+                           <Spinner
+                              as="span"
+                              animation="border"
+                              size="sm"
+                              role="status"
+                              aria-hidden="true"
+                           /> : `Login`
 
-                     }
-                  </Button>
-                  <Link to={routes.REGISTER}>Register</Link>
-                  <Link to={routes.FORGOT_PASSWORD}>Forgot Password</Link>
+                        }
+                     </Button>
+                  </div>
+                  <div>
+                     <Link to={routes.REGISTER}>Register</Link> &nbsp;
+                     <Link to={routes.FORGOT_PASSWORD}>Forgot Password</Link>
+                  </div>
+                  <div>
+                     <Google />
+                  </div>
 
                </Form>
          </div>

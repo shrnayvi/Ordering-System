@@ -7,6 +7,7 @@ const initialState = {
    isLoggedIn: token ? true : false,
    user: user ? user : false,
 }
+console.log(initialState);
 
 export default (state = initialState, action) => {
    switch(action.type) {
@@ -47,6 +48,6 @@ export default (state = initialState, action) => {
             ...state, emailVerificationMessage: null,
          };
       default:
-         return {};
+         return state;
    }
 }
