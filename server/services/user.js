@@ -1,4 +1,6 @@
 const User = require('@server/models/user');
+// User.deleteMany()
+// .then(e => console.log(e));
 
 module.exports = {
    model: User,

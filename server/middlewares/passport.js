@@ -14,8 +14,9 @@ passport.use(
          const { displayName, id, emails }  = profile;
          const user = await getUser({ googleId: id }, true);
          if(user) {
-            let token = generateToken({ _id: user._id });
-            return done(null, { user, token });
+            const { _id, role } = user;
+            const token = generateToken({ _id, role });
+            return done(null, { user: { _id, role }, token });
          } 
          try{
             const newUser = await createUser({ 
@@ -23,10 +24,12 @@ passport.use(
                name: displayName, 
                email: emails[0].value, 
                method: 'google', 
+               role: 'customer',
                status: 1 
             });
-            let token = generateToken({ _id: newUser._id });
-            done(null, { user: newUser, token });
+            const { _id, role } = newUser;
+            const token = generateToken({ _id, role });
+            done(null, { user: { _id, role }, token });
          } catch(e) {
             done(null, { error: e.message });
          }
