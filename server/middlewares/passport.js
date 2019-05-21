@@ -18,7 +18,13 @@ passport.use(
             return done(null, { user, token });
          } 
          try{
-            const newUser = await createUser({ googleId: id, name: displayName, email: emails[0].value, method: 'google' });
+            const newUser = await createUser({ 
+               googleId: id, 
+               name: displayName, 
+               email: emails[0].value, 
+               method: 'google', 
+               status: 1 
+            });
             let token = generateToken({ _id: newUser._id });
             done(null, { user: newUser, token });
          } catch(e) {

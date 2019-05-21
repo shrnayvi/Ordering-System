@@ -15,10 +15,13 @@ module.exports = async (req, res) => {
       }
 
       if(userDoc.method === 'local') {
-         let canLogin = userDoc.comparePassword(req.body.password, userDoc.password || '');
+         const canLogin = userDoc.comparePassword(req.body.password, userDoc.password || ''),
+            { _id, role, status } = userDoc;
 
+         if(status === -1) {
+            return apiResponse.badRequest(res, { message: 'email_not_verified' });
+         }
          if (canLogin) {
-            let { _id, role } = userDoc;
             const token = generateToken({ _id, role });
             return apiResponse.success(res, { message: 'login_successful', data: { user: { _id, role }, token }});
          } 

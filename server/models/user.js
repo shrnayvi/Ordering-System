@@ -6,6 +6,9 @@ const {
    ROLES: roles
 } = require('@config/constants');
 
+/**
+ * Status: { -1: pending, 0: blocked, 1: active, 2: inactive };
+ */
 const UserSchema = new mongoose.Schema(
    {
       method: {
@@ -25,7 +28,7 @@ const UserSchema = new mongoose.Schema(
       status: Number,
       avatar: {
          type: mongoose.Schema.Types.ObjectId,
-         ref: 'Avatar'
+         ref: 'Attachment'
       },
       resetPasswordToken: String,
       resetPasswordExpires: Date,
@@ -41,13 +44,20 @@ UserSchema.pre('save', async function() {
          return Promise.reject({ exists: true, message: 'User Already Exists' });
       }
 
-      if(this.method === 'local' && this.password) {
-         this.password = this.generateHash(this.password);
+      if(this.method === 'local') {
+         if(this.password) {
+            this.password = this.generateHash(this.password);
+         }
+
+         if(this.role !== 'admin') {
+            this.status = -1;
+         }
       }
 
       if(!this.username) {
          this.username = this.email.split('@')[0];
       }
+
    } catch(e) {
       return Promise.reject({ message: e.message });
    }
