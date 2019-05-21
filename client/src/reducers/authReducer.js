@@ -34,7 +34,19 @@ export default (state = initialState, action) => {
          return {
             isLoggedIn: false,
          };
+      case USER.VERIFICATION_SUCCESS:
+         return {
+            emailVerificationMessage: 'Email Verification Successful. Please use your credentials to login'
+         };
+      case USER.VERIFICATION_ERROR:
+         return {
+            emailVerificationMessage: 'Email Verification Failed',
+         };
+      case USER.VERIFICATION_CLEAR:
+         return {
+            ...state, emailVerificationMessage: null,
+         };
       default:
-         return state;
+         return {};
    }
 }

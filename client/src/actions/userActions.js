@@ -68,7 +68,6 @@ export const loginUser = ({ email, password }) => async (dispatch) => {
       const { data: { status, data, message }} =  await userService.login({ email, password });
       if(status === 200) {
          let { token, user } = data;
-         console.log(user._id);
          let cookieValue = JSON.stringify({ token, user });
          setCookie('order', cookieValue, { path: '/' });
          dispatch({ type: USER.LOGIN_SUCCESS, payload: { user }});
@@ -88,13 +87,27 @@ export const logoutUser = () => async (dispatch) => {
    dispatch({ type: USER.LOGOUT_SUCCESS });
 }
 
+export const clearRegister = () => async dispatch => {
+   dispatch({ type: USER.REGISTER_CLEAR });
+}
+
+export const emailVerification = (type) => async dispatch => {
+   if(type === 'success') {
+      dispatch({ type: USER.VERIFICATION_SUCCESS });
+   } else if(type === 'error') {
+      dispatch({ type: USER.VERIFICATION_ERROR });
+   } else if(type === 'clear') {
+      dispatch({ type: USER.VERIFICATION_CLEAR });
+   }
+}
+
 export const registerUser = (userData) => async (dispatch) => {
    dispatch({ type: USER.REGISTER_REQUEST });
 
    try {
       const { data: response } = await userService.register(userData);
       if(response.status === 200) {
-         dispatch({ type: USER.REGISTER_SUCCESS });
+         dispatch({ type: USER.REGISTER_SUCCESS, payload: response });
       } else {
          dispatch({ type: USER.REGISTER_FAILURE, payload: response });
       }

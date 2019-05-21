@@ -17,6 +17,7 @@ export const USER =  {
    RESET_PASSWORD_ERROR: 'reset_password_error',
    RESET_PASSWORD_FAILURE: 'reset_password_failure',
 
+   REGISTER_CLEAR: 'register_clear',
    REGISTER_REQUEST: 'register_request',
    REGISTER_SUCCESS: 'register_success',
    REGISTER_ERROR: 'register_error',
@@ -29,6 +30,10 @@ export const USER =  {
    FETCH_ERROR: 'fetch_error', 
    EDIT_REQUEST: 'edit_request',
    EDIT_FAILURE: 'edit_failure',
+
+   VERIFICATION_SUCCESS: 'verification_success',
+   VERIFICATION_ERROR: 'verification_error',
+   VERIFICATION_CLEAR: 'verification_clear',
 
    HANDLE_INPUT_CHANGE: 'handle_input_change', 
 }

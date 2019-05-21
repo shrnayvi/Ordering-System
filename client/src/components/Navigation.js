@@ -10,6 +10,7 @@ class Navigation extends Component {
       const { 
          HOME,
          PROFILE,
+         DASHBOARD,
          LOGIN,
          LOGOUT,
       } = routes;
@@ -25,6 +26,9 @@ class Navigation extends Component {
                   </li>
                   <li className={`nav-item ${getSelector('active', PROFILE, pathname)}`}>
                      <Link className="nav-link" to={PROFILE}>Profile</Link>
+                  </li>
+                  <li className={`nav-item ${getSelector('active', DASHBOARD, pathname)}`}>
+                     <Link className="nav-link" to={DASHBOARD}>Dashboard</Link>
                   </li>
                   {
                      this.props.isLoggedIn ? 

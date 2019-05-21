@@ -9,6 +9,7 @@ import Register from './components/user/Register';
 import ForgotPassword from './components/user/ForgotPassword';
 import ResetPassword from './components/user/ResetPassword';
 import Profile from './components/user/Profile';
+import Dashboard from './components/Dashboard';
 import Logout from './components/user/Logout';
 
 class Routes extends Component {
@@ -22,7 +23,7 @@ class Routes extends Component {
             <Route path="/forgot-password" component={ForgotPassword} />
             <Route path="/reset-password" component={ResetPassword} />
             <ProtectedRoutes isLoggedIn={isLoggedIn} path="/profile" component={Profile} />
-            {/* <Route path="/profile" component={Profile} /> */}
+            <ProtectedRoutes isLoggedIn={isLoggedIn} path="/dashboard" component={Dashboard} />
             <Route path="/logout" component={Logout} />
          </div>
       )

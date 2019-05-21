@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert';
 import { connect } from 'react-redux';
-import { registerUser } from '../../actions/userActions';
+import { registerUser, clearRegister } from '../../actions/userActions';
 import ErrorMessage from '../validations/ErrorMessage';
 
 const emailRequired = 'Email is required',
@@ -16,6 +16,7 @@ class Register extends Component {
    constructor(props) {
       super(props);
 
+      this.props.clearRegister();
       this.state = {
          formData: {
             email: '',
@@ -115,6 +116,8 @@ class Register extends Component {
                   {
                      hasRequested && status !== 200 ?
                         <Alert variant="danger">{message}</Alert>
+                        : hasRequested && status === 200 ?
+                        <Alert variant="success">{message}</Alert>
                         : ''
                   }
 
@@ -139,5 +142,8 @@ class Register extends Component {
 
 
 const mapStateToProps = ({ register }) => register;
-const mapDispatchToProps = { registerUser };
+const mapDispatchToProps = { 
+   registerUser,
+   clearRegister,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

@@ -5,7 +5,8 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert';
-import { loginUser } from '../../actions/userActions';
+import qs from 'querystring';
+import { loginUser, emailVerification } from '../../actions/userActions';
 import routes from '../../constants/routes';
 import ErrorMessage from '../validations/ErrorMessage';
 
@@ -15,6 +16,7 @@ const emailRequired = 'Email is required',
 class Login extends Component {
    constructor(props) {
       super(props);
+      this.checkEmailVerification();
 
       this.state = {
          formData: {
@@ -23,6 +25,36 @@ class Login extends Component {
          },
          validated: false,
       };
+   }
+
+   checkEmailVerification() {
+      const queryParameter = this.props.location.search;
+      let query = {};
+      if(queryParameter) {
+         query = qs.parse(queryParameter.split("?")[1]);
+      }
+
+      let { emailVerification, emailVerificationMessage } = this.props;
+      if(emailVerificationMessage){
+         emailVerification('clear');
+      }
+      
+      if('verification' in query) {
+         this.emailVerificationStatus = query.verification;
+         switch(query.verification) {
+            case 'success':
+               emailVerification('success');
+               break;
+            case 'error':
+               emailVerification('error');
+               break;
+            default: 
+               emailVerification('clear');
+               break;
+         }
+      }
+
+
    }
 
    handleChange = (e) => {
@@ -50,6 +82,7 @@ class Login extends Component {
          message,
          loginFailure,
          isLogging,
+         emailVerificationMessage,
       } = this.props;
 
       const { validated } = this.state;
@@ -87,6 +120,12 @@ class Login extends Component {
                         : ''
                   }
 
+                  {
+                     emailVerificationMessage ? 
+                        <Alert variant={this.emailVerificationStatus}>{emailVerificationMessage}</Alert>
+                        : ''
+                  }
+
                   <Button variant="primary" type="submit">
                      {
                         isLogging ?
@@ -110,6 +149,9 @@ class Login extends Component {
 }
 
 const mapStateToProps = ({ auth }) => auth;
-const mapDispatchToProps = { loginUser };
+const mapDispatchToProps = { 
+   loginUser,
+   emailVerification,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
