@@ -22,11 +22,11 @@ passport.use(
             let token = generateToken({ _id: newUser._id });
             done(null, { user: newUser, token });
          } catch(e) {
-            console.log(e, 'error creating user');
-            done(e);
+            done(null, { error: e.message });
          }
       } catch(e) {
-         console.log(e, 'error fetching user');
+         console.log(e.message, 'Error fetching socially loggedin user')
+         done(null, { error: 'error_fetching_user'  });
          done(e)
       }
 	})
