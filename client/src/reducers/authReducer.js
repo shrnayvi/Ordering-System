@@ -37,11 +37,11 @@ export default (state = initialState, action) => {
          };
       case USER.VERIFICATION_SUCCESS:
          return {
-            emailVerificationMessage: 'Email Verification Successful. Please use your credentials to login'
+            emailVerificationMessage: 'email_verified'
          };
       case USER.VERIFICATION_ERROR:
          return {
-            emailVerificationMessage: 'Email Verification Failed',
+            emailVerificationMessage: 'email_verification_failed',
          };
       case USER.VERIFICATION_CLEAR:
          return {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import GoogleLogin from 'react-google-login';
+import { FormattedMessage } from 'react-intl';
 import { loginWithGoogle } from '../../actions/userActions';
 import keys from '../../constants/keys';
  
@@ -18,7 +19,7 @@ class Google extends Component {
       return (
          <GoogleLogin
             clientId={keys.googleClientID}
-            buttonText="Login With Google"
+            buttonText={<FormattedMessage id="login_with_google" />}
             onSuccess={this.handleSuccess}
             onFailure={this.handleFailure}
             cookiePolicy={'single_host_origin'}

@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert';
+import { FormattedMessage } from 'react-intl';
 import { forgotPassword } from '../../actions/userActions';
 import ErrorMessage from '../validations/ErrorMessage';
 
@@ -40,10 +41,10 @@ class ForgotPassword extends Component {
       const { validated } = this.state;
       return (
          <div>
-            <h2>Forgot Password</h2>
+            <h2><FormattedMessage id="forgot_password" /></h2>
             <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
                <Form.Group controlId="email">
-                  <Form.Label>Email address</Form.Label>
+                  <Form.Label><FormattedMessage id="email_address" /></Form.Label>
                   <Form.Control 
                      onChange={this.handleChange}
                      type="email" 
@@ -64,7 +65,7 @@ class ForgotPassword extends Component {
                            role="status"
                            aria-hidden="true"
                         /> :
-                     `Forgot Password`
+                        <FormattedMessage id="forgot_password" />
                   }
                </Button>
                {

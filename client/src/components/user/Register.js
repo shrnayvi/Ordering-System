@@ -4,13 +4,9 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import { registerUser, clearRegister } from '../../actions/userActions';
 import ErrorMessage from '../validations/ErrorMessage';
-
-const emailRequired = 'Email is required',
-   passwordRequired = 'Password is required',
-   nameRequired = 'Name is required',
-   phoneRequired = 'Phone number is required';
 
 class Register extends Component {
    constructor(props) {
@@ -62,62 +58,62 @@ class Register extends Component {
 
       return (
          <div>
-               <h2>Register</h2>
+               <h2><FormattedMessage id="register" /></h2>
                <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
                   <Form.Group controlId="email">
-                     <Form.Label>Email address</Form.Label>
+                     <Form.Label><FormattedMessage id="email_address" /></Form.Label>
                      <Form.Control 
                         onChange={this.handleChange}
                         type="email" 
-                        placeholder="Enter email" 
+                        placeholder="Enter Email"
                         name="email"
                         required
                      />
 
-                     <ErrorMessage message={emailRequired} />
+                     <ErrorMessage message={<FormattedMessage id="email_required" />} />
                   </Form.Group>
 
                   <Form.Group controlId="password">
-                     <Form.Label>Password</Form.Label>
+                     <Form.Label><FormattedMessage id="password" /></Form.Label>
                      <Form.Control 
                         onChange={this.handleChange}
                         type="password" 
-                        placeholder="Password" 
+                        placeholder="Enter Password"
                         name="password"
                         required
                      />
-                     <ErrorMessage message={passwordRequired} />
+                     <ErrorMessage message={<FormattedMessage id="password_required" />} />
                   </Form.Group>
 
                   <Form.Group controlId="name">
-                     <Form.Label>Name</Form.Label>
+                     <Form.Label><FormattedMessage id="name" /></Form.Label>
                      <Form.Control 
                         onChange={this.handleChange}
                         type="text" 
-                        placeholder="Name" 
+                        placeholder="Enter Name"
                         name="name"
                         required
                      />
-                     <ErrorMessage message={nameRequired} />
+                     <ErrorMessage message={<FormattedMessage id="name_required" />} />
                   </Form.Group>
 
                   <Form.Group controlId="phone">
-                     <Form.Label>Phone Number</Form.Label>
+                     <Form.Label><FormattedMessage id="phone_number" /></Form.Label>
                      <Form.Control 
                         onChange={this.handleChange}
                         type="number" 
-                        placeholder="Phone" 
+                        placeholder="Phone Number"
                         name="phone"
                         required
                      />
-                     <ErrorMessage message={phoneRequired} />
+                     <ErrorMessage message={<FormattedMessage id="phone_required" />} />
                   </Form.Group>
 
                   {
                      hasRequested && status !== 200 ?
-                        <Alert variant="danger">{message}</Alert>
+                        <Alert variant="danger">{<FormattedMessage id={message} />}</Alert>
                         : hasRequested && status === 200 ?
-                        <Alert variant="success">{message}</Alert>
+                        <Alert variant="success">{<FormattedMessage id={message} />}</Alert>
                         : ''
                   }
 
@@ -130,7 +126,7 @@ class Register extends Component {
                               size="sm"
                               role="status"
                               aria-hidden="true"
-                           /> : 'Register'
+                           /> : <FormattedMessage id="register" />
                      }
                   </Button>
                   

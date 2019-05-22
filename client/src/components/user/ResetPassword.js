@@ -4,12 +4,9 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert';
+import { FormattedMessage } from 'react-intl';
 import ErrorMessage from '../validations/ErrorMessage';
 import { resetPassword } from '../../actions/userActions';
-
-const tokenRequired = 'Token is required',
-   passwordRequired = 'Token is required',
-   confirmPasswordRequired = 'Token is required';
 
 class ResetPassword extends Component {
    constructor(props) {
@@ -61,7 +58,7 @@ class ResetPassword extends Component {
                      name="token"
                      required
                   />
-                  <ErrorMessage message={tokenRequired} />
+                  <ErrorMessage message={<FormattedMessage id="token_required" />} />
                </Form.Group>
 
                <Form.Group controlId="password">
@@ -73,7 +70,7 @@ class ResetPassword extends Component {
                      name="password"
                      required
                   />
-                  <ErrorMessage message={passwordRequired} />
+                  <ErrorMessage message={<FormattedMessage id="password_required" />} />
                </Form.Group>
 
                <Form.Group controlId="confirmPassword">
@@ -85,7 +82,7 @@ class ResetPassword extends Component {
                      name="confirmPassword"
                      required
                   />
-                  <ErrorMessage message={confirmPasswordRequired} />
+                  <ErrorMessage message={<FormattedMessage id="confirm_password_required" />} />
                </Form.Group>
 
                <Button variant="primary" type="submit">
@@ -98,7 +95,7 @@ class ResetPassword extends Component {
                            role="status"
                            aria-hidden="true"
                         /> :
-                     `Reset`
+                        <FormattedMessage id="reset_password" />
                   }
 
                </Button>

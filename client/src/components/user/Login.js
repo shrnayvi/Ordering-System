@@ -10,9 +10,7 @@ import { loginUser, emailVerification } from '../../actions/userActions';
 import routes from '../../constants/routes';
 import ErrorMessage from '../validations/ErrorMessage';
 import Google from './GoogleLogin';
-
-const emailRequired = 'Email is required',
-   passwordRequired = 'Password is required';
+import { FormattedMessage } from 'react-intl';
 
 class Login extends Component {
    constructor(props) {
@@ -100,7 +98,7 @@ class Login extends Component {
                         name="email"
                         required
                      />
-                     <ErrorMessage message={emailRequired} />
+                     <ErrorMessage message={<FormattedMessage id="email_required" />} />
                   </Form.Group>
 
                   <Form.Group controlId="password">
@@ -112,19 +110,17 @@ class Login extends Component {
                         name="password"
                         required
                      />
-                     <ErrorMessage message={passwordRequired} />
+                     <ErrorMessage message={<FormattedMessage id="password_required" />} />
                   </Form.Group>
 
                   {
-                     loginFailure && status !== 200 ?
-                        <Alert variant="danger">{message}</Alert>
-                        : ''
+                     loginFailure && status !== 200 &&
+                        <Alert variant="danger">{<FormattedMessage id={message} />}</Alert>
                   }
 
                   {
-                     emailVerificationMessage ? 
-                        <Alert variant={this.emailVerificationStatus}>{emailVerificationMessage}</Alert>
-                        : ''
+                     emailVerificationMessage &&  
+                        <Alert variant={this.emailVerificationStatus}>{<FormattedMessage id={emailVerificationMessage} />}</Alert>
                   }
 
                   <div>
@@ -137,14 +133,14 @@ class Login extends Component {
                               size="sm"
                               role="status"
                               aria-hidden="true"
-                           /> : `Login`
+                           /> : <FormattedMessage id="login" />
 
                         }
                      </Button>
                   </div>
                   <div>
-                     <Link to={routes.REGISTER}>Register</Link> &nbsp;
-                     <Link to={routes.FORGOT_PASSWORD}>Forgot Password</Link>
+                     <Link to={routes.REGISTER}><FormattedMessage id="register" /></Link> &nbsp;
+                     <Link to={routes.FORGOT_PASSWORD}><FormattedMessage id="forgot_password" /></Link>
                   </div>
                   <div>
                      <Google />

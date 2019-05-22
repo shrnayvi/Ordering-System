@@ -8,6 +8,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import App from './App';
 import allReducers from './reducers/';
 
+
 const reducer = combineReducers(allReducers);
 const store = createStore(reducer, {}, applyMiddleware(thunk));
 
