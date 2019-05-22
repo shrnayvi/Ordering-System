@@ -18,6 +18,7 @@ const UserSchema = new mongoose.Schema(
       role: {
          type: String,
          enum: roles,
+         default: 'customer',
       },
       googleId: String,
       email: String,
