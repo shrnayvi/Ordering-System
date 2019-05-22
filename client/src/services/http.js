@@ -2,8 +2,6 @@ import axios from 'axios';
 import authHeader from '../helpers/authHeader';
 const baseURL = 'http://localhost:8000';
 
-const { token } = authHeader();
-
 const instance = axios.create({
   baseURL,
   responseType: 'json',
@@ -24,6 +22,7 @@ export const get = (url, setToken = true, headers = {}, params = {}) => {
    };
 
    if(setToken) {
+      const { token } = authHeader();
       headers = {
          ...headers,
          Authorization: `Bearer ${token}`,
@@ -57,6 +56,7 @@ export const post = (url, data, setToken = true, headers = {}) => {
    };
 
    if(setToken) {
+      const { token } = authHeader();
       headers = {
          ...headers,
          Authorization: `Bearer ${token}`,
@@ -86,6 +86,7 @@ export const put = (url, data, setToken = true, headers = {}) => {
    };
 
    if(setToken) {
+      const { token } = authHeader();
       headers = {
          ...headers,
          Authorization: `Bearer ${token}`,
@@ -115,6 +116,7 @@ export const remove = (url, setToken = true, data = {}, headers = {}) => {
    };
 
    if(setToken) {
+      const { token } = authHeader();
       headers = {
          ...headers,
          Authorization: `Bearer ${token}`,
