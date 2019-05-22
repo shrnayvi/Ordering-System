@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
 
       let userDoc = await get({ email: req.body.email }, true);
       if(!userDoc) {
-         return apiResponse.notFound(res);
+         return apiResponse.notFound(res, { message: 'user_not_found' });
       }
 
       if(userDoc.method === 'local') {

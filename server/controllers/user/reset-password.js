@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
       if(!user) {
          return apiResponse.badRequest(res, { message: 'token_expired' });
       }
-      return apiResponse.success(res, { message: 'reset_password', data: user });
+      return apiResponse.success(res, { message: 'reset_password_successful', data: user });
    } catch(e) {
       return apiResponse.serverError(res, { data: e.message });
    }

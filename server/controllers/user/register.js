@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
          let data = { ...req.body, method: 'local'},
             newUser = await create(data);
 
-         apiResponse.success(res, { message: 'created_user', data: newUser });
+         apiResponse.success(res, { message: 'registration_successful', data: newUser });
 
          /* Send verification email */
          const { _id, email, method, role } = newUser;
