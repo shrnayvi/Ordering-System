@@ -8,10 +8,10 @@ module.exports = function validateRegisterInput(data) {
    const schema = {
       email: Joi.string().email({ minDomainAtoms: 2 }).required(),
       password: Joi.string().required(),
-      name: Joi.string(),
-      phone: Joi.number(),
+      name: Joi.string().required(),
+      phone: Joi.number().required(),
    }
 
    let { email, password, name, phone } = data;
-   return Joi.validate({ email, password, name, phone }, schema);
+   return Joi.validate({ email, password, name, phone }, schema, { abortEarly: false });
 }

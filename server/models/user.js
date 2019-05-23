@@ -25,7 +25,7 @@ const UserSchema = new mongoose.Schema(
       username: String,
       password: String,
       name: String,
-      phone: String,
+      phone: Number,
       status: Number,
       avatar: {
          type: mongoose.Schema.Types.ObjectId,

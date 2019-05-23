@@ -27,7 +27,7 @@ function validateResetPasswordInput(data) {
       confirmPassword: Joi.string().valid(Joi.ref('password')).required(),
    }
 
-   return Joi.validate(data, schema);
+   return Joi.validate(data, schema, { abortEarly: false });
 }
 
 module.exports = {

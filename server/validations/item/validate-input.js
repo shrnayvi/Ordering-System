@@ -16,5 +16,5 @@ module.exports = function (data) {
    };
 
    let { name, description, price, category } = data;
-   return Joi.validate({ name, description, price, category }, schema);
+   return Joi.validate({ name, description, price, category }, schema, { abortEarly: false });
 }

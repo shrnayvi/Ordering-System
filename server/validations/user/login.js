@@ -10,5 +10,5 @@ module.exports = function validateLoginInput(data) {
    }
 
    let { email, password } = data;
-   return Joi.validate({ email, password }, schema);
+   return Joi.validate({ email, password }, schema, { abortEarly: false });
 }

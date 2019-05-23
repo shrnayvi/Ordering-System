@@ -12,5 +12,5 @@ module.exports = function (data) {
    }; 
 
    let { user, item, status } = data;
-   return Joi.validate({ user, item, status }, schema);
+   return Joi.validate({ user, item, status }, schema, { abortEarly: false });
 }
