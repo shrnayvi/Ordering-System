@@ -5,7 +5,7 @@ const Joi = require('@hapi/joi');
  */
 module.exports = function validateLoginInput(data) {
    const schema = {
-      email: Joi.string().email({ minDomainAtoms: 2 }).required(),
+      email: Joi.string().email({ minDomainSegments: 2 }).required(),
       password: Joi.string().required(),
    }
 

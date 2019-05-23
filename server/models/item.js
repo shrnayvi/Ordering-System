@@ -9,9 +9,13 @@ const ItemSchema = new Schema({
    description: String,
    slug: String,
    price: Number,
+   avatar: {
+      type: Schema.Types.ObjectId,
+      ref: 'Attachment',
+   },
    category: {
       type: Schema.Types.ObjectId,
-      ref: 'Category'
+      ref: 'Category',
    },
 }, { timestamps: true });
 

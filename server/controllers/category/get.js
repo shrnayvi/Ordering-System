@@ -1,5 +1,5 @@
 const { aggregation }   = require('@services/category');
-const { distinct }      = require('@services/category');
+const { get }      = require('@services/category');
 const pagination        = require('@utils/pagination');
 
 /**

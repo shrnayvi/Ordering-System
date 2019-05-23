@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
          }
       } catch (e) {
          if('exists' in e && e.exists) {
-            return apiResponse.badRequest(res, { data: e.message });
+            return apiResponse.badRequest(res, { message: e.message, data: e.message });
          }
          return apiResponse.serverError(res, { data: e.message });
       }

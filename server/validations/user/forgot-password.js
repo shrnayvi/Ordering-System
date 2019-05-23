@@ -7,7 +7,7 @@ const Joi = require('@hapi/joi');
  */
 function validateForgotPasswordInput(data) {
    const schema = {
-      email: Joi.string().email({ minDomainAtoms: 2 }).required(),
+      email: Joi.string().email({ minDomainSegments: 2 }).required(),
    }
 
    return Joi.validate(data, schema);
