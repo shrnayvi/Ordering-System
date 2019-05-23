@@ -56,4 +56,6 @@ export default {
    phone_number: 'Phone Number',
    token_required: 'Token is required',
    confirm_password_required: 'Confirm password is required',
+   price: 'Price',
+   view_details: 'View Details',
 }

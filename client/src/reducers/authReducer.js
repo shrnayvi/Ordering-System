@@ -7,7 +7,6 @@ const initialState = {
    isLoggedIn: token ? true : false,
    user: user ? user : false,
 }
-console.log(initialState);
 
 export default (state = initialState, action) => {
    switch(action.type) {

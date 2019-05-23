@@ -1,5 +1,6 @@
 export default {
    HOME: '/',
+   ITEM: '/items',
    LOGIN: '/login',
    LOGOUT: '/logout',
    PROFILE: '/profile',

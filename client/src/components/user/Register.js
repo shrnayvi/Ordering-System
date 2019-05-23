@@ -12,6 +12,9 @@ class Register extends Component {
    constructor(props) {
       super(props);
 
+      if(this.props.isLoggedIn) {
+         this.props.history.push('/dashboard');
+      }
       this.props.clearRegister();
       this.state = {
          formData: {
@@ -137,7 +140,7 @@ class Register extends Component {
 }
 
 
-const mapStateToProps = ({ register }) => register;
+const mapStateToProps = ({ auth: { isLoggedIn }, register }) => ({ isLoggedIn, ...register });
 const mapDispatchToProps = { 
    registerUser,
    clearRegister,

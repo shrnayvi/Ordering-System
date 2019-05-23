@@ -15,6 +15,11 @@ import { FormattedMessage } from 'react-intl';
 class Login extends Component {
    constructor(props) {
       super(props);
+
+      if(this.props.isLoggedIn) {
+         this.props.history.push('/dashboard'); 
+      }
+
       this.checkEmailVerification();
 
       this.state = {

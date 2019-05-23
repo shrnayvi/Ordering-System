@@ -43,6 +43,7 @@ class ResetPassword extends Component {
    }
 
    render() {
+      console.log(this.props);
       const { isResetting, hasRequested, status, message } = this.props;
       const { validated } = this.state;
       return (

@@ -43,3 +43,12 @@ export const MENU =  {
    INITIALIZE_MENU: 'initialize_menu', 
    REMOVE_MENU: 'remove_menu', 
 }
+
+export const ITEM =  {
+   FETCH_ALL_REQUEST: 'fetch_all_request', 
+   FETCH_ALL_SUCCESS: 'fetch_all_success', 
+   FETCH_ALL_FAILURE: 'fetch_all_failure', 
+   FETCH_SINGLE_REQUEST: 'fetch_single_request', 
+   FETCH_SINGLE_SUCCESS: 'fetch_single_success', 
+   FETCH_SINGLE_FAILURE: 'fetch_single_failure', 
+}

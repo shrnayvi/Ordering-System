@@ -11,6 +11,8 @@ import ResetPassword from './components/user/ResetPassword';
 import Profile from './components/user/Profile';
 import Dashboard from './components/Dashboard';
 import Logout from './components/user/Logout';
+import Item from './components/item/Item';
+import SingleItem from './components/item/SingleItem';
 
 class Routes extends Component {
    render() {
@@ -22,6 +24,8 @@ class Routes extends Component {
             <Route path="/register" component={Register} />
             <Route path="/forgot-password" component={ForgotPassword} />
             <Route path="/reset-password" component={ResetPassword} />
+            <Route exact path="/items" component={Item} />
+            <Route path="/items/:slug" component={SingleItem} />
             <ProtectedRoutes isLoggedIn={isLoggedIn} path="/profile" component={Profile} />
             <ProtectedRoutes isLoggedIn={isLoggedIn} path="/dashboard" component={Dashboard} />
             <Route path="/logout" component={Logout} />

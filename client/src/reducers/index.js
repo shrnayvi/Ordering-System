@@ -4,6 +4,7 @@ import menu from './menuReducer';
 import register from './registerReducer';
 import forgotPassword from './forgotPasswordReducer';
 import resetPassword from './resetPasswordReducer';
+import items from './itemReducer';
 
 export default {
    user,
@@ -12,4 +13,5 @@ export default {
    register,
    forgotPassword,
    resetPassword,
+   items,
 }
