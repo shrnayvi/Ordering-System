@@ -1,4 +1,4 @@
-const Joi = require('joi');
+const Joi = require('@hapi/joi');
 
 /**
  * Validate the user registration
@@ -6,7 +6,7 @@ const Joi = require('joi');
  */
 module.exports = function validateRegisterInput(data) {
    const schema = {
-      email: Joi.string().email({ minDomainAtoms: 2 }).required(),
+      email: Joi.string().email({ minDomainSegments: 2 }).required(),
       password: Joi.string().required(),
       name: Joi.string().required(),
       phone: Joi.number().required(),
