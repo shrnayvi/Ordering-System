@@ -12,3 +12,7 @@ export const ITEM = {
    GET_ALL: '/items',
    GET_BY_SLUG: slug => `/items/${slug}`,
 }
+
+export const ORDER = {
+   CREATE: '/order',
+}
