@@ -44,16 +44,16 @@ export default (state = initialState, action) => {
          return {
             ...state,
             fetchingItems: false,
-            fetchItemFailure: false,
+            fetchComplete: true,
             status: null,
-            message: null,
-            singleItem: action.payload,
+            message: action.payload.message,
+            singleItem: action.payload.data,
          };
       case ITEM.FETCH_SINGLE_FAILURE:
          return {
             ...state,
             fetchingItems: false,
-            fetchItemFailure: true,
+            fetchComplete: true,
             status: action.payload.status,
             message: action.payload.message,
             singleItem: {},

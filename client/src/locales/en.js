@@ -26,7 +26,7 @@ export default {
    token_expired: 'Token expired',
    reset_password_successful: 'Password reset successfully',
    updated_user: 'Updated user information',
-   added_order: 'Order added',
+   added_order: 'Your order has been placed. Please view your orders in the Order section',
    fetched_order: 'Order fetched',
    updated_order: 'Order updated',
    added_item: 'Menu item added',
@@ -58,4 +58,5 @@ export default {
    confirm_password_required: 'Confirm password is required',
    price: 'Price',
    view_details: 'View Details',
+   place_order: 'Place Order',
 }

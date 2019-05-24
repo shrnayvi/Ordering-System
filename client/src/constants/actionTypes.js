@@ -52,3 +52,9 @@ export const ITEM =  {
    FETCH_SINGLE_SUCCESS: 'fetch_single_success', 
    FETCH_SINGLE_FAILURE: 'fetch_single_failure', 
 }
+
+export const ORDER =  {
+   CREATE_REQUEST: 'create_order_request', 
+   CREATE_SUCCESS: 'create_order_success', 
+   CREATE_FAILURE: 'create_order_failure', 
+}

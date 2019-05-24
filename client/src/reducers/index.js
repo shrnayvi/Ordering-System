@@ -5,6 +5,7 @@ import register from './registerReducer';
 import forgotPassword from './forgotPasswordReducer';
 import resetPassword from './resetPasswordReducer';
 import items from './itemReducer';
+import order from './orderReducer';
 
 export default {
    user,
@@ -14,4 +15,5 @@ export default {
    forgotPassword,
    resetPassword,
    items,
+   order,
 }

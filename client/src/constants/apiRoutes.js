@@ -14,5 +14,5 @@ export const ITEM = {
 }
 
 export const ORDER = {
-   CREATE: '/order',
+   CREATE: '/orders',
 }

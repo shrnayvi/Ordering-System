@@ -10,7 +10,7 @@ export const fetchItems = () => async (dispatch) => {
    try {
       let { data: response }= await itemService.getAll();
       if(response.status === 200) {
-         dispatch({ type: ITEM.FETCH_ALL_SUCCESS, payload: response.data });
+         dispatch({ type: ITEM.FETCH_ALL_SUCCESS, payload: response.data })
       } else {
          const { status, message } = response
          dispatch({ type: ITEM.FETCH_ALL_FAILURE, payload: { status, message }});
@@ -29,10 +29,10 @@ export const fetchBySlug = slug => async dispatch => {
 
    try {
       let { data: response }= await itemService.getBySlug(slug);
+      const { status, message } = response;
       if(response.status === 200) {
-         dispatch({ type: ITEM.FETCH_SINGLE_SUCCESS, payload: response.data });
+         dispatch({ type: ITEM.FETCH_SINGLE_SUCCESS, payload: { message, data: response.data } });
       } else {
-         const { status, message } = response
          dispatch({ type: ITEM.FETCH_SINGLE_FAILURE, payload: { status, message }});
       }
    } catch(e) {

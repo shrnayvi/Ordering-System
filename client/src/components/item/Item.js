@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { fetchItems } from '../../actions/itemActions';
-import Card from '../Card';
+import { placeOrder } from '../../actions/orderActions';
+import ItemCard from '../ItemCard';
 import '../../assets/item.css';
 
 class Item extends Component {
@@ -18,11 +19,12 @@ class Item extends Component {
       const items = itemData
          .map(item => (
             <Col key={item._id}>
-               <Card 
+               <ItemCard 
                   title={item.title} 
                   description={item.description} 
                   price={item.price} 
                   slug={item.slug} 
+                  placeOrder={this.placeOrder}
                />
             </Col>
          )
@@ -38,5 +40,6 @@ class Item extends Component {
 const mapStateToProps = ({ items }) => items;
 const mapDispatchToProps = {
    fetchItems,
+   placeOrder,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Item);
