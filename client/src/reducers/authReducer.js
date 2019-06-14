@@ -10,6 +10,8 @@ const initialState = {
 
 export default (state = initialState, action) => {
    switch(action.type) {
+      case USER.LOGIN_RESET:
+         return initialState;
       case USER.LOGIN_REQUEST:
          return {
             isLogging: true,

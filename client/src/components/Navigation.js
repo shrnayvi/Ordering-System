@@ -12,6 +12,7 @@ class Navigation extends Component {
          HOME,
          PROFILE,
          DASHBOARD,
+         ITEM,
          LOGIN,
          LOGOUT,
       } = routes;
@@ -35,6 +36,11 @@ class Navigation extends Component {
                   <li className={`nav-item ${getSelector('active', DASHBOARD, pathname)}`}>
                      <Link className="nav-link" to={DASHBOARD}>
                         <FormattedMessage id="dashboard" />
+                     </Link>
+                  </li>
+                  <li className={`nav-item ${getSelector('active', ITEM, pathname)}`}>
+                     <Link className="nav-link" to={ITEM}>
+                        <FormattedMessage id="item" />
                      </Link>
                   </li>
                   {

@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert';
 import qs from 'querystring';
-import { loginUser, emailVerification } from '../../actions/userActions';
+import { loginReset, loginUser, emailVerification } from '../../actions/userActions';
 import routes from '../../constants/routes';
 import ErrorMessage from '../validations/ErrorMessage';
 import Google from './GoogleLogin';
@@ -20,6 +20,7 @@ class Login extends Component {
          this.props.history.push('/dashboard'); 
       }
 
+      this.props.loginReset();
       this.checkEmailVerification();
 
       this.state = {
@@ -57,8 +58,6 @@ class Login extends Component {
                break;
          }
       }
-
-
    }
 
    handleChange = (e) => {
@@ -159,6 +158,7 @@ class Login extends Component {
 
 const mapStateToProps = ({ auth }) => auth;
 const mapDispatchToProps = { 
+   loginReset,
    loginUser,
    emailVerification,
 };

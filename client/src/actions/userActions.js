@@ -61,6 +61,10 @@ export const handleInputChange = data => async dispatch => {
    dispatch({ type: USER.HANDLE_INPUT_CHANGE, payload: data });
 }
 
+export const loginReset = () => async (dispatch) => {
+   dispatch({ type: USER.LOGIN_RESET });
+}
+
 export const loginUser = ({ email, password }) => async (dispatch) => {
    dispatch({ type: USER.LOGIN_REQUEST });
 

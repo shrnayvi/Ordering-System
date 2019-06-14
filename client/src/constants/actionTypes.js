@@ -1,4 +1,5 @@
 export const USER =  {
+   LOGIN_RESET: 'login_reset',
    LOGIN_REQUEST: 'login_request',
    LOGIN_SUCCESS: 'login_success',
    LOGIN_FAILURE: 'login_failure',

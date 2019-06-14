@@ -59,4 +59,6 @@ export default {
    price: 'Price',
    view_details: 'View Details',
    place_order: 'Place Order',
+   google_login: 'You have loggedin using google account. Please use your google account to login.',
+   item: 'Items',
 }
