@@ -20,8 +20,6 @@ const { log } 			= require('@utils/logs');
 
 const { dataPerPage }	= require('@config/config');
 const response			= require('@server/responses/');
-const typeDefs 			= require('@graphql/typedefs');
-const resolvers 		= require('@graphql/resolvers');
 
 /* Global variables */
 global.log				= log;
@@ -48,10 +46,3 @@ app.use(express.static(path.join(__dirname, '../../client')));
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 app.use(cookieParser());
-const apollo = new ApolloServer({ 
-	typeDefs, 
-	resolvers,
-	playground: true,
-});
-
-apollo.applyMiddleware({ app });
