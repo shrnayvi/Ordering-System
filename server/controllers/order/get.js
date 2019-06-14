@@ -15,8 +15,8 @@ exports.get = async(req, res) => {
 
       const { skip, limit } = pagination(req.query),
          orders = await get(query, false)
-            .populate('user')
-            .populate('item')
+            .populate('user', { name: 1, email: 1, role: 1 })
+            .populate('item', { createdAt: 0, updatedAt: 0 })
             .skip(skip)
             .limit(limit)
             .sort({ createdAt: 'desc' });
@@ -33,8 +33,8 @@ exports.get = async(req, res) => {
 exports.getById = async(req, res) => {
    try {
       const order = await get({ _id: req.params._id })
-         .populate('user')
-         .populate('item')
+         .populate('user', { name: 1, email: 1, role: 1 })
+         .populate('item', { createdAt: 0, updatedAt: 0 })
 
       return apiResponse.success(res, { message: 'fetched_order', data: order });
    } catch(e) {
