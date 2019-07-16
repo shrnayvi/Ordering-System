@@ -13,6 +13,8 @@ import Dashboard from './components/Dashboard';
 import Logout from './components/user/Logout';
 import Item from './components/item/Item';
 import SingleItem from './components/item/SingleItem';
+import CategoryItems from './components/item/CategoryItems';
+import UserOrders from './components/order/UserOrders';
 
 class Routes extends Component {
    render() {
@@ -26,6 +28,8 @@ class Routes extends Component {
             <Route path="/reset-password" component={ResetPassword} />
             <Route exact path="/items" component={Item} />
             <Route path="/items/:slug" component={SingleItem} />
+            <Route path="/categories/:id" component={CategoryItems} />
+            <Route path="/orders" component={UserOrders} />
             <ProtectedRoutes isLoggedIn={isLoggedIn} path="/profile" component={Profile} />
             <ProtectedRoutes isLoggedIn={isLoggedIn} path="/dashboard" component={Dashboard} />
             <Route path="/logout" component={Logout} />
