@@ -25,8 +25,9 @@ export const placeOrder = data => async dispatch => {
 
 /**
  * Fetch orders of the loggedin user
+ * @param {String} userId Loggedin user
  */
-export const fetchOrders = (userId) => async dispatch => {
+export const fetchOrders = userId => async dispatch => {
   dispatch({ type: ORDER.FETCH_REQUEST });
 
   try {
@@ -38,6 +39,25 @@ export const fetchOrders = (userId) => async dispatch => {
       dispatch({ type: ORDER.FETCH_FAILURE, payload: { status, message } });
     }
   } catch (e) {
-    dispatch({ type: ORDER.FETCCH_FAILURE, payload: { status: 500, message: e.message } });
+    dispatch({ type: ORDER.FETCH_FAILURE, payload: { status: 500, message: e.message } });
+  }
+}
+
+/**
+ * Update the order status
+ */
+export const updateOrder = (_id, data) => async dispatch => {
+  dispatch({ type: ORDER.UPDATE_REQUEST });
+
+  try {
+    let { data: response } = await orderService.updateOrder(_id, data);
+    const { status, message } = response;
+    if (response.status === 200) {
+      dispatch({ type: ORDER.UPDATE_SUCCESS, payload: response });
+    } else {
+      dispatch({ type: ORDER.UPDATE_FAILURE, payload: { status, message } });
+    }
+  } catch (e) {
+    dispatch({ type: ORDER.UPDATE_FAILURE, payload: { status: 500, message: e.message } });
   }
 }

@@ -66,4 +66,8 @@ export const ORDER =  {
    FETCH_REQUEST: 'fetch_user_order_request',
    FETCH_SUCCESS: 'fetch_user_order_success',
    FETCH_FAILURE: 'fetch_user_order_failure',
+
+   UPDATE_REQUEST: 'update_order_request',
+   UPDATE_SUCCESS: 'update_order_success',
+   UPDATE_FAILURE: 'updat_order_failure',
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchOrders } from '../../actions/orderActions';
-import OrderList from '../OrderList';
+import { fetchOrders, updateOrder } from '../../actions/orderActions';
+import OrderList from './OrderList';
 import '../../assets/item.css';
 
 class UserOrder extends Component {
@@ -11,12 +11,16 @@ class UserOrder extends Component {
     this.props.fetchOrders(userId);
   }
 
+  cancelOrder = _id => {
+    this.props.updateOrder(_id, { status: 0 });
+  }
+
   render() {
     const { userOrders } = this.props.order;
     return (
       <div>
         <h1>My Orders</h1>
-        <OrderList orders={userOrders} />
+        <OrderList orders={userOrders} cancelOrder={this.cancelOrder} />
       </div>
     )
   }
@@ -25,5 +29,6 @@ class UserOrder extends Component {
 const mapStateToProps = ({ auth: { user }, order }) => ({user, order });
 const mapDispatchToProps = {
   fetchOrders,
+  updateOrder,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(UserOrder);

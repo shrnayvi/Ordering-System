@@ -1,8 +1,13 @@
 const { get } = require('@services/order');
 const pagination = require('@utils/pagination');
+const { ORDER_STATUS: orderStatus } = require('@config/constants');
 
 /**
+ * Get all orders or the user orders
  * @param {Object} [req.query] - Query Object
+ * @param {Object} [req.params] - Request parameter
+ * @param {String} [req.params.user] - User ID
+ * @param {String} [req.query.status] - Order Status
  * @param {String} [req.query.page] - Page Number Query parameter
  * @param {String} [req.query.size] - Number of data to fetch
  */
@@ -11,6 +16,13 @@ exports.get = async(req, res) => {
       let query = {};
       if(req.params.user) {
          query = { user: req.params.user };
+      }
+
+      if(req.query.status) {
+         const status = orderStatus[req.query.status];
+         if(typeof status !== 'undefined') {
+            query['status'] = status;
+         }
       }
 
       const { skip, limit } = pagination(req.query),

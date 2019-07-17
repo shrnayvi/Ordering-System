@@ -17,4 +17,5 @@ export const ITEM = {
 export const ORDER = {
    CREATE: '/orders',
    GET_ORDER: userId => `/users/${userId}/orders`,
+   UPDATE_ORDER: _id => `/orders/${_id}`,
 }
