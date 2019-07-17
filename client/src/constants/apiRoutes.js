@@ -19,3 +19,7 @@ export const ORDER = {
    GET_ORDER: userId => `/users/${userId}/orders`,
    UPDATE_ORDER: _id => `/orders/${_id}`,
 }
+
+export const CART = {
+   ADD: '/cart',
+}

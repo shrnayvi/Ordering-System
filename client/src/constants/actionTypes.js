@@ -71,3 +71,9 @@ export const ORDER =  {
    UPDATE_SUCCESS: 'update_order_success',
    UPDATE_FAILURE: 'updat_order_failure',
 }
+
+export const CART =  {
+   ADD_REQUEST: 'add_cart_request', 
+   ADD_SUCCESS: 'add_cart_success', 
+   ADD_FAILURE: 'add_cart_failure', 
+}

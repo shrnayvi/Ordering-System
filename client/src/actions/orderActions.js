@@ -1,4 +1,4 @@
-import { ORDER } from '../constants/actionTypes';
+import { ORDER, CART } from '../constants/actionTypes';
 import * as orderService from '../services/orderService';
 
 /**
@@ -59,5 +59,24 @@ export const updateOrder = (_id, data) => async dispatch => {
     }
   } catch (e) {
     dispatch({ type: ORDER.UPDATE_FAILURE, payload: { status: 500, message: e.message } });
+  }
+}
+
+/**
+ * Add to cart
+ */
+export const addCart = item => async dispatch => {
+  dispatch({ type: CART.ADD_REQUEST });
+
+  try {
+    let { data: response } = await orderService.addCart(item);
+    const { status, message } = response;
+    if (response.status === 200) {
+      dispatch({ type: CART.ADD_SUCCESS, payload: response });
+    } else {
+      dispatch({ type: CART.ADD_FAILURE, payload: { status, message } });
+    }
+  } catch (e) {
+    dispatch({ type: CART.ADD_FAILURE, payload: { status: 500, message: e.message } });
   }
 }

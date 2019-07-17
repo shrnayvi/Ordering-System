@@ -1,4 +1,4 @@
-const router = (module.exports = require("express").Router());
+const router = module.exports = require("express").Router();
 
 const authorize = require("@middlewares/authorize");
 const checkToken = require("@middlewares/authenticate");

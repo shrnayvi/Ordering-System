@@ -10,6 +10,9 @@ exports.create = async (req, res) => {
   }
 
   try {
+    if(!('user' in data)) {
+      data['user'] = req.userId
+    }
     const cart = await create(data);
     return apiResponse.success(res, { message: "added_cart", data: cart });
   } catch (e) {

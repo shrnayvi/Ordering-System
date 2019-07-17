@@ -6,7 +6,7 @@ import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
 import { fetchBySlug } from '../../actions/itemActions';
-import { placeOrder } from '../../actions/orderActions';
+import { placeOrder, addCart } from '../../actions/orderActions';
 
 class Item extends Component {
 
@@ -26,6 +26,18 @@ class Item extends Component {
       }
       const { _id } = this.props.item;
       this.props.placeOrder({ item: _id });
+   }
+
+   /**
+    * Add to cart 
+    */
+   addCart = () => {
+      const { isLoggedIn } = this.props;
+      if(!isLoggedIn) {
+         return this.props.history.push('/login');
+      }
+      const { _id } = this.props.item;
+      this.props.addCart({ item: _id });
    }
 
 
@@ -63,7 +75,7 @@ class Item extends Component {
                         size="sm"
                         role="status"
                         aria-hidden="true"
-                     /> : <Button onClick={this.placeOrder}><FormattedMessage id="place_order" /></Button>
+                     /> : <Button onClick={this.addToCart}><FormattedMessage id="add_to_cart" /></Button>
                }
             </div>
          </Row>
@@ -75,5 +87,6 @@ const mapStateToProps = ({ auth: { isLoggedIn }, items: { singleItem }, order })
 const mapDispatchToProps = {
    fetchBySlug,
    placeOrder,
+   addCart,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Item);

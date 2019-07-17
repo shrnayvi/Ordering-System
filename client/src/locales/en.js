@@ -71,4 +71,5 @@ export default {
    status: 'Status',
    date: 'Date',
    action: 'Action',
+   add_to_cart: 'Add to Cart',
 }
