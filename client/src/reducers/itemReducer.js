@@ -3,6 +3,7 @@ import { ITEM } from '../constants/actionTypes';
 const initialState = {
    itemData: [],
    singleItem: {},
+   categoryItems: [],
    status: null,
    message: null,
    fetchingItems: false,
@@ -57,6 +58,27 @@ export default (state = initialState, action) => {
             status: action.payload.status,
             message: action.payload.message,
             singleItem: {},
+         };
+      case ITEM.FETCH_CATEGORY_REQUEST:
+         return {
+            ...state,
+            fetchingItems: true,
+            fetchItemFailure: false,
+         }
+      case ITEM.FETCH_CATEGORY_SUCCESS:
+         return {
+            ...state,
+            fetchingItems: false,
+            fetchItemFailure: false,
+            categoryItems: action.payload,
+         }
+      case ITEM.FETCH_CATEGORY_FAILURE:
+         return {
+            ...state,
+            fetchingItems: false,
+            fetchItemFailure: true,
+            status: action.payload.status,
+            message: action.payload.message
          };
       default: 
          return state;

@@ -3,6 +3,7 @@ export const USER =  {
    LOGIN_REQUEST: 'login_request',
    LOGIN_SUCCESS: 'login_success',
    LOGIN_FAILURE: 'login_failure',
+   LOGIN_CLEAR: 'login_clear',
 
    LOGOUT_REQUEST: 'logout_request',
    LOGOUT_SUCCESS: 'logout_success',
@@ -25,12 +26,12 @@ export const USER =  {
    REGISTER_FAILURE: 'register_failure',
 
    FETCH_USER: 'fetch_user',
-   EDIT_SUCCESS: 'edit_success',
+   EDIT_SUCCESS: 'edit_user_success',
    RESET_PASSWORD: 'reset_password',
    FORGOT_PASSWORD: 'forgot_password', 
-   FETCH_ERROR: 'fetch_error', 
-   EDIT_REQUEST: 'edit_request',
-   EDIT_FAILURE: 'edit_failure',
+   FETCH_ERROR: 'fetch_user_error', 
+   EDIT_REQUEST: 'edit_user_request',
+   EDIT_FAILURE: 'edit_user_failure',
 
    VERIFICATION_SUCCESS: 'verification_success',
    VERIFICATION_ERROR: 'verification_error',
@@ -46,16 +47,23 @@ export const MENU =  {
 }
 
 export const ITEM =  {
-   FETCH_ALL_REQUEST: 'fetch_all_request', 
-   FETCH_ALL_SUCCESS: 'fetch_all_success', 
-   FETCH_ALL_FAILURE: 'fetch_all_failure', 
-   FETCH_SINGLE_REQUEST: 'fetch_single_request', 
-   FETCH_SINGLE_SUCCESS: 'fetch_single_success', 
-   FETCH_SINGLE_FAILURE: 'fetch_single_failure', 
+   FETCH_ALL_REQUEST: 'fetch_all_item_request', 
+   FETCH_ALL_SUCCESS: 'fetch_all_item_success', 
+   FETCH_ALL_FAILURE: 'fetch_all_item_failure', 
+   FETCH_SINGLE_REQUEST: 'fetch_single_item_request', 
+   FETCH_SINGLE_SUCCESS: 'fetch_single_item_success', 
+   FETCH_SINGLE_FAILURE: 'fetch_single_item_failure', 
+   FETCH_CATEGORY_REQUEST: 'fetch_category_item_request', 
+   FETCH_CATEGORY_SUCCESS: 'fetch_category_item_success', 
+   FETCH_CATEGORY_FAILURE: 'fetch_category_item_failure', 
 }
 
 export const ORDER =  {
    CREATE_REQUEST: 'create_order_request', 
    CREATE_SUCCESS: 'create_order_success', 
    CREATE_FAILURE: 'create_order_failure', 
+
+   FETCH_REQUEST: 'fetch_user_order_request',
+   FETCH_SUCCESS: 'fetch_user_order_success',
+   FETCH_FAILURE: 'fetch_user_order_failure',
 }

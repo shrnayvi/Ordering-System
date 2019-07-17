@@ -3,6 +3,7 @@ import { ORDER } from '../constants/actionTypes';
 const initialState = {
    status: null,
    message: '',
+   userOrders: [],
 }
 
 export default (state = initialState, action) => {
@@ -26,6 +27,28 @@ export default (state = initialState, action) => {
             ...state,
             placingOrder: false,
             placedOrder: true,
+            status: action.payload.status,
+            message: action.payload.message
+         };
+      case ORDER.FETCH_REQUEST:
+         return {
+            ...state,
+            fetchingOrder: true,
+         }
+      case ORDER.FETCH_SUCCESS:
+         return {
+            ...state,
+            fetchingOrder: false,
+            fetchedOrder: true,
+            status: action.payload.status,
+            message: action.payload.message,
+            userOrders: action.payload.data,
+         }
+      case ORDER.FETCH_FAILURE:
+         return {
+            ...state,
+            fetchingOrder: false,
+            fetchedOrder: true,
             status: action.payload.status,
             message: action.payload.message
          };

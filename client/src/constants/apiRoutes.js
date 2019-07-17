@@ -11,8 +11,10 @@ export const USER = {
 export const ITEM = {
    GET_ALL: '/items',
    GET_BY_SLUG: slug => `/items/${slug}`,
+   GET_BY_CATEGORY: category => `/categories/${category}/items`,
 }
 
 export const ORDER = {
    CREATE: '/orders',
+   GET_ORDER: userId => `/users/${userId}/orders`,
 }
