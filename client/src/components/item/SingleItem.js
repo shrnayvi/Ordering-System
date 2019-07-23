@@ -32,6 +32,7 @@ class Item extends Component {
     * Add to cart 
     */
    addCart = () => {
+      console.log('hello')
       const { isLoggedIn } = this.props;
       if(!isLoggedIn) {
          return this.props.history.push('/login');
@@ -49,8 +50,8 @@ class Item extends Component {
       } = this.props.item;
 
       const {
-         placingOrder,
-         placedOrder,
+         addingToCart,
+         addedToCart,
          message,
          status,
       } = this.props.order;
@@ -62,13 +63,13 @@ class Item extends Component {
                <p> Price: {price} </p>
                <p> Description: {description} </p>
 
-               { placedOrder && 
+               { addedToCart && 
                   <Alert variant={status === 200 ? 'success' : 'danger'}> 
                      <FormattedMessage id={message} /> 
                   </Alert>
                }
                {
-                  placingOrder ? 
+                  addingToCart ? 
                      <Spinner
                         as="span"
                         animation="border"

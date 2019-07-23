@@ -10,7 +10,7 @@ exports.create = async (req, res) => {
   }
 
   try {
-    if(!('user' in data)) {
+    if(typeof data.user === 'undefined') {
       data['user'] = req.userId
     }
     const cart = await create(data);
@@ -28,6 +28,11 @@ exports.bulkCreate = async (req, res) => {
     return apiResponse.badRequest(res, { data: error });
   }
   try {
+    for(let i = 0, length = data.length; i < length; i++) {
+      if(typeof data[i].user === 'undefined') {
+        data[i]['user'] = req.userId;
+      }
+    }
     const carts = await bulkCreate(data);
     return apiResponse.success(res, { message: "added_cart", data: carts });
   } catch (e) {

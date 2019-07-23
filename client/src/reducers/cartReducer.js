@@ -26,7 +26,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         addingToCart: false,
-        addedToCart: true,
+        addedToCart: false,
         status: action.payload.status,
         message: action.payload.message
       };

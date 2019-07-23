@@ -4,9 +4,11 @@ const randomstring = require("randomstring");
 
 module.exports = async (req, res) => {
   try {
-    let user = req.body.user,
-      item = req.body.item,
-      status = req.body.status;
+    let {
+      user,
+      item,
+      status
+    } = req.body;
 
     if (!user) {
       user = req.userId;
