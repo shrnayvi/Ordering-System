@@ -62,6 +62,7 @@ export const ORDER =  {
    CREATE_REQUEST: 'create_order_request', 
    CREATE_SUCCESS: 'create_order_success', 
    CREATE_FAILURE: 'create_order_failure', 
+   CREATE_RESET: 'create_order_reset', 
 
    FETCH_REQUEST: 'fetch_user_order_request',
    FETCH_SUCCESS: 'fetch_user_order_success',
@@ -88,4 +89,6 @@ export const CART =  {
    CHANGE_QUANTITY: 'change_cart_quantity',
 
    RESET_STATUS: 'reset_cart_status',
+
+   FLUSH: 'flush_cart',
 }

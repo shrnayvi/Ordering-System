@@ -28,10 +28,18 @@ export default (state = initialState, action) => {
       return {
         ...state,
         placingOrder: false,
-        placedOrder: true,
+        placedOrder: false,
         status: action.payload.status,
         message: action.payload.message
       };
+    case ORDER.CREATE_RESET:
+      return {
+        ...state,
+        placingOrder: null,
+        placedOrder: null,
+        status: null,
+        mmessage: "",
+      }
 
     /* Fetch Order */
     case ORDER.FETCH_REQUEST:

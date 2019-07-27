@@ -15,6 +15,7 @@ export const placeOrder = data => async dispatch => {
     let { data: response } = await orderService.placeOrder(data);
     const { status, message } = response;
     if (response.status === 200) {
+      dispatch({ type: CART.FLUSH });
       dispatch({ type: ORDER.CREATE_SUCCESS, payload: response });
     } else {
       dispatch({ type: ORDER.CREATE_FAILURE, payload: { status, message } });
@@ -61,6 +62,13 @@ export const updateOrder = (_id, data) => async dispatch => {
   } catch (e) {
     dispatch({ type: ORDER.UPDATE_FAILURE, payload: { status: 500, message: e.message } });
   }
+}
+
+/**
+ * Reset Create Order State
+ */
+export const resetPlacedOrder = () => async dispatch => {
+  dispatch({ type: ORDER.CREATE_RESET });
 }
 
 /**

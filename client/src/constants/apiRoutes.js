@@ -15,7 +15,7 @@ export const ITEM = {
 }
 
 export const ORDER = {
-   CREATE: '/orders',
+   BULKCREATE: '/orders/bulk',
    GET_ORDER: userId => `/users/${userId}/orders`,
    UPDATE_ORDER: _id => `/orders/${_id}`,
 }

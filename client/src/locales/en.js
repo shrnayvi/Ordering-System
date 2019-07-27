@@ -26,7 +26,7 @@ export default {
    token_expired: 'Token expired',
    reset_password_successful: 'Password reset successfully',
    updated_user: 'Updated user information',
-   added_order: 'Your order has been placed. Please view your orders in the Order section',
+   added_order: 'Your order has been placed. Please view your orders page in the Order section',
    fetched_order: 'Order fetched',
    updated_order: 'Order updated',
    added_item: 'Menu item added',
@@ -75,4 +75,7 @@ export default {
    added_cart: 'Item Added to Cart',
    my_cart: 'My Cart',
    item_exists_in_cart: 'You have already added this item to your cart',
+   cart_empty: 'Your cart is empty',
+   my_orders: 'My Orders',
+   cart: 'Cart'
 }

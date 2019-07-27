@@ -15,6 +15,8 @@ class Navigation extends Component {
          ITEM,
          LOGIN,
          LOGOUT,
+         ORDERS,
+         CART,
       } = routes;
 
       const { pathname } = this.props.location;
@@ -41,6 +43,16 @@ class Navigation extends Component {
                   <li className={`nav-item ${getSelector('active', ITEM, pathname)}`}>
                      <Link className="nav-link" to={ITEM}>
                         <FormattedMessage id="item" />
+                     </Link>
+                  </li>
+                  <li className={`nav-item ${getSelector('active', ORDERS, pathname)}`}>
+                     <Link className="nav-link" to={ORDERS}>
+                        <FormattedMessage id="my_orders" />
+                     </Link>
+                  </li>
+                  <li className={`nav-item ${getSelector('active', CART, pathname)}`}>
+                     <Link className="nav-link" to={CART}>
+                        <FormattedMessage id="cart" />
                      </Link>
                   </li>
                   {
