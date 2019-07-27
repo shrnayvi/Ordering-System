@@ -6,7 +6,7 @@ const Joi = require('@hapi/joi');
  */
 module.exports = function (data) {
   const schema = {
-    item: Joi.string().required(),
+    item: Joi.required(),
   };
 
   let { item } = data;

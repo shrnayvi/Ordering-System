@@ -7,7 +7,7 @@ const cartController = require("@controllers/cart");
 router.get(
   "/",
   [checkToken, authorize(cap["fetch_cart"])],
-  cartController.create
+  cartController.get
 );
 
 router.post(
