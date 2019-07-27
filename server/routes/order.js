@@ -20,6 +20,11 @@ router.post( '/',
    orderController.create
 );
 
+router.post( '/bulk', 
+   [checkToken, authorize(cap['add_order'])],
+   orderController.bulkCreate
+);
+
 router.put( '/:_id', 
    [checkToken, authorize(cap['update_order'])],
    orderController.update

@@ -31,7 +31,7 @@ module.exports = async (req, res) => {
       }
 
       const token = generateToken({ _id, role });
-      return apiResponse.success(res, { message: 'login_successful', data: { user: { _id, role }, token }});
+      return apiResponse.success(res, { message: 'login_successful', data: { user: { _id, role }, token: `Bearer ${token}` }});
 
 
    } catch (e) {

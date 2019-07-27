@@ -1,23 +1,27 @@
-const Order =  require('@server/models/order');
+const Order = require('@server/models/order');
 
 module.exports = {
-    get: (query, single = true) => { 
-        if(single) {
-            return Order.findOne(query);
-        } 
-        return Order.find(query);
-    },
+  get: (query, single = true) => {
+    if (single) {
+      return Order.findOne(query);
+    }
+    return Order.find(query);
+  },
 
-    create: (data) => {
-        let order= new Order(data);
-        return order.save();
-    },
+  create: (data) => {
+    let order = new Order(data);
+    return order.save();
+  },
 
-    update: (query, data) => {
-        return Order.findOneAndUpdate(query, data, { new: true });
-    },
+  bulkCreate: (data) => {
+    return Order.insertMany(data);
+  },
 
-    remove: (query) => {
-        return Order.findOneAndRemove(query);
-    },
+  update: (query, data) => {
+    return Order.findOneAndUpdate(query, data, { new: true });
+  },
+
+  remove: (query) => {
+    return Order.findOneAndRemove(query);
+  },
 }

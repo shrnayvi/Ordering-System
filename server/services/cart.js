@@ -22,7 +22,6 @@ module.exports = {
     if(single) {
       return Cart.findOneAndRemove(query);
     } 
-    return Cart.remove(query);
-
+    return Cart.deleteMany(query);
   },
 };
