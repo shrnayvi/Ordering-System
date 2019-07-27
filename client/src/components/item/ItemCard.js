@@ -4,7 +4,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import ListGroupItem from 'react-bootstrap/ListGroupItem';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import routes from '../constants/routes';
+import routes from '../../constants/routes';
 
 export default ({ title, description, price, slug }) => {
   return (

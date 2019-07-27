@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { fetchItems } from '../../actions/itemActions';
 import { placeOrder } from '../../actions/orderActions';
-import ItemCard from '../ItemCard';
+import ItemCard from './ItemCard';
 import '../../assets/item.css';
 
 class Item extends Component {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { fetchByCategory } from '../../actions/itemActions';
-import ItemCard from '../ItemCard';
+import ItemCard from './ItemCard';
 import '../../assets/item.css';
 
 class CategoryItems extends Component {
