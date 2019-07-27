@@ -8,8 +8,8 @@ import '../../assets/item.css';
 
 class CategoryItems extends Component {
   componentDidMount() {
-    const { params: { id } } = this.props.match;
-    this.props.fetchByCategory(id);
+    const { params: { slug } } = this.props.match;
+    this.props.fetchByCategory(slug);
   }
 
   render() {

@@ -6,7 +6,7 @@ const categoryController = require('@controllers/category');
 const { getMenuItems }= require('@controllers/item');
 
 /* Get items related to particular category */
-router.get('/:_id/items', getMenuItems);
+router.get('/:slug/items', getMenuItems);
 
 router.get('/:slug', categoryController.getBySlug);
 router.get('/', categoryController.get);

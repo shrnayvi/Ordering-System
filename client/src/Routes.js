@@ -29,7 +29,7 @@ class Routes extends Component {
             <Route path="/reset-password" component={ResetPassword} />
             <Route exact path="/items" component={Item} />
             <Route path="/items/:slug" component={SingleItem} />
-            <Route path="/categories/:id" component={CategoryItems} />
+            <Route path="/categories/:slug" component={CategoryItems} />
             <ProtectedRoutes isLoggedIn={isLoggedIn} path="/orders" component={UserOrders} />
             <ProtectedRoutes isLoggedIn={isLoggedIn} path="/cart" component={Cart} />
             <ProtectedRoutes isLoggedIn={isLoggedIn} path="/profile" component={Profile} />

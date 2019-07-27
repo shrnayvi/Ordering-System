@@ -1,5 +1,5 @@
 const { get } = require('@services/item');
-const { distinct: distinctCategory } = require('@services/category');
+const { get: getCategory, distinct: distinctCategory } = require('@services/category');
 const pagination = require('@utils/pagination');
 
 /**
@@ -46,7 +46,8 @@ exports.getBySlug = async(req, res) => {
 exports.getMenuItems = async (req, res) => {
    try {
 
-      const _id = req.params._id;
+      const slug = req.params.slug;
+      const { _id } = await getCategory({ slug });
       const items = await get({ category: _id }, false)
          .populate('category', 'name');
 
