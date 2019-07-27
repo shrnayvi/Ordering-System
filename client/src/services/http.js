@@ -16,28 +16,28 @@ const instance = axios.create({
  * @param {Boolean} setToken Whether to send the token or not
  */
 export const get = (url, setToken = true, headers = {}, params = {}) => {
-   let config = {
-      url,
-      method: 'get',
-   };
+  let config = {
+    url,
+    method: 'get',
+  };
 
-   if(setToken) {
-      const { token } = authHeader();
-      headers = {
-         ...headers,
-         Authorization: `Bearer ${token}`,
-      }
-   }
+  if (setToken) {
+    const { token } = authHeader();
+    headers = {
+      ...headers,
+      Authorization: `Bearer ${token}`,
+    }
+  }
 
-   if(Object.keys(headers).length) {
-      config['headers'] = headers;
-   }
+  if (Object.keys(headers).length) {
+    config['headers'] = headers;
+  }
 
-   if(Object.keys(params).length) {
-      config['params'] = params;
-   }
+  if (Object.keys(params).length) {
+    config['params'] = params;
+  }
 
-   return instance(config);
+  return instance(config);
 }
 
 
@@ -49,25 +49,25 @@ export const get = (url, setToken = true, headers = {}, params = {}) => {
  * @param {Boolean} setToken Whether to send the token or not
  */
 export const post = (url, data, setToken = true, headers = {}) => {
-   let config = {
-      url,
-      method: 'post',
-      data,
-   };
+  let config = {
+    url,
+    method: 'post',
+    data,
+  };
 
-   if(setToken) {
-      const { token } = authHeader();
-      headers = {
-         ...headers,
-         Authorization: `Bearer ${token}`,
-      }
-   }
+  if (setToken) {
+    const { token } = authHeader();
+    headers = {
+      ...headers,
+      Authorization: `Bearer ${token}`,
+    }
+  }
 
-   if(Object.keys(headers).length) {
-      config['headers'] = headers;
-   }
+  if (Object.keys(headers).length) {
+    config['headers'] = headers;
+  }
 
-   return instance(config);
+  return instance(config);
 }
 
 
@@ -79,25 +79,25 @@ export const post = (url, data, setToken = true, headers = {}) => {
  * @param {Boolean} setToken Whether to send the token or not
  */
 export const put = (url, data, setToken = true, headers = {}) => {
-   let config = {
-      url,
-      method: 'put',
-      data,
-   };
+  let config = {
+    url,
+    method: 'put',
+    data,
+  };
 
-   if(setToken) {
-      const { token } = authHeader();
-      headers = {
-         ...headers,
-         Authorization: `Bearer ${token}`,
-      }
-   }
+  if (setToken) {
+    const { token } = authHeader();
+    headers = {
+      ...headers,
+      Authorization: `Bearer ${token}`,
+    }
+  }
 
-   if(Object.keys(headers).length) {
-      config['headers'] = headers;
-   }
+  if (Object.keys(headers).length) {
+    config['headers'] = headers;
+  }
 
-   return instance(config);
+  return instance(config);
 }
 
 
@@ -109,27 +109,27 @@ export const put = (url, data, setToken = true, headers = {}) => {
  * @param {Boolean} setToken Whether to send the token or not
  */
 export const remove = (url, setToken = true, data = {}, headers = {}) => {
-   let config = {
-      url,
-      method: 'delete',
-      data,
-   };
+  let config = {
+    url,
+    method: 'delete',
+    data,
+  };
 
-   if(setToken) {
-      const { token } = authHeader();
-      headers = {
-         ...headers,
-         Authorization: `Bearer ${token}`,
-      }
-   }
+  if (setToken) {
+    const { token } = authHeader();
+    headers = {
+      ...headers,
+      Authorization: `Bearer ${token}`,
+    }
+  }
 
-   if(Object.keys(headers).length) {
-      config['headers'] = headers;
-   }
+  if (Object.keys(headers).length) {
+    config['headers'] = headers;
+  }
 
-   if(Object.keys(data).length) {
-      config['data'] = data;
-   }
+  if (Object.keys(data).length) {
+    config['data'] = data;
+  }
 
-   return instance(config);
+  return instance(config);
 }

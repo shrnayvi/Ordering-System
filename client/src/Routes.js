@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import { connect} from 'react-redux';
+import { connect } from 'react-redux';
 import ProtectedRoutes from './components/ProtectedRoutes';
 
 import Home from './components/Home';
@@ -18,28 +18,28 @@ import UserOrders from './components/order/UserOrders';
 import Cart from './components/cart/Cart';
 
 class Routes extends Component {
-   render() {
-      const { isLoggedIn } = this.props;
-      return (
-         <div>
-            <Route exact path="/" component={Home} />
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
-            <Route path="/forgot-password" component={ForgotPassword} />
-            <Route path="/reset-password" component={ResetPassword} />
-            <Route exact path="/items" component={Item} />
-            <Route path="/items/:slug" component={SingleItem} />
-            <Route path="/categories/:slug" component={CategoryItems} />
-            <ProtectedRoutes isLoggedIn={isLoggedIn} path="/orders" component={UserOrders} />
-            <ProtectedRoutes isLoggedIn={isLoggedIn} path="/cart" component={Cart} />
-            <ProtectedRoutes isLoggedIn={isLoggedIn} path="/profile" component={Profile} />
-            <ProtectedRoutes isLoggedIn={isLoggedIn} path="/dashboard" component={Dashboard} />
-            <Route path="/logout" component={Logout} />
-         </div>
-      )
+  render() {
+    const { isLoggedIn } = this.props;
+    return (
+      <div>
+        <Route exact path="/" component={Home} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <Route path="/forgot-password" component={ForgotPassword} />
+        <Route path="/reset-password" component={ResetPassword} />
+        <Route exact path="/items" component={Item} />
+        <Route path="/items/:slug" component={SingleItem} />
+        <Route path="/categories/:slug" component={CategoryItems} />
+        <ProtectedRoutes isLoggedIn={isLoggedIn} path="/orders" component={UserOrders} />
+        <ProtectedRoutes isLoggedIn={isLoggedIn} path="/cart" component={Cart} />
+        <ProtectedRoutes isLoggedIn={isLoggedIn} path="/profile" component={Profile} />
+        <ProtectedRoutes isLoggedIn={isLoggedIn} path="/dashboard" component={Dashboard} />
+        <Route path="/logout" component={Logout} />
+      </div>
+    )
 
-   }
+  }
 };
 
-const mapStateToProps = ({ auth }) =>  ({ isLoggedIn: auth.isLoggedIn });
+const mapStateToProps = ({ auth }) => ({ isLoggedIn: auth.isLoggedIn });
 export default connect(mapStateToProps)(Routes);

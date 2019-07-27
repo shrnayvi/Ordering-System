@@ -9,13 +9,13 @@ import order from './orderReducer';
 import cart from './cartReducer';
 
 export default {
-   user,
-   auth,
-   menu,
-   register,
-   forgotPassword,
-   resetPassword,
-   items,
-   order,
-   cart,
+  user,
+  auth,
+  menu,
+  register,
+  forgotPassword,
+  resetPassword,
+  items,
+  order,
+  cart,
 }

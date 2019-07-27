@@ -13,9 +13,9 @@ const reducer = combineReducers(allReducers);
 const store = createStore(reducer, {}, applyMiddleware(thunk));
 
 ReactDOM.render(
-   <Provider store={store}>
-      <App /> 
-   </Provider>,
-   document.getElementById('app')
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('app')
 );
 

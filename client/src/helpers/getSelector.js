@@ -1,6 +1,6 @@
 export default (type, current, request) => {
-   if(current === request) {
-      return type;
-   }
-   return '';
+  if (current === request) {
+    return type;
+  }
+  return '';
 }
