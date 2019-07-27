@@ -30,8 +30,8 @@ class Routes extends Component {
             <Route exact path="/items" component={Item} />
             <Route path="/items/:slug" component={SingleItem} />
             <Route path="/categories/:id" component={CategoryItems} />
-            <Route path="/orders" component={UserOrders} />
-            <Route path="/cart" component={Cart} />
+            <ProtectedRoutes isLoggedIn={isLoggedIn} path="/orders" component={UserOrders} />
+            <ProtectedRoutes isLoggedIn={isLoggedIn} path="/cart" component={Cart} />
             <ProtectedRoutes isLoggedIn={isLoggedIn} path="/profile" component={Profile} />
             <ProtectedRoutes isLoggedIn={isLoggedIn} path="/dashboard" component={Dashboard} />
             <Route path="/logout" component={Logout} />

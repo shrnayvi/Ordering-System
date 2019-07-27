@@ -127,7 +127,7 @@ class Login extends Component {
           </Form.Group>
 
           {loginFailure && status !== 200 && (
-            <Alert variant="danger">{<FormattedMessage id={message} />}</Alert>
+            <Alert variant="danger">{<FormattedMessage id={message || 'server_error'} />}</Alert>
           )}
 
           {emailVerificationMessage && (
