@@ -22,4 +22,6 @@ export const ORDER = {
 
 export const CART = {
    ADD: '/cart',
+   GET: '/cart',
+   REMOVE: _id => `/cart/${_id}`,
 }

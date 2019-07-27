@@ -111,7 +111,7 @@ export const put = (url, data, setToken = true, headers = {}) => {
 export const remove = (url, setToken = true, data = {}, headers = {}) => {
    let config = {
       url,
-      method: 'put',
+      method: 'delete',
       data,
    };
 

@@ -1,8 +1,16 @@
-const { create, bulkCreate } = require("@services/cart");
+const { get, create, bulkCreate } = require("@services/cart");
 const validateCartInput = require("@validations/cart/validate-input");
 
 exports.create = async (req, res) => {
   const data = req.body;
+
+  if(typeof data.user === 'undefined') {
+    data['user'] = req.userId
+  }
+  
+  if(typeof data.quantity === 'undefined') {
+    data['quantity'] = 1;
+  }
 
   const { error } = validateCartInput(data);
   if (error) {
@@ -10,11 +18,13 @@ exports.create = async (req, res) => {
   }
 
   try {
-    if(typeof data.user === 'undefined') {
-      data['user'] = req.userId
+    const cart = await get({ user: data.user, item: data.item });
+    if(cart) {
+      return apiResponse.badRequest(res, { message: "item_exists_in_cart" });
     }
-    const cart = await create(data);
-    return apiResponse.success(res, { message: "added_cart", data: cart });
+
+    const newCart = await create(data);
+    return apiResponse.success(res, { message: "added_cart", data: newCart });
   } catch (e) {
     return apiResponse.serverError(res, { data: e.message });
   }

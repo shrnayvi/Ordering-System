@@ -6,7 +6,9 @@ const { get } = require("@services/cart");
 module.exports = async (req, res) => {
   try {
     const user = req.userId;
-    const cart = await get({ user }, false);
+    const cart = await get({ user }, false)
+      .populate('item');
+      
     return apiResponse.success(res, { message: "fetched_cart", data: cart });
   } catch (e) {
     return apiResponse.serverError(res, { data: e.message });

@@ -7,11 +7,16 @@ module.exports = async (req, res) => {
     let {
       user,
       item,
-      status
+      status,
+      quantity,
     } = req.body;
 
     if (!user) {
       user = req.userId;
+    }
+
+    if(!quantity) {
+      quantity = 1;
     }
 
     if (typeof status === "undefined") {

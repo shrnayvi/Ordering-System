@@ -6,6 +6,7 @@ import forgotPassword from './forgotPasswordReducer';
 import resetPassword from './resetPasswordReducer';
 import items from './itemReducer';
 import order from './orderReducer';
+import cart from './cartReducer';
 
 export default {
    user,
@@ -16,4 +17,5 @@ export default {
    resetPassword,
    items,
    order,
+   cart,
 }

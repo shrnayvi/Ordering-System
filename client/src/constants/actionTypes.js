@@ -76,4 +76,16 @@ export const CART =  {
    ADD_REQUEST: 'add_cart_request', 
    ADD_SUCCESS: 'add_cart_success', 
    ADD_FAILURE: 'add_cart_failure', 
+
+   FETCH_REQUEST: 'fetch_cart_request',
+   FETCH_SUCCESS: 'fetch_cart_success',
+   FETCH_FAILURE: 'fetch_cart_failure',
+   
+   REMOVE_REQUEST: 'remove_cart_request',
+   REMOVE_SUCCESS: 'remove_cart_success',
+   REMOVE_FAILURE: 'remove_cart_failure',
+
+   CHANGE_QUANTITY: 'change_cart_quantity',
+
+   RESET_STATUS: 'reset_cart_status',
 }

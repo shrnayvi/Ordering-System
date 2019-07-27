@@ -15,6 +15,7 @@ import Item from './components/item/Item';
 import SingleItem from './components/item/SingleItem';
 import CategoryItems from './components/item/CategoryItems';
 import UserOrders from './components/order/UserOrders';
+import Cart from './components/cart/Cart';
 
 class Routes extends Component {
    render() {
@@ -30,6 +31,7 @@ class Routes extends Component {
             <Route path="/items/:slug" component={SingleItem} />
             <Route path="/categories/:id" component={CategoryItems} />
             <Route path="/orders" component={UserOrders} />
+            <Route path="/cart" component={Cart} />
             <ProtectedRoutes isLoggedIn={isLoggedIn} path="/profile" component={Profile} />
             <ProtectedRoutes isLoggedIn={isLoggedIn} path="/dashboard" component={Dashboard} />
             <Route path="/logout" component={Logout} />

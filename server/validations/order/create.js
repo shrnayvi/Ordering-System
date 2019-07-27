@@ -9,8 +9,9 @@ module.exports = function (data) {
       user: Joi.string().required(),
       item: Joi.string().required(),
       status: Joi.number().required(),
+      quantity: Joi.number().required(),
    }; 
 
-   let { user, item, status } = data;
-   return Joi.validate({ user, item, status }, schema, { abortEarly: false });
+   let { user, item, status, quantity } = data;
+   return Joi.validate({ user, item, status, quantity }, schema, { abortEarly: false });
 }

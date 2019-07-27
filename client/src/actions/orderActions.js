@@ -1,5 +1,6 @@
 import { ORDER, CART } from '../constants/actionTypes';
 import * as orderService from '../services/orderService';
+import { addToCart } from '../services/cartService';
 
 /**
  * Place order
@@ -69,7 +70,7 @@ export const addCart = item => async dispatch => {
   dispatch({ type: CART.ADD_REQUEST });
 
   try {
-    let { data: response } = await orderService.addCart(item);
+    let { data: response } = await addToCart(item);
     const { status, message } = response;
     if (response.status === 200) {
       dispatch({ type: CART.ADD_SUCCESS, payload: response });

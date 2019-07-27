@@ -17,6 +17,7 @@ const OrderSchema = new Schema({
       type: Number,
       enum: [-1, 0, 1, 2],
    },
+   quantity: Number,
    orderNumber: String,
 
 }, { timestamps: true });

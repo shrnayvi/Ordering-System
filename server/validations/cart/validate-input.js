@@ -7,8 +7,9 @@ const Joi = require('@hapi/joi');
 module.exports = function (data) {
   const schema = {
     item: Joi.required(),
+    quantity: Joi.number().required(),
   };
 
-  let { item } = data;
-  return Joi.validate({ item }, schema, { abortEarly: false });
+  let { item, quantity } = data;
+  return Joi.validate({ item, quantity }, schema, { abortEarly: false });
 }

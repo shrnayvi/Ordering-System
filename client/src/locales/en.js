@@ -72,4 +72,7 @@ export default {
    date: 'Date',
    action: 'Action',
    add_to_cart: 'Add to Cart',
+   added_cart: 'Item Added to Cart',
+   my_cart: 'My Cart',
+   item_exists_in_cart: 'You have already added this item to your cart',
 }
