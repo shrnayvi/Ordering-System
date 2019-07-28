@@ -1,6 +1,11 @@
 import React from 'react';
+import Sidebar from './customer/sidebar/Sidebar';
+
 export default () => (
   <div>
-    <h2>Dashboard</h2>
+    <Sidebar />    
+    <div className="main">
+      <h2>Dashboard</h2>
+    </div>
   </div>
 )

@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 import { fetchUser, editUser, handleInputChange } from '../../actions/userActions';
+import Sidebar from '../customer/sidebar/Sidebar';
 import ErrorMessage from '../validations/ErrorMessage';
 
 const emailRequired = 'Email is required',
@@ -59,79 +60,83 @@ class Profile extends Component {
     const { validated } = this.state;
     return (
       <div>
-        <h3>User Information</h3>
-        <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
-          <Form.Group controlId="email">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="email"
-              name="email"
-              defaultValue={email}
-              onChange={this.handleChange}
-              required
-            />
-            <ErrorMessage message={emailRequired} />
-          </Form.Group>
+        <Sidebar />
+        <div className="main">
+          <h3>User Information</h3>
+          <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
+            <Form.Group controlId="email">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="email"
+                name="email"
+                defaultValue={email}
+                onChange={this.handleChange}
+                required
+              />
+              <ErrorMessage message={emailRequired} />
+            </Form.Group>
 
-          <Form.Group controlId="name">
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Name"
-              name="name"
-              defaultValue={name}
-              onChange={this.handleChange}
-              required
-            />
-            <ErrorMessage message={nameRequired} />
-          </Form.Group>
+            <Form.Group controlId="name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Name"
+                name="name"
+                defaultValue={name}
+                onChange={this.handleChange}
+                required
+              />
+              <ErrorMessage message={nameRequired} />
+            </Form.Group>
 
-          <Form.Group controlId="username">
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              type="username"
-              placeholder="Username"
-              name="username"
-              defaultValue={username}
-              onChange={this.handleChange}
-              required
-            />
-            <ErrorMessage message={usernameRequired} />
-          </Form.Group>
+            <Form.Group controlId="username">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="username"
+                placeholder="Username"
+                name="username"
+                defaultValue={username}
+                onChange={this.handleChange}
+                required
+              />
+              <ErrorMessage message={usernameRequired} />
+            </Form.Group>
 
-          <Form.Group controlId="username">
-            <Form.Label>Phone Number</Form.Label>
-            <Form.Control
-              type="number"
-              placeholder="Phone Number"
-              name="phone"
-              defaultValue={phone}
-              onChange={this.handleChange}
-              required
-            />
-            <ErrorMessage message={phoneRequired} />
-          </Form.Group>
+            <Form.Group controlId="username">
+              <Form.Label>Phone Number</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Phone Number"
+                name="phone"
+                defaultValue={phone}
+                onChange={this.handleChange}
+                required
+              />
+              <ErrorMessage message={phoneRequired} />
+            </Form.Group>
 
-          {
-            message ?
-              <Alert variant={status === 200 ? 'success' : 'danger'}>{message}</Alert>
-              : null
-          }
-
-          <Button variant="primary" type="submit">
             {
-              isEditing ?
-                <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                /> : 'Update'
+              message ?
+                <Alert variant={status === 200 ? 'success' : 'danger'}>{message}</Alert>
+                : null
             }
-          </Button>
-        </Form>
+
+            <Button variant="primary" type="submit">
+              {
+                isEditing ?
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  /> : 'Update'
+              }
+            </Button>
+          </Form>
+
+        </div>
       </div>
     )
   }

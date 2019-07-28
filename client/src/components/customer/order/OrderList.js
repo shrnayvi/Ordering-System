@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import Table from 'react-bootstrap/Table'
 import { FormattedMessage } from 'react-intl';
-import { ORDER as status } from '../../helpers/status';
+import { ORDER as status } from '../../../helpers/status';
 
 export default ({ orders, cancelOrder }) => {
   let userOrders = orders

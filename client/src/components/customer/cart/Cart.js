@@ -6,6 +6,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import CartItem from './CartItem';
+import Sidebar from '../sidebar/Sidebar';
 import { fetchCart } from '../../../actions/cartActions';
 import { placeOrder, resetPlacedOrder } from '../../../actions/orderActions';
 
@@ -31,65 +32,69 @@ class Cart extends Component {
     
     return (
       <div>
-        <h1>
-          <FormattedMessage id="my_cart" /> 
-        </h1>
-        
-        { fetchingCart ? <p>Fetching Cart....</p> : '' }
+        <Sidebar />
+        <div className="main">
+          <h1>
+            <FormattedMessage id="my_cart" /> 
+          </h1>
+          
+          { fetchingCart ? <p>Fetching Cart....</p> : '' }
 
-        {
-          placedOrder && placedOrderStatus === 200 &&
-            <Alert variant='success'>
-              <FormattedMessage id={orderMessage} />
-            </Alert>
-        }
+          {
+            placedOrder && placedOrderStatus === 200 &&
+              <Alert variant='success'>
+                <FormattedMessage id={orderMessage} />
+              </Alert>
+          }
 
-        {
-          cartItems.length ?
-           <Table responsive>
-            <thead>
-              <tr>
-                <th>Item</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Subtotal</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cart}
-              {
-                totalPrice 
-                ? <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td><b>Total: Rs. {totalPrice}</b></td>
-                  <td>
-                  {
-                    placingOrder ?
-                      <Spinner
-                        as="span"
-                        animation="border"
-                        size="sm"
-                        role="status"
-                        aria-hidden="true"
-                      /> : <Button onClick={this.placeOrder}><FormattedMessage id="place_order" /></Button>
-                  }
-                  </td>
-                </tr> : <tr></tr>
-              }
-            </tbody>
-          </Table>
-          : ''
-        }
+          {
+            cartItems.length ?
+            <Table responsive>
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Subtotal</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cart}
+                {
+                  totalPrice 
+                  ? <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><b>Total: Rs. {totalPrice}</b></td>
+                    <td>
+                    {
+                      placingOrder ?
+                        <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        /> : <Button onClick={this.placeOrder}><FormattedMessage id="place_order" /></Button>
+                    }
+                    </td>
+                  </tr> : <tr></tr>
+                }
+              </tbody>
+            </Table>
+            : ''
+          }
 
-        {
-          !placedOrder && !cartItems.length &&
-            <Alert variant='primary'>
-              <FormattedMessage id="cart_empty" />
-            </Alert>
-        }
+          {
+            !placedOrder && !cartItems.length &&
+              <Alert variant='primary'>
+                <FormattedMessage id="cart_empty" />
+              </Alert>
+          }
+
+          </div>
       </div>
     )
   }

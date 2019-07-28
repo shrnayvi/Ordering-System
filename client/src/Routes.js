@@ -14,7 +14,7 @@ import Logout from './components/user/Logout';
 import Item from './components/item/Item';
 import SingleItem from './components/item/SingleItem';
 import CategoryItems from './components/item/CategoryItems';
-import UserOrders from './components/order/UserOrders';
+import UserOrders from './components/customer/order/UserOrders';
 import Cart from './components/customer/cart/Cart';
 
 

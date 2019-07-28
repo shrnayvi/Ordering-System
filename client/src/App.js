@@ -9,6 +9,8 @@ import Footer from './components/Footer';
 import history from './helpers/history';
 import EN_locale from './locales/en';
 
+import './assets/main.css';
+
 const App = () => {
   return (
     <IntlProvider locale="en" messages={EN_locale}>

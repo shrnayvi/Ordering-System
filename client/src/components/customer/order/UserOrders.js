@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchOrders, updateOrder } from '../../actions/orderActions';
+import { fetchOrders, updateOrder } from '../../../actions/orderActions';
 import OrderList from './OrderList';
-import '../../assets/item.css';
+import Sidebar from '../sidebar/Sidebar';
+import '../../../assets/item.css';
 
 class UserOrder extends Component {
 
@@ -19,8 +20,11 @@ class UserOrder extends Component {
     const { userOrders } = this.props.order;
     return (
       <div>
-        <h1>My Orders</h1>
-        <OrderList orders={userOrders} cancelOrder={this.cancelOrder} />
+        <Sidebar />
+        <div className="main">
+          <h1>My Orders</h1>
+          <OrderList orders={userOrders} cancelOrder={this.cancelOrder} />
+        </div>
       </div>
     )
   }

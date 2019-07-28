@@ -10,34 +10,30 @@ class Navigation extends Component {
   render() {
     const {
       HOME,
-      PROFILE,
-      DASHBOARD,
       ITEM,
+      DASHBOARD,
       LOGIN,
       LOGOUT,
-      MYORDERS,
-      CART,
     } = routes;
 
     const { pathname } = this.props.location;
+    const { role } = this.props.user || {};
 
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav">
+            {
+              this.props.isLoggedIn && role &&
+                <li className={`nav-item ${getSelector('active', DASHBOARD(role), pathname)}`}>
+                  <Link className="nav-link" to={DASHBOARD(role)} >
+                    <FormattedMessage id="dashboard" />
+                  </Link>
+                </li>
+            }
             <li className={`nav-item ${getSelector('active', HOME, pathname)}`}>
               <Link className="nav-link" to={HOME}>
                 <FormattedMessage id="home" />
-              </Link>
-            </li>
-            {/* <li className={`nav-item ${getSelector('active', PROFILE, pathname)}`}>
-              <Link className="nav-link" to={PROFILE}>
-                <FormattedMessage id="profile" />
-              </Link>
-            </li> */}
-            {/* <li className={`nav-item ${getSelector('active', DASHBOARD, pathname)}`}>
-              <Link className="nav-link" to={DASHBOARD}>
-                <FormattedMessage id="dashboard" />
               </Link>
             </li>
             <li className={`nav-item ${getSelector('active', ITEM, pathname)}`}>
@@ -45,16 +41,6 @@ class Navigation extends Component {
                 <FormattedMessage id="item" />
               </Link>
             </li>
-            <li className={`nav-item ${getSelector('active', MYORDERS, pathname)}`}>
-              <Link className="nav-link" to={MYORDERS}>
-                <FormattedMessage id="my_orders" />
-              </Link>
-            </li>
-            <li className={`nav-item ${getSelector('active', CART, pathname)}`}>
-              <Link className="nav-link" to={CART}>
-                <FormattedMessage id="cart" />
-              </Link>
-            </li> */}
             {
               this.props.isLoggedIn ?
                 <li className="nav-item">
