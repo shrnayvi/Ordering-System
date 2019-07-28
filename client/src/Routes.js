@@ -15,11 +15,13 @@ import Item from './components/item/Item';
 import SingleItem from './components/item/SingleItem';
 import CategoryItems from './components/item/CategoryItems';
 import UserOrders from './components/order/UserOrders';
-import Cart from './components/cart/Cart';
+import Cart from './components/customer/cart/Cart';
+
+
 
 class Routes extends Component {
   render() {
-    const { isLoggedIn } = this.props;
+    const { isLoggedIn, role } = this.props;
     return (
       <div>
         <Route exact path="/" component={Home} />
@@ -30,16 +32,23 @@ class Routes extends Component {
         <Route exact path="/items" component={Item} />
         <Route path="/items/:slug" component={SingleItem} />
         <Route path="/categories/:slug" component={CategoryItems} />
-        <ProtectedRoutes isLoggedIn={isLoggedIn} path="/orders" component={UserOrders} />
-        <ProtectedRoutes isLoggedIn={isLoggedIn} path="/cart" component={Cart} />
-        <ProtectedRoutes isLoggedIn={isLoggedIn} path="/profile" component={Profile} />
-        <ProtectedRoutes isLoggedIn={isLoggedIn} path="/dashboard" component={Dashboard} />
         <Route path="/logout" component={Logout} />
+
+        {/* Customer Routes */}
+        <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/customer/my-orders" component={UserOrders} />
+        <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/customer/cart" component={Cart} />
+        <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/customer/profile" component={Profile} />
+        <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/customer/dashboard" component={Dashboard} />
+
+        {/* Admin Routes */}
+        <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/admin/profile" component={Profile} />
+        <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/admin/dashboard" component={Dashboard} />
+
       </div>
     )
 
   }
 };
 
-const mapStateToProps = ({ auth }) => ({ isLoggedIn: auth.isLoggedIn });
+const mapStateToProps = ({ auth }) => ({ isLoggedIn: auth.isLoggedIn, role: auth.user ? auth.user.role : null });
 export default connect(mapStateToProps)(Routes);

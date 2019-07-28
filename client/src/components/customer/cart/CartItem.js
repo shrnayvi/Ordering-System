@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { changeQuantity, removeFromCart } from '../../actions/cartActions';
+import { changeQuantity, removeFromCart } from '../../../actions/cartActions';
 
 class CartItem extends Component{
   constructor(props) {

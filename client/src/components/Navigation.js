@@ -15,7 +15,7 @@ class Navigation extends Component {
       ITEM,
       LOGIN,
       LOGOUT,
-      ORDERS,
+      MYORDERS,
       CART,
     } = routes;
 
@@ -30,12 +30,12 @@ class Navigation extends Component {
                 <FormattedMessage id="home" />
               </Link>
             </li>
-            <li className={`nav-item ${getSelector('active', PROFILE, pathname)}`}>
+            {/* <li className={`nav-item ${getSelector('active', PROFILE, pathname)}`}>
               <Link className="nav-link" to={PROFILE}>
                 <FormattedMessage id="profile" />
               </Link>
-            </li>
-            <li className={`nav-item ${getSelector('active', DASHBOARD, pathname)}`}>
+            </li> */}
+            {/* <li className={`nav-item ${getSelector('active', DASHBOARD, pathname)}`}>
               <Link className="nav-link" to={DASHBOARD}>
                 <FormattedMessage id="dashboard" />
               </Link>
@@ -45,8 +45,8 @@ class Navigation extends Component {
                 <FormattedMessage id="item" />
               </Link>
             </li>
-            <li className={`nav-item ${getSelector('active', ORDERS, pathname)}`}>
-              <Link className="nav-link" to={ORDERS}>
+            <li className={`nav-item ${getSelector('active', MYORDERS, pathname)}`}>
+              <Link className="nav-link" to={MYORDERS}>
                 <FormattedMessage id="my_orders" />
               </Link>
             </li>
@@ -54,7 +54,7 @@ class Navigation extends Component {
               <Link className="nav-link" to={CART}>
                 <FormattedMessage id="cart" />
               </Link>
-            </li>
+            </li> */}
             {
               this.props.isLoggedIn ?
                 <li className="nav-item">

@@ -6,8 +6,8 @@ import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import CartItem from './CartItem';
-import { fetchCart } from '../../actions/cartActions';
-import { placeOrder, resetPlacedOrder } from '../../actions/orderActions';
+import { fetchCart } from '../../../actions/cartActions';
+import { placeOrder, resetPlacedOrder } from '../../../actions/orderActions';
 
 class Cart extends Component {
   constructor(props) {
