@@ -10,4 +10,8 @@ export default {
   FORGOT_PASSWORD: '/forgot-password',
   MYORDERS: '/customer/my-orders',
   CART: '/customer/cart',
+
+  /* Admin routes */
+  ALL_USERS: '/admin/users',
+  NEW_USER: '/admin/new-user',
 };

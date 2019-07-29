@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
-import { fetchUser, editUser, handleInputChange } from '../../actions/userActions';
-import Sidebar from '../customer/sidebar/Sidebar';
+import { fetchUser, editProfile, handleInputChange, resetStatus } from '../../actions/userActions';
+import CustomerSidebar from '../customer/sidebar/Sidebar';
+import AdminSidebar from '../admin/sidebar/Sidebar';
 import ErrorMessage from '../validations/ErrorMessage';
 
 const emailRequired = 'Email is required',
@@ -16,6 +18,7 @@ const emailRequired = 'Email is required',
 class Profile extends Component {
   constructor(props) {
     super(props);
+    this.props.resetStatus();
     this.state = {
       validated: false,
     }
@@ -36,7 +39,7 @@ class Profile extends Component {
 
     if (form.checkValidity()) {
       const { user: { _id } } = this.props.auth;
-      this.props.editUser(_id, { ...this.props.user.information });
+      this.props.editProfile(_id, { ...this.props.user.profile });
     } else {
       e.stopPropagation();
     }
@@ -49,7 +52,7 @@ class Profile extends Component {
       name,
       username,
       phone,
-    } = this.props.user.information;
+    } = this.props.user.profile;
 
     const {
       message,
@@ -57,10 +60,16 @@ class Profile extends Component {
       isEditing,
     } = this.props.user;
 
+    const { role } = this.props.auth.user;
+
     const { validated } = this.state;
     return (
       <div>
-        <Sidebar />
+        {
+          role === 'admin'
+            ? <AdminSidebar />
+            : <CustomerSidebar />
+        }
         <div className="main">
           <h3>User Information</h3>
           <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
@@ -118,7 +127,9 @@ class Profile extends Component {
 
             {
               message ?
-                <Alert variant={status === 200 ? 'success' : 'danger'}>{message}</Alert>
+                <Alert variant={status === 200 ? 'success' : 'danger'}>
+                  <FormattedMessage id={message} />
+                </Alert>
                 : null
             }
 
@@ -145,8 +156,9 @@ class Profile extends Component {
 const mapStateToProps = ({ auth, user }) => ({ auth, user });
 const mapDispatchToProps = {
   fetchUser,
-  editUser,
-  handleInputChange
+  editProfile,
+  handleInputChange,
+  resetStatus,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

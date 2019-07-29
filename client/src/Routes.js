@@ -17,6 +17,10 @@ import CategoryItems from './components/item/CategoryItems';
 import UserOrders from './components/customer/order/UserOrders';
 import Cart from './components/customer/cart/Cart';
 
+import Users from './components/admin/user/Users';
+import NewUser from './components/admin/user/NewUser';
+import AdminDashboard from './components/admin/Dashboard';
+
 
 
 class Routes extends Component {
@@ -42,8 +46,9 @@ class Routes extends Component {
 
         {/* Admin Routes */}
         <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/admin/profile" component={Profile} />
-        <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/admin/dashboard" component={Dashboard} />
-
+        <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/admin/dashboard" component={AdminDashboard} />
+        <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/admin/users" component={Users} />
+        <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/admin/new-user" component={NewUser} />
       </div>
     )
 

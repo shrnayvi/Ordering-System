@@ -28,7 +28,22 @@ export const fetchUser = _id => async (dispatch) => {
   }
 }
 
-export const editUser = (_id, userData) => async dispatch => {
+export const fetchAllUsers = () => async dispatch => {
+  dispatch({ type: USER.FETCH_ALL_REQUEST })
+  try {
+    const { data: response } = await userService.getAll();
+    const { status, message } = response;
+    if (status === 200) {
+      dispatch({ type: USER.FETCH_ALL_SUCCESS, payload: response });
+    } else {
+      dispatch({ type: USER.FETCH_ALL_FAILURE, payload: { status, message } });
+    }
+  } catch (e) {
+    dispatch({ type: USER.FETCH_ALL_FAILURE, payload: e.message });
+  }
+}
+
+export const editProfile = (_id, userData) => async dispatch => {
   dispatch({ type: USER.EDIT_REQUEST });
   try {
     const { data: response } = await userService.update(_id, userData);
@@ -46,7 +61,7 @@ export const editUser = (_id, userData) => async dispatch => {
         payload: {
           status,
           message,
-          information: { email, username, phone, name },
+          profile: { email, username, phone, name },
         }
       });
     } else {
@@ -115,7 +130,7 @@ export const clearRegister = () => async dispatch => {
   dispatch({ type: USER.REGISTER_CLEAR });
 }
 
-export const emailVerification = (type) => async dispatch => {
+export const emailVerification = type => async dispatch => {
   if (type === 'success') {
     dispatch({ type: USER.VERIFICATION_SUCCESS });
   } else if (type === 'error') {
@@ -125,7 +140,7 @@ export const emailVerification = (type) => async dispatch => {
   }
 }
 
-export const registerUser = (userData) => async (dispatch) => {
+export const registerUser = userData => async dispatch => {
   dispatch({ type: USER.REGISTER_REQUEST });
 
   try {
@@ -172,4 +187,8 @@ export const resetPassword = (resetData) => async (dispatch) => {
   } catch (e) {
     dispatch({ type: USER.RESET_PASSWORD_FAILURE, payload: { status: 500, message: e.message } });
   }
+}
+
+export const resetStatus = () => async dispatch => {
+  dispatch({ type: USER.RESET_STATUS });
 }

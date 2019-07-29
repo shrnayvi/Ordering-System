@@ -5,6 +5,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 import { registerUser, clearRegister } from '../../actions/userActions';
 import ErrorMessage from '../validations/ErrorMessage';
 
@@ -12,8 +13,10 @@ class Register extends Component {
   constructor(props) {
     super(props);
 
-    if (this.props.isLoggedIn) {
-      this.props.history.push('/dashboard');
+    this.role = (this.props.auth.user || {}).role;
+    console.log(this.props)
+    if (this.props.auth.isLoggedIn && this.role !== 'admin') {
+      this.props.history.push(`/${this.role}/dashboard`);
     }
     this.props.clearRegister();
     this.state = {
@@ -61,7 +64,9 @@ class Register extends Component {
 
     return (
       <div>
-        <h2><FormattedMessage id="register" /></h2>
+        <h2>
+          <FormattedMessage id={this.role === 'admin' ? 'Add User': 'register'} />
+        </h2>
         <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
           <Form.Group controlId="email">
             <Form.Label><FormattedMessage id="email_address" /></Form.Label>
@@ -129,7 +134,7 @@ class Register extends Component {
                   size="sm"
                   role="status"
                   aria-hidden="true"
-                /> : <FormattedMessage id="register" />
+                /> : <FormattedMessage id={this.role === 'admin' ? 'add' : 'register'} />
             }
           </Button>
 
@@ -139,10 +144,9 @@ class Register extends Component {
   }
 }
 
-
-const mapStateToProps = ({ auth: { isLoggedIn }, register }) => ({ isLoggedIn, ...register });
+const mapStateToProps = ({ auth, register }) => ({ auth, ...register });
 const mapDispatchToProps = {
   registerUser,
   clearRegister,
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Register));

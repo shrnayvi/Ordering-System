@@ -37,6 +37,12 @@ export const USER = {
   VERIFICATION_ERROR: 'verification_error',
   VERIFICATION_CLEAR: 'verification_clear',
 
+  FETCH_ALL_REQUEST: 'fetch_all_user_request',
+  FETCH_ALL_SUCCESS: 'fetch_all_user_success',
+  FETCH_ALL_FAILURE: 'fetch_all_user_failure',
+
+  RESET_STATUS: 'reset_user_status',
+
   HANDLE_INPUT_CHANGE: 'handle_input_change',
 }
 

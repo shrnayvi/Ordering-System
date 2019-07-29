@@ -77,5 +77,7 @@ export default {
   item_exists_in_cart: 'You have already added this item to your cart',
   cart_empty: 'Your cart is empty',
   my_orders: 'My Orders',
-  cart: 'Cart'
+  cart: 'Cart',
+  all_users: 'All Users',
+  add: 'Add',
 }

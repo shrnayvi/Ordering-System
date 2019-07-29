@@ -6,4 +6,6 @@ export default {
 
   '/admin/profile': ['admin'],
   '/admin/dashboard': ['admin'],
+  '/admin/users': ['admin'],
+  '/admin/new-user': ['admin'],
 }
