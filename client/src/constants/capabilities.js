@@ -9,4 +9,7 @@ export default {
   '/admin/users': ['admin'],
   '/admin/new-user': ['admin'],
   '/admin/edit-user/:_id': ['admin'],
+  '/admin/new-category': ['admin'],
+  '/admin/categories': ['admin'],
+  '/admin/edit-category/:slug': ['admin'],
 }

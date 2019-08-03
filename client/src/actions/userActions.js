@@ -108,7 +108,6 @@ export const loginUser = ({ email, password }) => async (dispatch) => {
       let cookieValue = JSON.stringify({ token, user });
       setCookie('order', cookieValue, { path: '/' });
       dispatch({ type: USER.LOGIN_SUCCESS, payload: { user } });
-      console.log(routes.DASHBOARD(user.role))
       history.push(routes.DASHBOARD(user.role));
     } else {
       dispatch({ type: USER.LOGIN_FAILURE, payload: { status, message } });

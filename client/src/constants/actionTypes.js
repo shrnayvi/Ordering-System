@@ -106,3 +106,24 @@ export const CART = {
 
   FLUSH: 'flush_cart',
 }
+
+export const CATEGORY = {
+  ADD_REQUEST: 'add_category_request',
+  ADD_SUCCESS: 'add_category_success',
+  ADD_FAILURE: 'add_category_failure',
+
+  FETCH_REQUEST: 'fetch_category_request',
+  FETCH_ALL_SUCCESS: 'fetch_categories_success',
+  FETCH_SINGLE_SUCCESS: 'fetch_category_success',
+  FETCH_FAILURE: 'fetch_category_failure',
+
+  REMOVE_REQUEST: 'remove_category_request',
+  REMOVE_SUCCESS: 'remove_category_success',
+  REMOVE_FAILURE: 'remove_category_failure',
+
+  UPDATE_REQUEST: 'update_category_request',
+  UPDATE_SUCCESS: 'update_category_success',
+  UPDATE_FAILURE: 'update_category_failure',
+
+  RESET_STATUS: 'reset_category_status',
+}

@@ -11,6 +11,8 @@ class Sidebar extends Component {
       PROFILE,
       ALL_USERS,
       NEW_USER,
+      ALL_CATEGORIES,
+      NEW_CATEGORY
     } = routes;
 
     const { pathname } = this.props.location;
@@ -32,6 +34,16 @@ class Sidebar extends Component {
           <li className={`sidenav-link ${getSelector('sidenav-active', NEW_USER, pathname)}`} >
             <Link to={NEW_USER}>
               <FormattedMessage id="new_user" />
+            </Link>
+          </li>
+          <li className={`sidenav-link ${getSelector('sidenav-active', ALL_CATEGORIES, pathname)}`} >
+            <Link to={ALL_CATEGORIES}>
+              <FormattedMessage id="categories" />
+            </Link>
+          </li>
+          <li className={`sidenav-link ${getSelector('sidenav-active', NEW_CATEGORY, pathname)}`} >
+            <Link to={NEW_CATEGORY}>
+              <FormattedMessage id="new_category" />
             </Link>
           </li>
         </ul>

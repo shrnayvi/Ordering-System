@@ -12,6 +12,7 @@ export const USER = {
 
 export const ITEM = {
   GET_ALL: '/items',
+  ADD: '/items',
   GET_BY_SLUG: slug => `/items/${slug}`,
   GET_BY_CATEGORY: category => `/categories/${category}/items`,
 }
@@ -19,6 +20,7 @@ export const ITEM = {
 export const ORDER = {
   BULKCREATE: '/orders/bulk',
   GET_ORDER: userId => `/users/${userId}/orders`,
+  GET_ALL_ORDER: '/orders',
   UPDATE_ORDER: _id => `/orders/${_id}`,
 }
 
@@ -26,4 +28,12 @@ export const CART = {
   ADD: '/cart',
   GET: '/cart',
   REMOVE: _id => `/cart/${_id}`,
+}
+
+export const CATEGORY = {
+  ADD: '/categories',
+  GET_BY_SLUG: slug =>  `/categories/${slug}`,
+  GET_ALL_CATEGORY: '/categories',
+  REMOVE: _id => `/categories/${_id}`,
+  EDIT: _id => `/categories/${_id}`,
 }

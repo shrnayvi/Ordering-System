@@ -85,5 +85,11 @@ export default {
   add: 'Add',
   add_user: 'Add User',
   new_user: 'New User',
-  user_by_admin_add_successful: 'User has been added successfully'
+  user_by_admin_add_successful: 'User has been added successfully',
+  add_new_category: "Add New Category",
+  add_category: "Add Category",
+  categories: "Categories",
+  new_category: "New Category",
+  description: "Description",
+  edit_category: "Edit Category",
 }

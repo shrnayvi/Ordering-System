@@ -15,4 +15,7 @@ export default {
   ALL_USERS: '/admin/users',
   NEW_USER: '/admin/new-user',
   USER_EDIT: _id => `/admin/edit-user/${_id}`,
+  ALL_CATEGORIES: '/admin/categories',
+  NEW_CATEGORY: '/admin/new-category',
+  CATEGORY_EDIT: slug => `/admin/edit-category/${slug}`,
 };

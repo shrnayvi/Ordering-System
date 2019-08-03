@@ -3,19 +3,18 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Alert from 'react-bootstrap/Alert';
+// import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 import AdminSidebar from '../sidebar/Sidebar';
 import ErrorMessage from '../../validations/ErrorMessage';
-import { resetStatus, addCategory } from '../../../actions/categoryActions';
+import { updateCategory, getBySlug } from '../../../actions/categoryActions';
 
 const nameRequired = '',
   descriptionRequired = '';
 
-class NewCategory extends Component {
+class EditCategory extends Component {
   constructor(props) {
     super(props)
-    this.props.resetStatus();
     this.state = {
       validated: false,
       formData: {
@@ -23,6 +22,11 @@ class NewCategory extends Component {
         description: '',
       }
     }
+  }
+
+  componentDidMount() {
+    const { slug } = this.props.match.params;
+    this.props.getBySlug(slug)
   }
 
   handleChange = e => {
@@ -50,53 +54,53 @@ class NewCategory extends Component {
 
   render() {
     const { validated } = this.state;
+
     const { 
-      addingCategory,
-      message,
-      status,
+      editData: {
+        name,
+        description
+      }, 
+      isUpdating 
     } = this.props.category;
-    console.log(this.props.category)
+    console.log(description)
     return (
       <div>
         <AdminSidebar />
         <div className="main">
-          <h3><FormattedMessage id="add_new_category" /></h3>
+          <h3><FormattedMessage id="edit_category" /></h3>
           <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
             <Form.Group controlId="name">
-              <Form.Label>Name</Form.Label>
+              <Form.Label><FormattedMessage id="name" /></Form.Label>
               <Form.Control
                 type="name"
                 placeholder="name"
                 name="name"
                 onChange={this.handleChange}
+                defaultValue={name}
                 required
               />
               <ErrorMessage message={nameRequired} />
             </Form.Group>
 
-            <Form.Group controlId="description">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                as="textarea"
-                // placeholder="Description"
-                name="description"
-                onChange={this.handleChange}
-                required
-              />
-              <ErrorMessage message={descriptionRequired} />
-            </Form.Group>
-
             {
-              message ?
-                <Alert variant={status === 200 ? 'success' : 'danger'}>
-                  <FormattedMessage id={message} />
-                </Alert>
-                : null
+              typeof description !== 'undefined' &&
+                <Form.Group controlId="description">
+                  <Form.Label><FormattedMessage id="description" /></Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    // placeholder="Description"
+                    name="description"
+                    onChange={this.handleChange}
+                    defaultValue={description}
+                    required
+                  />
+                  <ErrorMessage message={descriptionRequired} />
+                </Form.Group>
             }
 
             <Button variant="primary" type="submit">
               {
-                addingCategory ?
+                isUpdating ?
                   <Spinner
                     as="span"
                     animation="border"
@@ -118,9 +122,8 @@ class NewCategory extends Component {
 const mapStateToProps = ({ category }) => ({ category })
 
 const mapDispatchToProps = {
-  resetStatus,
-  addCategory,
+  updateCategory,
+  getBySlug,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewCategory);
-
+export default connect(mapStateToProps, mapDispatchToProps)(EditCategory);
