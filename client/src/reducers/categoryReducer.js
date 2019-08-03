@@ -98,10 +98,7 @@ export default (state = initialState, action) => {
     case CATEGORY.FETCH_SINGLE_SUCCESS:
       return {
         ...state,
-        fetchingCategory: false,
-        fetchedCategory: true,
         status: action.payload.status,
-        message: action.payload.message,
         editData: action.payload.data,
       }
     case CATEGORY.FETCH_FAILURE:
@@ -136,6 +133,12 @@ export default (state = initialState, action) => {
         status: action.payload.status,
         message: action.payload.message,
       }
+
+    case CATEGORY.HANDLE_INPUT_CHANGE:
+      return {
+        ...state,
+        editData: { ...state.editData, ...action.payload }
+      };
       
     default:
       return state;

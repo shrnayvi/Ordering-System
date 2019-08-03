@@ -126,4 +126,6 @@ export const CATEGORY = {
   UPDATE_FAILURE: 'update_category_failure',
 
   RESET_STATUS: 'reset_category_status',
+
+  HANDLE_INPUT_CHANGE: 'handle_category_input_chnage',
 }

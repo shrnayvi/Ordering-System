@@ -1,3 +1,4 @@
+import omit from 'lodash/omit';
 import { CATEGORY } from "../constants/actionTypes";
 import * as categoryService from "../services/categoryService";
 import routes from '../constants/routes';
@@ -71,7 +72,7 @@ export const updateCategory = (_id, data) => async dispatch => {
   try {
     let { data: response } = await categoryService.editCategory(_id, data);
     if(response.status === 200) {
-      dispatch({ type: CATEGORY.UPDATE_SUCCESS, payload: response.data });
+      dispatch({ type: CATEGORY.UPDATE_SUCCESS, payload: response });
     } else {
       dispatch({ type: CATEGORY.UPDATE_FAILURE, payload: { status: response.status, message: response.message } });
     }
@@ -82,4 +83,9 @@ export const updateCategory = (_id, data) => async dispatch => {
 
 export const resetStatus = () => async dispatch => {
   dispatch({ type: CATEGORY.RESET_STATUS });
+}
+
+export const handleInputChange = data => async dispatch => {
+  data = omit(data, ['slug']);
+  dispatch({ type: CATEGORY.HANDLE_INPUT_CHANGE, payload: data });
 }

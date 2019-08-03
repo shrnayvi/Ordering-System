@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-// import Alert from 'react-bootstrap/Alert';
+import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 import AdminSidebar from '../sidebar/Sidebar';
 import ErrorMessage from '../../validations/ErrorMessage';
-import { updateCategory, getBySlug } from '../../../actions/categoryActions';
+import { resetStatus, updateCategory, getBySlug, handleInputChange } from '../../../actions/categoryActions';
 
 const nameRequired = '',
   descriptionRequired = '';
@@ -15,6 +15,7 @@ const nameRequired = '',
 class EditCategory extends Component {
   constructor(props) {
     super(props)
+    this.props.resetStatus();
     this.state = {
       validated: false,
       formData: {
@@ -31,12 +32,7 @@ class EditCategory extends Component {
 
   handleChange = e => {
     let { name, value } = e.target;
-    this.setState({ 
-      formData: { 
-        ...this.state.formData,
-        [name]: value 
-      }
-    });
+    this.props.handleInputChange({ [name]: value });
   }
 
   handleSubmit = e => {
@@ -44,8 +40,13 @@ class EditCategory extends Component {
     const form = e.currentTarget;
 
     if (form.checkValidity()) {
-      let data =  this.state.formData;
-      this.props.addCategory(data);
+      const {
+        _id, 
+        name, 
+        description,
+      } = this.props.category.editData;
+
+      this.props.updateCategory(_id, { name, description });
     } else {
       e.stopPropagation();
     }
@@ -60,9 +61,10 @@ class EditCategory extends Component {
         name,
         description
       }, 
-      isUpdating 
+      isUpdating,
+      status,
+      message,
     } = this.props.category;
-    console.log(description)
     return (
       <div>
         <AdminSidebar />
@@ -98,6 +100,14 @@ class EditCategory extends Component {
                 </Form.Group>
             }
 
+            {
+              message ?
+                <Alert variant={status === 200 ? 'success' : 'danger'}>
+                  <FormattedMessage id={message} />
+                </Alert>
+                : null
+            }
+
             <Button variant="primary" type="submit">
               {
                 isUpdating ?
@@ -107,7 +117,7 @@ class EditCategory extends Component {
                     size="sm"
                     role="status"
                     aria-hidden="true"
-                  /> : <FormattedMessage id="add_category" />
+                  /> : <FormattedMessage id="edit_category" />
               }
             </Button>
           </Form>
@@ -122,8 +132,10 @@ class EditCategory extends Component {
 const mapStateToProps = ({ category }) => ({ category })
 
 const mapDispatchToProps = {
+  resetStatus,
   updateCategory,
   getBySlug,
+  handleInputChange,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditCategory);
