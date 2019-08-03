@@ -7,6 +7,7 @@ export const USER = {
   EDIT: _id => `/users/${_id}`,
   RESET_PASSWORD: '/users/reset-password',
   FORGOT_PASSWORD: '/users/forgot-password',
+  DELETE: _id => `/users/${_id}`,
 };
 
 export const ITEM = {

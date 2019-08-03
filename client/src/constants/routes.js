@@ -14,4 +14,5 @@ export default {
   /* Admin routes */
   ALL_USERS: '/admin/users',
   NEW_USER: '/admin/new-user',
+  USER_EDIT: _id => `/admin/edit-user/${_id}`,
 };

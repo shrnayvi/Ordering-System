@@ -2,7 +2,13 @@ const { remove } = require('@services/user');
 
 module.exports = async (req, res) => {
    try {
-      let users = await remove({ _id: req.params._id });
+      let users = await remove({ _id: req.params._id })
+         .select({
+            _id: 1,
+            role: 1,
+            email: 1,
+         })
+
       if (!users) {
          return apiResponse.notFound(res);
       }

@@ -119,7 +119,6 @@ export default (state = initialState, action) => {
 
     /* Flush user cart after the order is placed */
     case CART.FLUSH:
-      console.log('hello')
       return {
         ...state,
         cartItems: []

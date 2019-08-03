@@ -5,17 +5,14 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
-import { fetchUser, editProfile, handleInputChange, resetStatus } from '../../actions/userActions';
-import CustomerSidebar from '../customer/sidebar/Sidebar';
-import AdminSidebar from '../admin/sidebar/Sidebar';
-import ErrorMessage from '../validations/ErrorMessage';
+import { fetchUser, editProfile, handleEditInputChange, resetStatus } from '../../../actions/userActions';
+import AdminSidebar from '../sidebar/Sidebar';
+import ErrorMessage from '../../validations/ErrorMessage';
 
-const emailRequired = 'Email is required',
-  nameRequired = 'Name is required',
-  phoneRequired = 'Phone is required',
-  usernameRequired = 'Username is required';
+const nameRequired = 'Name is required',
+  phoneRequired = 'Phone is required';
 
-class Profile extends Component {
+class UserEdit extends Component {
   constructor(props) {
     super(props);
     this.props.resetStatus();
@@ -24,13 +21,13 @@ class Profile extends Component {
     }
   }
   componentDidMount() {
-    const { user: { _id } } = this.props.auth;
-    this.props.fetchUser(_id, 'profile');
+    const { _id } = this.props.match.params;
+    this.props.fetchUser(_id, 'user');
   }
 
   handleChange = (e) => {
     const { name, value } = e.target
-    this.props.handleInputChange({ [name]: value })
+    this.props.handleEditInputChange({ [name]: value })
   }
 
   handleSubmit = (e) => {
@@ -38,8 +35,8 @@ class Profile extends Component {
     const form = e.currentTarget;
 
     if (form.checkValidity()) {
-      const { user: { _id } } = this.props.auth;
-      this.props.editProfile(_id, { ...this.props.user.profile }, 'profile');
+      const { _id } = this.props.match.params;
+      this.props.editProfile(_id, { ...this.props.user.editInformation }, 'user-edit');
     } else {
       e.stopPropagation();
     }
@@ -52,7 +49,8 @@ class Profile extends Component {
       name,
       username,
       phone,
-    } = this.props.user.profile;
+      status: userStatus,
+    } = this.props.user.editInformation;
 
     const {
       message,
@@ -60,16 +58,10 @@ class Profile extends Component {
       isEditing,
     } = this.props.user;
 
-    const { role } = this.props.auth.user;
-
     const { validated } = this.state;
     return (
       <div>
-        {
-          role === 'admin'
-            ? <AdminSidebar />
-            : <CustomerSidebar />
-        }
+        <AdminSidebar />
         <div className="main">
           <h3>User Information</h3>
           <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
@@ -84,7 +76,6 @@ class Profile extends Component {
                 required
                 readOnly
               />
-              <ErrorMessage message={emailRequired} />
             </Form.Group>
 
             <Form.Group controlId="name">
@@ -110,7 +101,6 @@ class Profile extends Component {
                 onChange={this.handleChange}
                 required
               />
-              <ErrorMessage message={usernameRequired} />
             </Form.Group>
 
             <Form.Group controlId="username">
@@ -125,6 +115,19 @@ class Profile extends Component {
               />
               <ErrorMessage message={phoneRequired} />
             </Form.Group>
+
+              {
+                typeof userStatus !== 'undefined' &&
+                  <Form.Group controlId="status">
+                    <Form.Label><FormattedMessage id="status" /></Form.Label>
+                    <Form.Control name="status" as="select" onChange={this.handleChange} defaultValue={userStatus} >
+                      <option value="-1">Pending</option>
+                      <option value="0" >Blocked</option>
+                      <option value="1">Active</option>
+                      <option value="-2">Inactive</option>
+                    </Form.Control>
+                  </Form.Group>
+              }
 
             {
               message ?
@@ -158,8 +161,8 @@ const mapStateToProps = ({ auth, user }) => ({ auth, user });
 const mapDispatchToProps = {
   fetchUser,
   editProfile,
-  handleInputChange,
+  handleEditInputChange,
   resetStatus,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(UserEdit);

@@ -8,4 +8,5 @@ export default {
   '/admin/dashboard': ['admin'],
   '/admin/users': ['admin'],
   '/admin/new-user': ['admin'],
+  '/admin/edit-user/:_id': ['admin'],
 }

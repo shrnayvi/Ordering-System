@@ -9,7 +9,8 @@ class Sidebar extends Component {
   render() {
     const {
       PROFILE,
-      ALL_USERS
+      ALL_USERS,
+      NEW_USER,
     } = routes;
 
     const { pathname } = this.props.location;
@@ -26,6 +27,11 @@ class Sidebar extends Component {
           <li className={`sidenav-link ${getSelector('sidenav-active', ALL_USERS, pathname)}`} >
             <Link to={ALL_USERS}>
               <FormattedMessage id="all_users" />
+            </Link>
+          </li>
+          <li className={`sidenav-link ${getSelector('sidenav-active', NEW_USER, pathname)}`} >
+            <Link to={NEW_USER}>
+              <FormattedMessage id="new_user" />
             </Link>
           </li>
         </ul>

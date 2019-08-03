@@ -63,6 +63,9 @@ export default {
   item: 'Items',
   cancel_order: 'Cancel Order',
   pending: 'Pending',
+  blocked: 'Blocked',
+  active: 'Active',
+  inactive: 'Inactive',
   cancelled: 'Cancelled',
   confirmed: 'Confirmed',
   delivered: 'Delivered',
@@ -80,4 +83,7 @@ export default {
   cart: 'Cart',
   all_users: 'All Users',
   add: 'Add',
+  add_user: 'Add User',
+  new_user: 'New User',
+  user_by_admin_add_successful: 'User has been added successfully'
 }

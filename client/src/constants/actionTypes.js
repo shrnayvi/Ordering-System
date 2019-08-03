@@ -26,7 +26,9 @@ export const USER = {
   REGISTER_FAILURE: 'register_failure',
 
   FETCH_USER: 'fetch_user',
-  EDIT_SUCCESS: 'edit_user_success',
+  FETCH_PROFILE: 'fetch_profile',
+  EDIT_USER_SUCCESS: 'edit_user_success',
+  EDIT_PROFILE_SUCCESS: 'edit_profile_success',
   RESET_PASSWORD: 'reset_password',
   FORGOT_PASSWORD: 'forgot_password',
   FETCH_ERROR: 'fetch_user_error',
@@ -41,9 +43,15 @@ export const USER = {
   FETCH_ALL_SUCCESS: 'fetch_all_user_success',
   FETCH_ALL_FAILURE: 'fetch_all_user_failure',
 
+  DELETE_REQUEST: 'delete_user_request',
+  DELETE_SUCCESS: 'delete_user_success',
+  DELETE_FAILURE: 'delete_user_failure',
+
   RESET_STATUS: 'reset_user_status',
 
-  HANDLE_INPUT_CHANGE: 'handle_input_change',
+  HANDLE_INPUT_CHANGE: 'handle_profile_input_change',
+
+  HANDLE_EDIT_INPUT_CHANGE: 'handle_edit_input_change',
 }
 
 export const MENU = {

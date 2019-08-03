@@ -38,6 +38,7 @@ class Users extends Component {
                   <th>Username</th>
                   <th>Phone</th>
                   <th>Role</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>

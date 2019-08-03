@@ -14,8 +14,7 @@ class Register extends Component {
     super(props);
 
     this.role = (this.props.auth.user || {}).role;
-    console.log(this.props)
-    if (this.props.auth.isLoggedIn && this.role !== 'admin') {
+    if ((this.props.auth.isLoggedIn && this.role !== 'admin') || (this.props.auth.isLoggedIn && this.props.location.pathname === '/register')) {
       this.props.history.push(`/${this.role}/dashboard`);
     }
     this.props.clearRegister();
@@ -25,6 +24,7 @@ class Register extends Component {
         password: '',
         name: '',
         phone: '',
+        status: -1,
       },
       validated: false,
     };
@@ -44,6 +44,9 @@ class Register extends Component {
       data = this.state.formData;
 
     if (form.checkValidity()) {
+      if('status' in data) {
+        data['status'] = +data.status;
+      }
       this.props.registerUser(data);
     } else {
       e.stopPropagation();
@@ -65,7 +68,7 @@ class Register extends Component {
     return (
       <div>
         <h2>
-          <FormattedMessage id={this.role === 'admin' ? 'Add User': 'register'} />
+          <FormattedMessage id={this.role === 'admin' ? 'add_user': 'register'} />
         </h2>
         <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
           <Form.Group controlId="email">
@@ -118,11 +121,26 @@ class Register extends Component {
           </Form.Group>
 
           {
+            this.role === 'admin' &&
+              <Form.Group controlId="status">
+                <Form.Label><FormattedMessage id="status" /></Form.Label>
+                <Form.Control name="status" as="select" onChange={this.handleChange}>
+                  <option value="-1">Pending</option>
+                  <option value="0">Blocked</option>
+                  <option value="1">Active</option>
+                  <option value="-2">Inactive</option>
+                </Form.Control>
+              </Form.Group>
+          }
+
+          {
             hasRequested && status !== 200 ?
               <Alert variant="danger">{<FormattedMessage id={message} />}</Alert>
+              : hasRequested && status === 200 && this.role === 'admin' ?
+              <Alert variant="success">{<FormattedMessage id={'user_by_admin_add_successful'} />}</Alert>
               : hasRequested && status === 200 ?
-                <Alert variant="success">{<FormattedMessage id={message} />}</Alert>
-                : ''
+              <Alert variant="success">{<FormattedMessage id={message} />}</Alert>
+              : ''
           }
 
           <Button variant="primary" type="submit">

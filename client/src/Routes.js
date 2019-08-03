@@ -19,6 +19,7 @@ import Cart from './components/customer/cart/Cart';
 
 import Users from './components/admin/user/Users';
 import NewUser from './components/admin/user/NewUser';
+import UserEdit from './components/admin/user/UserEdit';
 import AdminDashboard from './components/admin/Dashboard';
 
 
@@ -49,6 +50,7 @@ class Routes extends Component {
         <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/admin/dashboard" component={AdminDashboard} />
         <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/admin/users" component={Users} />
         <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/admin/new-user" component={NewUser} />
+        <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/admin/edit-user/:_id" component={UserEdit} />
       </div>
     )
 

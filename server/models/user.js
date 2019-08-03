@@ -50,7 +50,7 @@ UserSchema.pre('save', async function() {
             this.password = this.generateHash(this.password);
          }
 
-         if(this.role !== 'admin') {
+         if(this.role !== 'admin' || typeof this.status === 'undefined') {
             this.status = -1;
          }
       }
