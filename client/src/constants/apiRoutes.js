@@ -16,6 +16,8 @@ export const ITEM = {
   ADD: '/items',
   GET_BY_SLUG: slug => `/items/${slug}`,
   GET_BY_CATEGORY: category => `/categories/${category}/items`,
+  EDIT: _id => `/items/${_id}`,
+  REMOVE: _id => `/items/${_id}`,
 }
 
 export const ORDER = {

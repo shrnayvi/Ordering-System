@@ -13,4 +13,7 @@ export default {
   '/admin/categories': ['admin'],
   '/admin/edit-category/:slug': ['admin'],
   '/admin/orders': ['admin'],
+  '/admin/items': ['admin'],
+  '/admin/new-item': ['admin'],
+  '/admin/edit-item/:slug': ['admin'],
 }

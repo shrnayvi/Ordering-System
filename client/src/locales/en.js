@@ -93,4 +93,8 @@ export default {
   description: "Description",
   edit_category: "Edit Category",
   orders: "Orders",
+  items: "Items",
+  edit_item: "Edit Item",
+  category: "Category",
+  new_item: "New Item",
 }

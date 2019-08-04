@@ -64,12 +64,30 @@ export const ITEM = {
   FETCH_ALL_REQUEST: 'fetch_all_item_request',
   FETCH_ALL_SUCCESS: 'fetch_all_item_success',
   FETCH_ALL_FAILURE: 'fetch_all_item_failure',
+
   FETCH_SINGLE_REQUEST: 'fetch_single_item_request',
   FETCH_SINGLE_SUCCESS: 'fetch_single_item_success',
   FETCH_SINGLE_FAILURE: 'fetch_single_item_failure',
+  
   FETCH_CATEGORY_REQUEST: 'fetch_category_item_request',
   FETCH_CATEGORY_SUCCESS: 'fetch_category_item_success',
   FETCH_CATEGORY_FAILURE: 'fetch_category_item_failure',
+
+  ADD_REQUEST: 'add_item_request',
+  ADD_SUCCESS: 'add_item_success',
+  ADD_FAILURE: 'add_item_failure',
+
+  REMOVE_REQUEST: 'remove_item_request',
+  REMOVE_SUCCESS: 'remove_item_success',
+  REMOVE_FAILURE: 'remove_item_failure',
+
+  UPDATE_REQUEST: 'update_item_request',
+  UPDATE_SUCCESS: 'update_item_success',
+  UPDATE_FAILURE: 'update_item_failure',
+
+  RESET_STATUS: 'reset_item_status',
+
+  HANDLE_INPUT_CHANGE: 'handle_item_input_change',
 }
 
 export const ORDER = {

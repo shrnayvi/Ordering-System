@@ -31,7 +31,6 @@ export default (state = initialState, action) => {
         addingCategory: true
       };
     case CATEGORY.ADD_SUCCESS:
-      console.log(action)
       return {
         ...state,
         addingCategory: false,

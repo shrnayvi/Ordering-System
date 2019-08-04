@@ -5,3 +5,5 @@ export const getAll = () => http.get(item.GET_ALL, false);
 export const getBySlug = slug => http.get(item.GET_BY_SLUG(slug), false);
 export const getByCategory = category => http.get(item.GET_BY_CATEGORY(category), false);
 export const addItem = data => http.post(item.ADD, data);
+export const editItem = (_id, data) => http.put(item.EDIT(_id), data);
+export const removeItem = _id => http.remove(item.REMOVE(_id));
