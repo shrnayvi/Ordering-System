@@ -81,10 +81,14 @@ export const ORDER = {
   FETCH_REQUEST: 'fetch_user_order_request',
   FETCH_SUCCESS: 'fetch_user_order_success',
   FETCH_FAILURE: 'fetch_user_order_failure',
+  FETCH_ALL_SUCCESS: 'fetch_all_order_success',
 
   UPDATE_REQUEST: 'update_order_request',
   UPDATE_SUCCESS: 'update_order_success',
   UPDATE_FAILURE: 'updat_order_failure',
+  UPDATE_ALL_ORDER_SUCCESS: 'update_admin_order_success',
+
+  RESET_STATUS: 'update_order_status'
 }
 
 export const CART = {
@@ -127,5 +131,5 @@ export const CATEGORY = {
 
   RESET_STATUS: 'reset_category_status',
 
-  HANDLE_INPUT_CHANGE: 'handle_category_input_chnage',
+  HANDLE_INPUT_CHANGE: 'handle_category_input_change',
 }

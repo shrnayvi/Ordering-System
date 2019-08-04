@@ -18,4 +18,5 @@ export default {
   ALL_CATEGORIES: '/admin/categories',
   NEW_CATEGORY: '/admin/new-category',
   CATEGORY_EDIT: slug => `/admin/edit-category/${slug}`,
+  ALL_ORDERS:`/admin/orders`,
 };

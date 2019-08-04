@@ -92,4 +92,5 @@ export default {
   new_category: "New Category",
   description: "Description",
   edit_category: "Edit Category",
+  orders: "Orders",
 }

@@ -23,6 +23,7 @@ import UserEdit from './components/admin/user/UserEdit';
 import NewCategory from './components/admin/category/NewCategory';
 import EditCategory from './components/admin/category/EditCategory';
 import Categories from './components/admin/category/Categories';
+import Orders from './components/admin/order/Orders';
 import AdminDashboard from './components/admin/Dashboard';
 
 
@@ -57,6 +58,7 @@ class Routes extends Component {
         <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/admin/new-category" component={NewCategory} />
         <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/admin/categories" component={Categories} />
         <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/admin/edit-category/:slug" component={EditCategory} />
+        <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/admin/orders" component={Orders} />
       </div>
     )
 

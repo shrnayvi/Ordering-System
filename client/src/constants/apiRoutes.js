@@ -1,3 +1,4 @@
+const qs = require('querystring');
 export const USER = {
   LOGIN: '/users/login',
   GOOGLE_OAUTH: '/oauth/google',
@@ -22,6 +23,8 @@ export const ORDER = {
   GET_ORDER: userId => `/users/${userId}/orders`,
   GET_ALL_ORDER: '/orders',
   UPDATE_ORDER: _id => `/orders/${_id}`,
+  ORDER_BY_STATUS: (status) => `/orders?status=${status}`,
+  FILTER_ORDER: filterData => `/orders?${qs.encode(filterData)}`,
 }
 
 export const CART = {

@@ -79,7 +79,6 @@ export const post = (url, data, setToken = true, headers = {}) => {
  * @param {Boolean} setToken Whether to send the token or not
  */
 export const put = (url, data, setToken = true, headers = {}) => {
-  console.log(url, data)
   let config = {
     url,
     method: 'put',

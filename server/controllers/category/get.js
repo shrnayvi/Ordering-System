@@ -44,7 +44,7 @@ exports.get = async (req, res) => {
       }
     } else {
       category = await get({}, false)
-        .sort({ createdAt: -1 })
+        .sort({ createdAt: 'desc' });
       }
 
     return apiResponse.success(res, { message: 'fetched_category', data: category });

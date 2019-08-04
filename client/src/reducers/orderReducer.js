@@ -4,27 +4,27 @@ import { ORDER } from "../constants/actionTypes";
 const initialState = {
   status: null,
   message: "",
-  userOrders: []
+  userOrders: [],
+  allOrders: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    /* Place Order */
+    /* Rest Order states */
     case ORDER.CREATE_REQUEST:
       return {
         ...state,
-        placingOrder: true
+        placingOrder: null,
+        placedOrder: null,
+        message: '',
+        fetchingOrder: null,
+        fetchedOrder: null,
+        updatedOrder: null,
+        isUpdating: null,
       };
-    case ORDER.CREATE_SUCCESS:
-      return {
-        ...state,
-        placingOrder: false,
-        placedOrder: true,
-        status: action.payload.status,
-        message: action.payload.message,
-        newOrder: action.payload.data
-      };
-    case ORDER.CREATE_FAILURE:
+
+    /* Place Order */
+    case ORDER.RESET_STATUS:
       return {
         ...state,
         placingOrder: false,
@@ -56,6 +56,16 @@ export default (state = initialState, action) => {
         message: action.payload.message,
         userOrders: action.payload.data
       };
+    case ORDER.FETCH_ALL_SUCCESS:
+      console.log(action.payload.data.length)
+      return {
+        ...state,
+        fetchingOrder: false,
+        fetchedOrder: true,
+        status: action.payload.status,
+        message: action.payload.message,
+        allOrders: action.payload.data
+      };
     case ORDER.FETCH_FAILURE:
       return {
         ...state,
@@ -84,6 +94,19 @@ export default (state = initialState, action) => {
         status: action.payload.status,
         message: action.payload.message,
         userOrders,
+      };
+    case ORDER.UPDATE_ALL_ORDER_SUCCESS:
+      const { _id: orderId } = action.payload.data;
+      const orderIndex = findIndex(state.allOrders, { _id: orderId });
+      const allOrders = Object.assign([], state.allOrders, { [orderIndex]: action.payload.data });
+
+      return {
+        ...state,
+        isUpdating: false,
+        updatedOrder: true,
+        status: action.payload.status,
+        message: action.payload.message,
+        allOrders,
       };
     case ORDER.UPDATE_FAILURE:
       return {

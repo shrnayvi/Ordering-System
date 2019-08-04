@@ -24,6 +24,7 @@ exports.get = async(req, res) => {
             query['status'] = status;
          }
       }
+      //TODO filter by date
 
       const { skip, limit } = pagination(req.query),
          orders = await get(query, false)

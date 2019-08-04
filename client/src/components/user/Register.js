@@ -128,7 +128,7 @@ class Register extends Component {
                   <option value="-1">Pending</option>
                   <option value="0">Blocked</option>
                   <option value="1">Active</option>
-                  <option value="-2">Inactive</option>
+                  <option value="2">Inactive</option>
                 </Form.Control>
               </Form.Group>
           }
