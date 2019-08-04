@@ -120,7 +120,7 @@ class EditCategory extends Component {
               this.props.categories.length &&
                 <Form.Group controlId="category">
                   <Form.Label><FormattedMessage id="category" /></Form.Label>
-                  <Form.Control name="category" as="select" onChange={this.handleChange} defaultValue={category}>
+                  <Form.Control name="category" as="select" onChange={this.handleChange} value={category} required>
                     {
                       this.props.categories.map(c => (<option key={c._id} value={c._id}>{c.name}</option>))
                     }

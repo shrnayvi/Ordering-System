@@ -14,7 +14,7 @@ const nameRequired = 'Name required',
   descriptionRequired = 'Description required',
   categoryRequired = 'Category required';
 
-class NewCategory extends Component {
+class NewItem extends Component {
   constructor(props) {
     super(props)
     this.props.resetStatus();
@@ -74,7 +74,7 @@ class NewCategory extends Component {
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type="name"
-                placeholder="name"
+                placeholder="Name"
                 name="name"
                 onChange={this.handleChange}
                 required
@@ -164,5 +164,5 @@ const mapDispatchToProps = {
   fetchAllCategory,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewCategory);
+export default connect(mapStateToProps, mapDispatchToProps)(NewItem);
 
