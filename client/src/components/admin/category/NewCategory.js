@@ -9,8 +9,8 @@ import AdminSidebar from '../sidebar/Sidebar';
 import ErrorMessage from '../../validations/ErrorMessage';
 import { resetStatus, addCategory } from '../../../actions/categoryActions';
 
-const nameRequired = '',
-  descriptionRequired = '';
+const nameRequired = 'Name required',
+  descriptionRequired = 'Description required';
 
 class NewCategory extends Component {
   constructor(props) {
@@ -55,7 +55,6 @@ class NewCategory extends Component {
       message,
       status,
     } = this.props.category;
-    console.log(this.props.category)
     return (
       <div>
         <AdminSidebar />
@@ -78,7 +77,8 @@ class NewCategory extends Component {
               <Form.Label>Description</Form.Label>
               <Form.Control
                 as="textarea"
-                // placeholder="Description"
+                rows="5"
+                placeholder="Description"
                 name="description"
                 onChange={this.handleChange}
                 required
