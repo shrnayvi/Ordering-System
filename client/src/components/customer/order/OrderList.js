@@ -16,7 +16,7 @@ export default ({ orders, cancelOrder }) => {
           <td>
             {
               [-1, 1].includes(order.status) 
-                ? <button onClick={() => cancelOrder(order._id)}><FormattedMessage id="cancel_order" /></button>
+                ? <button className="btn btn-danger" onClick={() => cancelOrder(order._id)}><FormattedMessage id="cancel_order" /></button>
                 : ''
             }
           </td>
