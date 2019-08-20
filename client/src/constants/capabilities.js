@@ -1,4 +1,8 @@
 export default {
+  '/': ['customer', 'admin'],
+  '/items': ['customer'],
+  '/items/:slug': ['customer'],
+
   '/customer/dashboard': ['customer'],
   '/customer/my-orders': ['customer'],
   '/customer/cart': ['customer'],

@@ -1,9 +1,13 @@
 import React from 'react';
+import Sidebar from './customer/sidebar/Sidebar';
 
 const Home = (props) => {
   return (
     <div>
-      <h1>Welcome to Ordering System</h1>
+      <Sidebar />
+      <div className="main">
+        <h1>Welcome to Ordering System</h1>
+      </div>
     </div>
   )
 }

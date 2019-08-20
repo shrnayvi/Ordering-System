@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { fetchItems } from '../../actions/itemActions';
 import { placeOrder } from '../../actions/orderActions';
 import ItemCard from './ItemCard';
+import Sidebar from '../customer/sidebar/Sidebar';
 import '../../assets/item.css';
 
 class Item extends Component {
@@ -30,9 +30,12 @@ class Item extends Component {
       )
       );
     return (
-      <Row>
-        {items}
-      </Row>
+      <div>
+        <Sidebar />    
+        <div className="main">
+          {items}
+        </div>
+      </div>
     )
   }
 }

@@ -36,15 +36,17 @@ class Routes extends Component {
     const { isLoggedIn, role } = this.props;
     return (
       <div>
-        <Route exact path="/" component={Home} />
+        <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} exact path="/" component={Home} />
+
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/forgot-password" component={ForgotPassword} />
         <Route path="/reset-password" component={ResetPassword} />
-        <Route exact path="/items" component={Item} />
-        <Route path="/items/:slug" component={SingleItem} />
-        <Route path="/categories/:slug" component={CategoryItems} />
         <Route path="/logout" component={Logout} />
+
+        <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/items" component={Item}  exact />
+        <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/items/:slug" component={SingleItem} />
+        <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/categories/:slug" component={CategoryItems}  />
 
         {/* Customer Routes */}
         <ProtectedRoutes isLoggedIn={isLoggedIn} role={role} path="/customer/my-orders" component={UserOrders} />

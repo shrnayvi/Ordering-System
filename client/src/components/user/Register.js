@@ -5,7 +5,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { registerUser, clearRegister } from '../../actions/userActions';
 import ErrorMessage from '../validations/ErrorMessage';
 
@@ -157,6 +157,9 @@ class Register extends Component {
           </Button>
 
         </Form>
+        <Link to="/login">
+          <FormattedMessage id="login" />
+        </Link>
       </div>
     )
   }

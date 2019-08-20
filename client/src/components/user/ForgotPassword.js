@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 import { forgotPassword } from '../../actions/userActions';
 import ErrorMessage from '../validations/ErrorMessage';
 
@@ -74,6 +75,9 @@ class ForgotPassword extends Component {
               : ''
           }
         </Form>
+        <Link to="/login">
+          <FormattedMessage id="login" />
+        </Link>
       </div>
     )
   }

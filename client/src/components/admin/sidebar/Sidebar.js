@@ -8,6 +8,8 @@ import getSelector from '../../../helpers/getSelector';
 class Sidebar extends Component {
   render() {
     const {
+      DASHBOARD,
+      LOGOUT,
       PROFILE,
       ALL_USERS,
       NEW_USER,
@@ -24,6 +26,11 @@ class Sidebar extends Component {
     return (
       <div className="sidenav">
         <ul>
+          <li className={`sidenav-link ${getSelector('sidenav-active', DASHBOARD(role), pathname)}`} >
+            <Link to={DASHBOARD(role)}>
+              <FormattedMessage id="dashboard" />
+            </Link>
+          </li>
           <li className={`sidenav-link ${getSelector('sidenav-active', PROFILE(role), pathname)}`} >
             <Link to={PROFILE(role)}>
               <FormattedMessage id="profile" />
@@ -64,6 +71,14 @@ class Sidebar extends Component {
               <FormattedMessage id="new_item" />
             </Link>
           </li>
+          {
+            this.props.isLoggedIn && 
+              <li className="nav-item">
+                <Link className="nav-link" to={LOGOUT} >
+                  <FormattedMessage id="logout" />
+                </Link>
+              </li>
+          }
         </ul>
       </div>
     );
