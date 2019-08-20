@@ -27,10 +27,11 @@ export const fetchUser = (_id, fetchType = 'profile') => async (dispatch) => {
   }
 }
 
-export const fetchAllUsers = () => async dispatch => {
+export const fetchAllUsers = (page = null) => async dispatch => {
   dispatch({ type: USER.FETCH_ALL_REQUEST })
   try {
-    const { data: response } = await userService.getAll();
+    const query = page ? `page=${page}`: null
+    const { data: response } = await userService.getAll(query);
     const { status, message } = response;
     if (status === 200) {
       dispatch({ type: USER.FETCH_ALL_SUCCESS, payload: response });

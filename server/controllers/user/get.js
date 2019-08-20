@@ -1,4 +1,4 @@
-const { get } = require('@services/user');
+const { get, count } = require('@services/user');
 const pagination = require('@utils/pagination');
 
 /**
@@ -7,15 +7,16 @@ const pagination = require('@utils/pagination');
  * @param {String} [req.query.size] - Number of data to fetch
  */
 exports.get = async (req, res) => {
-   let users;
    try {
       const { skip, limit } = pagination(req.query);
       const users = await get({}, false)
          .skip(skip)
          .limit(limit)
          .sort({ createdAt: 'desc' });
+      
+      const total = await count({});
 
-      return apiResponse.success(res, { message: 'fetched_user', data: users });
+      return apiResponse.success(res, { message: 'fetched_user', data: { total, pageCount: Math.ceil(total / dataPerPage), users } });
    } catch(e) {
       return apiResponse.serverError(res, { data: e.message });
    }

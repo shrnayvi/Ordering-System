@@ -3,6 +3,10 @@ const User = require('@server/models/user');
 module.exports = {
    model: User,
 
+   count: query => {
+      return User.countDocuments(query);
+   },
+
    get: (query, single = true) => {
       if (single) {
          return User.findOne(query);

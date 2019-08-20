@@ -4,6 +4,8 @@ const initialState = {
   profile: {},  
   userList: [],
   editInformation: {},
+  total: 0,
+  pageCount: null,
 };
 
 
@@ -96,7 +98,9 @@ export default (state = initialState, action) => {
         fetchingUsers: false,
         fetchedUsers: true,
         message: action.payload.message,
-        userList: action.payload.data,
+        userList: action.payload.data.users,
+        total: action.payload.data.total,
+        pageCount: action.payload.data.pageCount,
       }
     case USER.FETCH_ALL_FAILURE:
       return {

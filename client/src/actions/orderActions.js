@@ -114,7 +114,6 @@ export const fetchAllOrders = (filterData = null) => async dispatch => {
   try {
     let response;
     if(filterData) {
-      console.log(filterData,'data')
       let { data } = await orderService.getFilteredOrders(filterData);
       response = data;
     } else {

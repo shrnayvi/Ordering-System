@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Table from 'react-bootstrap/Table';
-// import Button from 'react-bootstrap/Button';
-// import Spinner from 'react-bootstrap/Spinner';
 import { resetStatus, fetchAllUsers } from '../../../actions/userActions';
 import AdminSidebar from '../sidebar/Sidebar';
 import UserList from './UserList';
+import Pagination from '../../Pagination';
+import getPageNumber from '../../../helpers/getPageNumber';
 
 class Users extends Component {
   constructor(props) {
@@ -14,14 +14,17 @@ class Users extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchAllUsers();
+    const page = getPageNumber(this.props.history.location)
+    this.props.fetchAllUsers(page);
   }
 
   render() {
     const {
       userList,
+      pageCount,
     } = this.props.user;
 
+    const page = getPageNumber(this.props.history.location)
     const users = userList.map(usr => <UserList key={usr._id} member={usr} /> )
 
     return (
@@ -48,6 +51,8 @@ class Users extends Component {
             </Table>
             : ''
           }
+
+          <Pagination currentPage={page} routePath="/admin/users" pageCount={pageCount} action={this.props.fetchAllUsers} />
 
         </div>
       </div>

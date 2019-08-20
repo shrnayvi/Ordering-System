@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "bootstrap": "^4.3.1",
     "history": "^4.9.0",
     "js-cookie": "^2.2.0",
@@ -15,6 +15,7 @@
     "react-dom": "^16.8.6",
     "react-google-login": "^5.0.4",
     "react-intl": "^2.9.0",
+    "react-paginate": "^6.3.0",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",

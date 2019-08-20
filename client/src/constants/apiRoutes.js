@@ -3,7 +3,7 @@ export const USER = {
   LOGIN: '/users/login',
   GOOGLE_OAUTH: '/oauth/google',
   REGISTER: '/users/register',
-  FETCH_ALL: `/users`,
+  FETCH_ALL: query => query ? `/users?${query}` : `/users`,
   BY_ID: _id => `/users/${_id}`,
   EDIT: _id => `/users/${_id}`,
   RESET_PASSWORD: '/users/reset-password',
