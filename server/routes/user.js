@@ -18,7 +18,7 @@ router.get(
 router.get(
    '/:_id', 
    [checkToken, authorize(cap['get_user']), restrictUser], 
-   userController.get
+   userController.getById
 );
 
 /* Fetch the orders of a particular user */
