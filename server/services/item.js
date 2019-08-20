@@ -1,6 +1,10 @@
 const Item = require("@server/models/item");
 
 module.exports = {
+  count: query => {
+    return Item.countDocuments(query);
+  },
+
   get: (query, single = true) => {
     if (single) {
       return Item.findOne(query);
