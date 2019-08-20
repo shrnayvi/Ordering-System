@@ -11,7 +11,7 @@ const { get: getOrder } = require('@controllers/order');
 router.get( '/verify', userController.emailVerification);
 router.get(
    '/', 
-   // [checkToken, authorize(cap['get_users'])], 
+   [checkToken, authorize(cap['get_users'])], 
    userController.get
 );
 
@@ -23,7 +23,7 @@ router.get(
 
 /* Fetch the orders of a particular user */
 router.get(
-   '/:_id/orders', 
+   '/:user/orders', 
    [checkToken, authorize(cap['get_order'])],
    getOrder
 );

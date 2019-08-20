@@ -79,6 +79,13 @@ export const resetPlacedOrder = () => async dispatch => {
 }
 
 /**
+ * Reset states and statuses
+ */
+export const resetStatus = () => async dispatch => {
+  dispatch({ type: ORDER.RESET_STATUS });
+}
+
+/**
  * Add to cart
  */
 export const addCart = item => async dispatch => {

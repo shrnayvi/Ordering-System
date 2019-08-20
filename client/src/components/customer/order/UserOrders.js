@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchOrders, updateOrder } from '../../../actions/orderActions';
+import { fetchOrders, updateOrder, resetStatus } from '../../../actions/orderActions';
 import OrderList from './OrderList';
 import Sidebar from '../sidebar/Sidebar';
 import '../../../assets/item.css';
 
 class UserOrder extends Component {
+  constructor(props) {
+    super(props);
+    this.props.resetStatus();
+  }
 
   componentDidMount() {
     const { _id: userId } = this.props.user;
@@ -34,5 +38,6 @@ const mapStateToProps = ({ auth: { user }, order }) => ({user, order });
 const mapDispatchToProps = {
   fetchOrders,
   updateOrder,
+  resetStatus,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(UserOrder);

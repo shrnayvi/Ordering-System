@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import Row from 'react-bootstrap/Row';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
+import Sidebar from '../customer/sidebar/Sidebar';
 import { fetchBySlug } from '../../actions/itemActions';
 import { placeOrder, addCart } from '../../actions/orderActions';
 import { resetStatus } from '../../actions/cartActions';
@@ -61,8 +61,9 @@ class Item extends Component {
     } = this.props.cart;
 
     return (
-      <Row>
-        <div>
+      <div>
+        <Sidebar />
+        <div className="main">
           <h1>{name}</h1>
           <p> Price: {price} </p>
           <p> Description: {description} </p>
@@ -83,7 +84,7 @@ class Item extends Component {
               /> : <Button onClick={this.addToCart}><FormattedMessage id="add_to_cart" /></Button>
           }
         </div>
-      </Row>
+      </div>
     )
   }
 }

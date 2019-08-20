@@ -11,7 +11,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     /* Rest Order states */
-    case ORDER.CREATE_REQUEST:
+    case ORDER.RESET_STATUS:
       return {
         ...state,
         placingOrder: null,
@@ -24,13 +24,10 @@ export default (state = initialState, action) => {
       };
 
     /* Place Order */
-    case ORDER.RESET_STATUS:
+    case ORDER.CREATE_REQUEST:
       return {
         ...state,
-        placingOrder: false,
-        placedOrder: false,
-        status: action.payload.status,
-        message: action.payload.message
+        placingOrder: true,
       };
     case ORDER.CREATE_RESET:
       return {
@@ -57,7 +54,6 @@ export default (state = initialState, action) => {
         userOrders: action.payload.data
       };
     case ORDER.FETCH_ALL_SUCCESS:
-      console.log(action.payload.data.length)
       return {
         ...state,
         fetchingOrder: false,

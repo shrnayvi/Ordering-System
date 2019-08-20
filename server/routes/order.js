@@ -5,7 +5,7 @@ const checkToken = require('@middlewares/authenticate');
 const authorize = require('@middlewares/authorize');
 
 router.get( '/', 
-   // [checkToken, authorize(cap['get_order'])],
+   [checkToken, authorize(cap['get_order'])],
    orderController.get
 )
 
