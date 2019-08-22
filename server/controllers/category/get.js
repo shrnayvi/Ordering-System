@@ -1,5 +1,5 @@
 const { aggregation } = require('@services/category');
-const { get } = require('@services/category');
+const { get, count } = require('@services/category');
 const pagination = require('@utils/pagination');
 
 /**
@@ -11,6 +11,7 @@ const pagination = require('@utils/pagination');
  */
 exports.get = async (req, res) => {
   try {
+    let total;
     let { skip, limit } = pagination(req.query);
     let category;
     if (req.query.get === 'hierarchical') {
@@ -43,11 +44,14 @@ exports.get = async (req, res) => {
         }
       }
     } else {
+      total = await count({});
       category = await get({}, false)
+        .skip(skip)
+        .limit(limit)
         .sort({ createdAt: 'desc' });
       }
 
-    return apiResponse.success(res, { message: 'fetched_category', data: category });
+    return apiResponse.success(res, { message: 'fetched_category', data: { total, pageCount: Math.ceil(total / dataPerPage), category } });
   } catch (e) {
     return apiResponse.serverError(res, { data: e.message });
   }

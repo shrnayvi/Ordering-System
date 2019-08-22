@@ -12,7 +12,7 @@ export const USER = {
 };
 
 export const ITEM = {
-  GET_ALL: '/items',
+  GET_ALL: query => query ? `/items?${query}` : '/items',
   ADD: '/items',
   GET_BY_SLUG: slug => `/items/${slug}`,
   GET_BY_CATEGORY: category => `/categories/${category}/items`,
@@ -38,7 +38,7 @@ export const CART = {
 export const CATEGORY = {
   ADD: '/categories',
   GET_BY_SLUG: slug =>  `/categories/${slug}`,
-  GET_ALL_CATEGORY: '/categories',
+  GET_ALL_CATEGORY: query => query ? `/categories?${query}` : '/categories',
   REMOVE: _id => `/categories/${_id}`,
   EDIT: _id => `/categories/${_id}`,
 }

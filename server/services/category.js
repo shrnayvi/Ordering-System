@@ -1,6 +1,10 @@
 const Category = require('@server/models/category');
 
 module.exports = {
+   count: query => {
+      return Category.countDocuments(query);
+   },
+
    get: (query, single = true) => {
       if (single) {
          return Category.findOne(query);

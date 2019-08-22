@@ -6,6 +6,8 @@ const initialState = {
   message: "",
   categories: [],
   editData: {},
+  total: 0,
+  pageCount: null,
 };
 
 export default (state = initialState, action) => {
@@ -92,7 +94,9 @@ export default (state = initialState, action) => {
         fetchedCategory: true,
         status: action.payload.status,
         message: action.payload.message,
-        categories: action.payload.data,
+        categories: action.payload.data.category,
+        total: action.payload.data.total,
+        pageCount: action.payload.data.pageCount,
       }
     case CATEGORY.FETCH_SINGLE_SUCCESS:
       return {

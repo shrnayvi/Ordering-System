@@ -5,11 +5,13 @@ import * as itemService from '../services/itemService';
 /**
  * Fetch all the items
  */
-export const fetchItems = () => async (dispatch) => {
+export const fetchItems = (page = null) => async (dispatch) => {
+  console.log(page)
   dispatch({ type: ITEM.FETCH_ALL_REQUEST });
 
   try {
-    let { data: response } = await itemService.getAll();
+    const query = page ? `page=${page}`: null;
+    let { data: response } = await itemService.getAll(query);
     if (response.status === 200) {
       dispatch({ type: ITEM.FETCH_ALL_SUCCESS, payload: response.data })
     } else {

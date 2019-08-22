@@ -10,6 +10,8 @@ const initialState = {
   fetchingItems: false,
   fetchItemsFailure: false,
   editData: {},
+  total: 0,
+  pageCount: null,
 }
 
 export default (state = initialState, action) => {
@@ -40,7 +42,9 @@ export default (state = initialState, action) => {
         ...state,
         fetchingItems: false,
         fetchItemFailure: false,
-        itemData: action.payload,
+        itemData: action.payload.items,
+        total: action.payload.total,
+        pageCount: action.payload.pageCount,
       }
     case ITEM.FETCH_ALL_FAILURE:
       return {

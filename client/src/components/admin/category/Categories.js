@@ -5,6 +5,8 @@ import Table from 'react-bootstrap/Table';
 import { resetStatus, fetchAllCategory } from '../../../actions/categoryActions';
 import AdminSidebar from '../sidebar/Sidebar';
 import CategoryList from './CategoryList';
+import Pagination from '../../Pagination';
+import getPageNumber from '../../../helpers/getPageNumber';
 
 class Categories extends Component {
   constructor(props) {
@@ -13,13 +15,17 @@ class Categories extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchAllCategory();
+    const page = getPageNumber(this.props.history.location)
+    this.props.fetchAllCategory(page);
   }
 
   render() {
     const {
       categories,
+      pageCount,
     } = this.props.category;
+
+    const page = getPageNumber(this.props.history.location)
 
     const categoryList = categories.map(ctg => <CategoryList key={ctg._id} categoryData={ctg} /> )
 
@@ -44,7 +50,8 @@ class Categories extends Component {
             </Table>
             : ''
           }
-
+          
+          <Pagination currentPage={page} routePath="/admin/categories" pageCount={pageCount} action={this.props.fetchAllCategory} />
         </div>
       </div>
     )

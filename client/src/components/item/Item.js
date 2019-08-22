@@ -5,17 +5,25 @@ import { fetchItems } from '../../actions/itemActions';
 import { placeOrder } from '../../actions/orderActions';
 import ItemCard from './ItemCard';
 import Sidebar from '../customer/sidebar/Sidebar';
+import Pagination from '../Pagination';
+import getPageNumber from '../../helpers/getPageNumber';
 import '../../assets/item.css';
 
 class Item extends Component {
 
   componentDidMount() {
-    const { params } = this.props.match;
-    this.props.fetchItems(params.slug);
+    const page = getPageNumber(this.props.history.location)
+    this.props.fetchItems(page);
   }
 
   render() {
-    const { itemData } = this.props;
+    const { 
+      itemData,
+      pageCount,
+    } = this.props;
+    
+    const page = getPageNumber(this.props.history.location)
+
     const items = itemData
       .map(item => (
         <Col key={item._id}>
@@ -34,6 +42,7 @@ class Item extends Component {
         <Sidebar />    
         <div className="main">
           {items}
+          <Pagination currentPage={page} routePath="/items" pageCount={pageCount} action={this.props.fetchItems} />
         </div>
       </div>
     )

@@ -5,6 +5,8 @@ import Table from 'react-bootstrap/Table';
 import { resetStatus, fetchItems } from '../../../actions/itemActions';
 import AdminSidebar from '../sidebar/Sidebar';
 import ItemList from './ItemList';
+import Pagination from '../../Pagination';
+import getPageNumber from '../../../helpers/getPageNumber';
 
 class Items extends Component {
   constructor(props) {
@@ -13,13 +15,17 @@ class Items extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchItems();
+    const page = getPageNumber(this.props.history.location)
+    this.props.fetchItems(page);
   }
 
   render() {
     const {
       itemData,
+      pageCount,
     } = this.props.items;
+
+    const page = getPageNumber(this.props.history.location)
 
     const itemList = itemData.map(itm => <ItemList key={itm._id} itm={itm} /> )
 
@@ -47,6 +53,8 @@ class Items extends Component {
             </Table>
             : ''
           }
+
+          <Pagination currentPage={page} routePath="/admin/items" pageCount={pageCount} action={this.props.fetchItems} />
 
         </div>
       </div>

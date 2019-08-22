@@ -1,4 +1,4 @@
-const { get } = require('@services/item');
+const { get, count: countItems } = require('@services/item');
 const { get: getCategory, distinct: distinctCategory } = require('@services/category');
 const pagination = require('@utils/pagination');
 
@@ -10,14 +10,14 @@ const pagination = require('@utils/pagination');
 exports.get = async (req, res) => {
   try {
     const { skip, limit } = pagination(req.query),
+      total = await countItems({}),
       items = await get({}, false)
         .populate('category')
         .skip(skip)
         .limit(limit)
         .sort({ createdAt: 'desc' });
 
-
-    return apiResponse.success(res, { message: 'fetched_item', data: items });
+    return apiResponse.success(res, { message: 'fetched_item', data: { total, pageCount: Math.ceil(total / dataPerPage), items } });
   } catch (e) {
     return apiResponse.serverError(res, { data: e.message });
   }

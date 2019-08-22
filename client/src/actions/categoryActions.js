@@ -20,11 +20,12 @@ export const getBySlug = slug => async dispatch => {
   }
 }
 
-export const fetchAllCategory = () => async dispatch => {
+export const fetchAllCategory = (page = null) => async dispatch => {
   dispatch({ type: CATEGORY.FETCH_REQUEST });
 
   try {
-    let { data: response } = await categoryService.getCategories();
+    const query = page ? `page=${page}`: null;
+    let { data: response } = await categoryService.getCategories(query);
     if(response.status === 200) {
       dispatch({ type: CATEGORY.FETCH_ALL_SUCCESS, payload: response });
     } else {
