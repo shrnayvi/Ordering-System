@@ -3,5 +3,5 @@ module.exports = {
       user: 'vinayshrestha555@gmail.com',
    },
    from: 'vinayshrestha555@gmail.com',
-   dataPerPage: 2,
+   dataPerPage: 3,
 }
