@@ -12,7 +12,8 @@ const EventSchema = new Schema({
     type: Number,
     enum: [1, 2], //active: 1, expired: 2
     default: 1
-  }
+  },
+  priceLimit: Number,
 }, { timestamps: true });
 
 EventSchema.pre('save', async function () {
