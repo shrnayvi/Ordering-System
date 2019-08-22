@@ -7,6 +7,7 @@ function authorize(roles = []) {
       roles = [roles];
    }
    return (req, res, next) => {
+      console.log(roles, req.role)
       if(roles.length && roles.includes(req.role)) {
          next();
       } else {

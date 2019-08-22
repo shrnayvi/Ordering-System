@@ -10,23 +10,24 @@ const EventSchema = new Schema({
   slug: String,
   status: {
     type: Number,
-    enum: [1, 2] //active: 1, expired: 2
+    enum: [1, 2], //active: 1, expired: 2
+    default: 1
   }
 }, { timestamps: true });
 
-EventSchema.pre('save', async function() {
-   try {
-      const slug = slugify(this.name);
-      const event = await this.constructor.findOne({ slug });
-      if(category) {
-         const rand = randomstring.generate(5);
-         this.slug = `${slug}-${rand}`;
-      } else {
-         this.slug = slug;
-      }
-   } catch(e) {
-      return Promise.reject(e);
-   }
+EventSchema.pre('save', async function () {
+  try {
+    const slug = slugify(this.name);
+    const event = await this.constructor.findOne({ slug });
+    if (event) {
+      const rand = randomstring.generate(5);
+      this.slug = `${slug}-${rand}`;
+    } else {
+      this.slug = slug;
+    }
+  } catch (e) {
+    return Promise.reject(e);
+  }
 });
 
 
