@@ -1,14 +1,13 @@
 const passport 		   = module.exports = require('passport');
 const GoogleStrategy    = require('passport-google-plus-token');
 
-const User                                   = require('@models/user')
-const { generateToken }                      = require('@utils/JWT');
-const { googleClientID, googleClientSecret } = require('@config/keys');
+const User = require('@models/user')
+const { generateToken } = require('@utils/JWT');
 
 passport.use(
 	new GoogleStrategy({
-		clientID: googleClientID,
-		clientSecret: googleClientSecret,
+		clientID: process.env.GOOGLE_CLIENT_ID,
+		clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 	}, async (accessToken, refreshToken, profile, done) => {
       try {
          const { displayName, id, emails }  = profile;
