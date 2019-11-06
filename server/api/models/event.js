@@ -10,7 +10,7 @@ const EventSchema = new Schema({
   slug: String,
   status: {
     type: Number,
-    enum: [1, 2], //active: 1, expired: 2
+    enum: [1, 2], //active: 1, closed: 2
     default: 1
   },
   priceLimit: Number,

@@ -1,4 +1,6 @@
 const Cart = require("@models/cart");
+const Item = require("@models/item");
+const Event = require("@models/event");
 const validateCartInput = require("@validations/cart/validate-input");
 
 exports.create = async (req, res) => {
@@ -18,34 +20,44 @@ exports.create = async (req, res) => {
   }
 
   try {
-    const cart = await Cart.findOne({ user: data.user, item: data.item });
-    if(cart) {
-      return apiResponse.badRequest(res, { message: "item_exists_in_cart" });
-    }
+    const cart = await Cart.find({ user: data.user })
+      .select({ item: 1, quantity: 1 })
+      .populate('item');
+  
+    //TODO checking for events and combined orders
+    // const event = await Event.findOne({ _id: data.event })
+    //   .select({ status: 1, priceLimit: 1 });
+
+    // const item = await Item.findOne({ _id: data.item }).select('price'),
+    //   currentItemPrice = item.price,
+    //   priceLimit = event.priceLimit;
+
+    // const numberOfCombinedOrder = data.numberOfCombinedOrder;
+    // if(numberOfCombinedOrder > 1) {
+    //   let calculatedPrice = currentItemPrice;
+    //   if(cart.length) {
+    //     for(i = 0; i < cart.length; i++) {
+    //       calculatedPrice += cart.item.price;
+    //     }
+    //   }
+
+    //   if(calculatedPrice > priceLimit * numberOfCombinedOrder) {
+    //     return apiResponse.badRequest(res, { message: "price_limit_exceeded" });
+    //   }
+
+    // } else if(cart.length) {
+    //   return apiResponse.badRequest(res, { message: "can_add_only_one_item" });
+    // } else if(currentItemPrice > priceLimit) {
+    //   return apiResponse.badRequest(res, { message: "price_limit_exceeded" });
+    // }
+    
+    if(cart.length) {
+      return apiResponse.badRequest(res, { message: "can_add_only_one_item" });
+    } 
 
     const doc = new Cart(data);
     const newCart = await doc.save();
     return apiResponse.success(res, { message: "added_cart", data: newCart });
-  } catch (e) {
-    return apiResponse.serverError(res, { data: e.message });
-  }
-};
-
-exports.bulkCreate = async (req, res) => {
-  const data = req.body;
-
-  const { error } = validateCartInput(data);
-  if (error) {
-    return apiResponse.badRequest(res, { data: error });
-  }
-  try {
-    for(let i = 0, length = data.length; i < length; i++) {
-      if(typeof data[i].user === 'undefined') {
-        data[i]['user'] = req.userId;
-      }
-    }
-    const carts = await Cart.insertMany(data);
-    return apiResponse.success(res, { message: "added_cart", data: carts });
   } catch (e) {
     return apiResponse.serverError(res, { data: e.message });
   }

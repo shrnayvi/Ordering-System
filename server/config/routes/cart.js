@@ -16,12 +16,6 @@ router.post(
   cartController.create
 );
 
-router.post(
-  "/bulk-create",
-  [checkToken, authorize(cap["add_cart"])],
-  cartController.bulkCreate
-);
-
 router.delete(
   "/",
   [checkToken, authorize(cap["remove_cart"])],
