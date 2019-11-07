@@ -16,7 +16,6 @@ const CartSchema = new Schema({
     ref: 'Event',
   },
   quantity: Number,
-  numberOfCombinedOrder: Number,
 }, { timestamps: true });
 
 module.exports = mongoose.model('Cart', CartSchema);

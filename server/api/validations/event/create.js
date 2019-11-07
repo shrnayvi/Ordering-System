@@ -10,7 +10,7 @@ module.exports = function (data) {
   const schema = {
     name: Joi.string().required(),
     description: Joi.string().required(),
-    priceLimit: Joi.number().required,
+    priceLimit: Joi.number().required(),
   };
 
   let { name, description, priceLimit } = data;
