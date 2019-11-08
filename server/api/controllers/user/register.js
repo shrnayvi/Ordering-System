@@ -8,8 +8,21 @@ module.exports = async (req, res) => {
     res.send({ status: 400, message: error.name, error: error.details });
   } else {
     try {
-      let data = { ...req.body, method: 'local' },
-        userDoc = new User(data),
+      let data = { ...req.body, method: 'local' };
+      const foundUser = await User.countDocuments({ email: data.email });
+      if(foundUser) {
+        return apiResponse.conflict(res, { message: 'user_exists' });
+      }
+
+      if (!data.username) {
+        data.username = data.email.split('@')[0];
+      }
+
+      if (data.role !== 'admin' || typeof data.status === 'undefined') {
+        data.status = -1;
+      }
+
+      let userDoc = new User(data),
         newUser = await userDoc.save();
 
 
@@ -27,7 +40,7 @@ module.exports = async (req, res) => {
           });
       }
 
-      return apiResponse.success(res, { message: 'registration_successful', data: newUser });
+      return apiResponse.success(res, { message: 'registration_successful', data: { _id, role } });
     } catch (e) {
       if ('exists' in e && e.exists) {
         return apiResponse.badRequest(res, { message: e.message, data: e.message });

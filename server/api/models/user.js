@@ -6,6 +6,8 @@ const {
   ROLES: roles
 } = require('@config/constants');
 
+const pwd = require('@utils/password');
+
 /**
  * Status: { -1: pending, 0: blocked, 1: active, 2: inactive };
  */
@@ -37,51 +39,29 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-
 UserSchema.pre('save', async function () {
   try {
-    let user = await this.constructor.findOne({ email: this.email });
-    if (user) {
-      return Promise.reject({ exists: true, message: 'User Already Exists' });
-    }
-
     if (this.method === 'local') {
       if (this.password) {
-        this.password = this.generateHash(this.password);
-      }
-
-      if (this.role !== 'admin' || typeof this.status === 'undefined') {
-        this.status = -1;
+        this.password = await pwd.generateHash(this.password);
+        console.log(this.password);
       }
     }
-
-    if (!this.username) {
-      this.username = this.email.split('@')[0];
-    }
-
   } catch (e) {
     return Promise.reject({ message: e.message });
   }
 });
 
-UserSchema.pre('findOneAndUpdate', function () {
+UserSchema.pre('findOneAndUpdate', async function () {
   const password = this._update.password;
   if (password) {
     try {
-      this._update.password = this.schema.methods.generateHash(password);
+      this._update.password = await pwd.generateHash(password);
     } catch (e) {
       return Promise.reject({ message: e.message });
     }
   }
 });
 
-
-UserSchema.methods.generateHash = function (password) {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-}
-
-UserSchema.methods.comparePassword = function (password, hash) {
-  return bcrypt.compareSync(password, hash);
-}
 
 module.exports = mongoose.model('User', UserSchema);

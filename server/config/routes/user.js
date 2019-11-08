@@ -8,7 +8,6 @@ const restrictUser = require('@middlewares/restrict-user');
 const userController = require('@controllers/user');
 const { get: getOrder } = require('@controllers/order');
 
-router.get( '/verify', userController.emailVerification);
 router.get(
    '/', 
    [checkToken, authorize(cap['get_users'])], 
@@ -30,6 +29,7 @@ router.get(
 
 router.post('/login', userController.login);
 router.post('/register', userController.register);
+router.post('/verify', userController.emailVerification);
 router.post('/forgot-password', userController.forgotPassword);
 router.post('/reset-password', userController.resetPassword);
 

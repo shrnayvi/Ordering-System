@@ -36,4 +36,10 @@ module.exports = {
       return res.send({ status: 403, message, error: data });
    },
 
+   conflict: (res, opts = {}) => {
+      const message = opts.message || 'confilct';
+      const data = opts.data || {};
+      return res.send({ status: 409, message, error: data });
+   },
+
 }

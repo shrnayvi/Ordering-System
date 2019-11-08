@@ -5,7 +5,7 @@ const mail = require('@emails/mail');
  * @param {String} data.email - Receipent Email
  * @param {String} data.token - Reset Token
  */
-async function sendToken(data) {
+function sendToken(data) {
    const args = {
       emailData: {
          to: data.email,
@@ -19,11 +19,8 @@ async function sendToken(data) {
          `,
       }
    }
-   try{
-      return await mail.send(args);
-   } catch(e) {
-      return (e.message);
-   }
+
+   return mail.send(args);
 }
 
 module.exports = sendToken;

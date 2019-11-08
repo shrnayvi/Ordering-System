@@ -1,5 +1,6 @@
 const user                 = require('@models/user');
 const { generateToken }    = require('@utils/JWT');
+const pwd                  = require('@utils/password');
 const validateLoginInput   = require('@validations/user/login');
 
 module.exports = async (req, res) => {
@@ -19,7 +20,7 @@ module.exports = async (req, res) => {
          return apiResponse.badRequest(res, { message: `${userDoc.method}_login`});
       }
 
-      const canLogin = userDoc.comparePassword(req.body.password, userDoc.password || ''),
+      const canLogin = await pwd.comparePassword(req.body.password, userDoc.password || ''),
          { _id, role, status } = userDoc;
 
       if(status === -1) {
