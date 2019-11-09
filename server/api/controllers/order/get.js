@@ -24,12 +24,17 @@ exports.get = async (req, res) => {
         query['status'] = status;
       }
     }
-    //TODO filter by date
 
+    if(req.query.event) {
+      query = { ...query, event: req.query.event };
+    }
+
+    //TODO filter by date
     const { skip, limit } = pagination(req.query),
       orders = await Order.find(query)
         .populate('user', { name: 1, email: 1, role: 1 })
         .populate('item', { createdAt: 0, updatedAt: 0 })
+        .populate('event')
         .skip(skip)
         .limit(limit)
         .sort({ createdAt: 'desc' });

@@ -1,84 +1,74 @@
+const { get: _get } = require('lodash');
 const Order = require("@models/order");
 const Cart = require("@models/cart");
+const Item = require("@models/item");
+const Event = require("@models/event");
 const validateCreate = require("@validations/order/create");
-const validateBulkCreate = require("@validations/order/bulk-create");
+// const validateBulkCreate = require("@validations/order/bulk-create");
 const randomString = require("@utils/random-string");
 
 exports.create = async (req, res) => {
   try {
-    let {
-      user,
-      item,
-      status,
-      quantity,
-    } = req.body;
-
-    if (!user) {
-      user = req.userId;
-    }
-
-    if(!quantity) {
-      quantity = 1;
-    }
-
-    if (typeof status === "undefined") {
-      status = -1;
-    }
-
-    const rand = randomString(10);
-    const orderNumber = `${rand}${item.substring(3, 8)}`;
-    let data = {
-      user,
-      item,
-      status,
-      orderNumber
-    };
-
-    const { error } = validateCreate(data);
-    if (error) {
-      return apiResponse.badRequest(res, { data: error });
-    }
-
-    const doc = new Order(data);
-    const newOrder = await doc.save();
-    return apiResponse.success(res, { message: "added_order", data: newOrder });
-  } catch (e) {
-    return apiResponse.serverError(res, { data: e.message });
-  }
-};
-
-exports.bulkCreate = async (req, res) => {
-  let data = req.body;
-  let rand, orderNumber;
-  data.forEach(ord => {
-    if(typeof ord.user === 'undefined') {
-      ord['user'] = req.userId;
-    }
-
-    if(typeof ord.quantity === 'undefined' || !ord.quantity) {
-      ord['quantity'] = 1;
-    }
-
-    if(typeof ord.status === 'undefined') {
-      ord['status'] = -1;
-    }
+    const data = req.body;
+    const numberOfCombinedOrder = data.numberOfCombinedOrder || 1;
+    let orders = data.orders;
     
-    rand = randomString(10);
-    orderNumber = `${rand}${ord.item.substring(3, 8)}`;
-    ord['orderNumber'] = orderNumber;
-  });
+    if(typeof orders === 'undefined') {
+      orders = [{}];
+    }
 
+    if(!Array.isArray(orders)) {
+      orders = [orders];
+    }
 
-  try {
-    const { error } = validateBulkCreate(data);
+    let totalQuantity = 0;
+    let totalPrice = 0;
+    for(let i = 0; i < orders.length; i++) {
+      const item = orders[i].item || null;
+      orders[i].user = req.userId;
+      orders[i].event = data.event;
+
+      if(typeof orders[i].quantity === 'undefined' || !orders[i].quantity) {
+        orders[i].quantity = 1;
+      }
+
+      if(typeof orders[i].status === 'undefined') {
+        orders[i].status = -1;
+      }
+
+       
+      rand = randomString(10);
+      orderNumber = `${rand}${(item || '').substring(3, 8)}`;
+      orders[i].orderNumber = orderNumber;
+      const foundItem = await Item.find({ _id: item }).select('price');
+      totalQuantity += orders[i].quantity;
+      totalPrice += orders[i].quantity * foundItem.price;
+    }
+
+    const { error } = validateCreate({
+      event: data.event,
+      orders,
+    });
+
     if (error) {
       return apiResponse.badRequest(res, { data: error });
     }
 
-    const newOrder = await Order.insertMany(data);
+    const event = await Event.find({ _id: data.event }).select('priceLimit');
+    if(totalQuantity > numberOfCombinedOrder) {
+      return apiResponse.badRequest(res, { message: 'order_exceeded' });
+    }
+
+    if(totalPrice > event.priceLimit * numberOfCombinedOrder) {
+      return apiResponse.badRequest(res, { message: 'price_exceeded' })    
+    }
+
+    const newOrder = await Order.insertMany(data.orders);
     await Cart.deleteMany({ user: req.userId });
+
     return apiResponse.success(res, { message: "added_order", data: newOrder });
   } catch (e) {
+    console.log(e);
     return apiResponse.serverError(res, { data: e.message });
   }
-};
+}
