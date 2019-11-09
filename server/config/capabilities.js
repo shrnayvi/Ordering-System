@@ -33,4 +33,10 @@ module.exports = {
    'add_cart': ['customer'],
    'update_cart': ['customer'],
    'remove_cart': ['customer'],
+
+   /* Event Resource*/
+   'fetch_event': ['customer', 'admin'],
+   'add_event': ['admin'],
+   'edit_event': ['admin'],
+   'remove_event': ['admin'],
 };
