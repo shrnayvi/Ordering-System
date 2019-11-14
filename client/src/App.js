@@ -1,30 +1,28 @@
 import React from 'react';
-import { Router } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
-import { IntlProvider } from 'react-intl';
+import logo from './logo.svg';
+import './App.css';
 
-import Routes from './Routes';
-import Footer from './components/Footer';
-import history from './helpers/history';
-import EN_locale from './locales/en';
 
-import './assets/main.css';
-import './assets/pagination.css';
 
-const App = () => {
+function App() {
   return (
-    <IntlProvider locale="en" messages={EN_locale}>
-      <Container fluid={true}>
-        <Router history={history}>
-          <div>
-            {/* <Header /> */}
-            <Routes />
-            <Footer />
-          </div>
-        </Router>
-      </Container>
-    </IntlProvider>
-  )
-};
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
+}
 
 export default App;
