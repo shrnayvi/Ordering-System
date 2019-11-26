@@ -1,11 +1,18 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-function App() {
+import Login from './components/Login';
+import NotFound from './components/NotFound';
+
+export default () => {
   return (
-    <div className="app">
-      React APP!!
-    </div>
+    <Router>
+      <div className="container-fluid">
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
-
-export default App;
