@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
       let userDoc = await user.findOne({ email: req.body.email })
          .select({ role: 1, status: 1, password: 1, method: 1 })
       if(!userDoc) {
-         return apiResponse.notFound(res, { message: 'user_not_found' });
+         return apiResponse.notFound(res, { message: 'invalid_email_password' });
       }
 
       if(userDoc.method !== 'local') {
@@ -28,13 +28,11 @@ module.exports = async (req, res) => {
       }
 
       if(!canLogin) {
-         return apiResponse.badRequest(res, { message: 'password_invalid' });
+         return apiResponse.badRequest(res, { message: 'invalid_email_password' });
       }
 
       const token = generateToken({ _id, role });
       return apiResponse.success(res, { message: 'login_successful', data: { user: { _id, role }, token }});
-
-
    } catch (e) {
       return apiResponse.serverError(res, { data: e.message });
    }
