@@ -3,13 +3,20 @@ import { connect } from 'react-redux';
 import { loginUser } from '../actions/auth';
 import Input from './Input';
 import LabelInput from './LabelInput';
+import get from 'lodash/get';
 
 class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       email: '',
       password: '',
+    }
+
+    if(this.props.auth.isLoggedIn) {
+      const role = get(this.props, 'auth.user.role');
+      console.log(role);
+      this.props.history.push(`${role}`);
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -26,6 +33,7 @@ class Login extends Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <React.Fragment>
         <form onSubmit={this.handleSubmit}>
@@ -34,7 +42,7 @@ class Login extends Component {
             type="email"
             handleChange={this.handleChange}
             value={this.state.email}
-            label="Email"
+            label="enter_email"
           />
 
           <LabelInput 
@@ -42,7 +50,7 @@ class Login extends Component {
             type="password"
             handleChange={this.handleChange}
             value={this.state.email}
-            label="Password"
+            label="password"
           />
 
           <Input type="submit" className="btn btn-primary" />

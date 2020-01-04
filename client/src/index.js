@@ -9,6 +9,8 @@ import * as serviceWorker from './serviceWorker';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import './assets/main.css';
+
 const reducer = combineReducers(reducers);
 const store = createStore(
   reducer,

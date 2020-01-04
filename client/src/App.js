@@ -1,18 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { IntlProvider } from 'react-intl';
 
-import Login from './components/Login';
-import NotFound from './components/NotFound';
+import Routes from './Routes';
+import EN_Locale from './locales/en';
 
 export default () => {
   return (
-    <Router>
-      <div className="container-fluid">
-        <Switch>
-          <Route path="/login" component={Login} />
-          <Route component={NotFound} />
-        </Switch>
-      </div>
-    </Router>
+    <IntlProvider locale="en" messages={EN_Locale} >
+      <Routes />
+    </IntlProvider>
   );
 }

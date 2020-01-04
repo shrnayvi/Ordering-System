@@ -1,4 +1,6 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import Input from './Input';
 
 export default ({
@@ -10,7 +12,9 @@ export default ({
 }) => {
   return (
     <div className="form-group">
-      <label>{label}</label> 
+      <label>
+        <FormattedMessage id={label} />
+      </label> 
       <Input 
         name={name}
         type={type}
