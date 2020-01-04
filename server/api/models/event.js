@@ -1,8 +1,7 @@
-const mongoose = require('mongoose');
 const randomstring = require('randomstring');
 const slugify = require('@utils/slugify');
 
-const { Schema, model } = mongoose;
+const { Schema, model } = require('mongoose');
 
 const EventSchema = new Schema({
   name: String,

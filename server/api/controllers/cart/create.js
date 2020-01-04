@@ -71,7 +71,6 @@ exports.create = async (req, res) => {
     const newCart = await doc.save();
     return apiResponse.success(res, { message: "added_cart", data: newCart });
   } catch (e) {
-    console.log(e);
     return apiResponse.serverError(res, { data: e.message });
   }
 };

@@ -1,10 +1,9 @@
-const { get: _get } = require('lodash');
 const Order = require("@models/order");
+const OrderDetail = require("@models/order-detail");
 const Cart = require("@models/cart");
 const Item = require("@models/item");
 const Event = require("@models/event");
 const validateCreate = require("@validations/order/create");
-// const validateBulkCreate = require("@validations/order/bulk-create");
 const randomString = require("@utils/random-string");
 
 exports.create = async (req, res) => {
@@ -25,21 +24,10 @@ exports.create = async (req, res) => {
     let totalPrice = 0;
     for(let i = 0; i < orders.length; i++) {
       const item = orders[i].item || null;
-      orders[i].user = req.userId;
-      orders[i].event = data.event;
-
       if(typeof orders[i].quantity === 'undefined' || !orders[i].quantity) {
         orders[i].quantity = 1;
       }
 
-      if(typeof orders[i].status === 'undefined') {
-        orders[i].status = -1;
-      }
-
-       
-      rand = randomString(10);
-      orderNumber = `${rand}${(item || '').substring(3, 8)}`;
-      orders[i].orderNumber = orderNumber;
       const foundItem = await Item.find({ _id: item }).select('price');
       totalQuantity += orders[i].quantity;
       totalPrice += orders[i].quantity * foundItem.price;
@@ -54,7 +42,9 @@ exports.create = async (req, res) => {
       return apiResponse.badRequest(res, { data: error });
     }
 
+
     const event = await Event.find({ _id: data.event }).select('priceLimit');
+
     if(totalQuantity > numberOfCombinedOrder) {
       return apiResponse.badRequest(res, { message: 'order_exceeded' });
     }
@@ -62,13 +52,26 @@ exports.create = async (req, res) => {
     if(totalPrice > event.priceLimit * numberOfCombinedOrder) {
       return apiResponse.badRequest(res, { message: 'price_exceeded' })    
     }
+      
+    const rand = randomString(10);
+    orderNumber = `${rand}${(data.event || '').substring(3, 8)}`;
 
-    const newOrder = await Order.insertMany(data.orders);
+    const order = new Order({ 
+      orderNumber,
+      user: req.userId,
+      event: data.event,
+    });
+
+    const newOrder = await order.save();
+
+    let details = orders.map(detail => ({ ...detail, order: order._id }));
+    await OrderDetail.insertMany(details);
+
     await Cart.deleteMany({ user: req.userId });
 
     return apiResponse.success(res, { message: "added_order", data: newOrder });
   } catch (e) {
-    console.log(e);
+    console.log(e)
     return apiResponse.serverError(res, { data: e.message });
   }
 }

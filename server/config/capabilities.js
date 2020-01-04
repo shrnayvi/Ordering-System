@@ -28,6 +28,9 @@ module.exports = {
    'add_order': ['admin', 'customer'],
    'update_order': ['admin', 'customer'],
 
+   /* Order Detail Resource*/
+   'get_order_detail': ['admin', 'customer'],
+
    /* Cart Resource*/
    'fetch_cart': ['customer'],
    'add_cart': ['customer'],

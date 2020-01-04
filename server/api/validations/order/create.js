@@ -9,7 +9,6 @@ module.exports = function (data) {
     event: Joi.string().length(24),
     orders: Joi.array().items(
       Joi.object({
-        user: Joi.string().length(24).required(),
         item: Joi.string().length(24).required(),
         quantity: Joi.number().required(),
       })
