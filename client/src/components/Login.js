@@ -15,7 +15,6 @@ class Login extends Component {
 
     if(this.props.auth.isLoggedIn) {
       const role = get(this.props, 'auth.user.role');
-      console.log(role);
       this.props.history.push(`${role}`);
     }
 
