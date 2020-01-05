@@ -25,10 +25,24 @@ export const USER = {
   REGISTER_ERROR: 'register_error',
   REGISTER_FAILURE: 'register_failure',
 
-  FETCH_USER: 'fetch_user',
-  FETCH_PROFILE: 'fetch_profile',
-  EDIT_USER_SUCCESS: 'edit_user_success',
+  EDIT_PROFILE_REQUEST: 'edit_profile_request',
   EDIT_PROFILE_SUCCESS: 'edit_profile_success',
+  EDIT_PROFILE_FAILURE: 'edit_profile_failure',
+
+  FETCH_PROFILE_REQUEST: 'fetch_profile_request',
+  FETCH_PROFILE_SUCCESS: 'fetch_profile_success',
+  FETCH_PROFILE_FAILURE: 'fetch_profile_failure',
+
+  HANDLE_PROFILE_INPUT: 'handle_profile_input',
+
+  FETCH_USER_REQUEST: 'fetch_user_request',
+  FETCH_USER_SUCCESS: 'fetch_user_success',
+  FETCH_USER_FAILURE: 'fetch_user_failure',
+
+  EDIT_USER_REQUEST: 'edit_user_request',
+  EDIT_USER_SUCCESS: 'edit_user_success',
+  EDIT_USER_FAILURE: 'edit_user_failure',
+
   RESET_PASSWORD: 'reset_password',
   FORGOT_PASSWORD: 'forgot_password',
   FETCH_ERROR: 'fetch_user_error',

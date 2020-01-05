@@ -1,15 +1,13 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import Sidebar from './Sidebar';
+import Profile from '../common/Profile';
 
 export default () => (
   <React.Fragment>
     <Sidebar />
     <div className="main">
-      <h1>
-        <FormattedMessage id="profile" />
-      </h1>
+      <Profile />
     </div>
   </React.Fragment>
 )

@@ -11,7 +11,12 @@ export default (state = initialState, action) => {
     case USER.LOGIN_SUCCESS:
       return { isLoggedIn: true, isLogging: false, user: action.payload.user };
     case USER.LOGIN_FAILURE:
-      return { isLoggedIn: false, isLogging: false };
+      return { isLoggedIn: false, isLogging: false, user: {} };
+
+    case USER.LOGOUT_REQUEST:
+      return { ...state, isLoggingOut: true };
+    case USER.LOGOUT_SUCCESS:
+      return { ...state, isLoggingOut: false, isLoggedIn: false, user: {} };
     default: 
       return state;
   }

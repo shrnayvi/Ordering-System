@@ -4,6 +4,7 @@ import { loginUser } from '../actions/auth';
 import Input from './Input';
 import LabelInput from './LabelInput';
 import get from 'lodash/get';
+import { ToastContainer } from 'react-toastify';
 
 class Login extends Component {
   constructor(props) {
@@ -32,7 +33,6 @@ class Login extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <React.Fragment>
         <form onSubmit={this.handleSubmit}>
@@ -48,11 +48,13 @@ class Login extends Component {
             name="password"
             type="password"
             handleChange={this.handleChange}
-            value={this.state.email}
+            value={this.state.password}
             label="password"
           />
 
           <Input type="submit" className="btn btn-primary" />
+          
+          <ToastContainer autoClose={3000} />
 
         </form>
       </React.Fragment>

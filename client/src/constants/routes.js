@@ -1,6 +1,6 @@
 export default {
   ITEM: '/items',
-  LOGIN: '/login',
+  LOGIN: '/',
   LOGOUT: '/logout',
   PROFILE: role =>  `/${role}/profile`,
   REGISTER: '/register',

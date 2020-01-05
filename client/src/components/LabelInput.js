@@ -9,6 +9,7 @@ export default ({
   className,
   handleChange,
   label,
+  ...rest
 }) => {
   return (
     <div className="form-group">
@@ -20,6 +21,7 @@ export default ({
         type={type}
         className={className}
         handleChange={handleChange}
+        {...rest}
       />
     </div>
   )

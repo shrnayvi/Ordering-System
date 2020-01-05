@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
+
+import history from './helpers/history';
 
 import ProtectedRoutes from './components/ProtectedRoutes';
 
 import Login from './components/Login';
+import Logout from './components/Logout';
 import Dashboard from './components/Customer/Dashboard';
 import Items from './components/Customer/item/Items';
 import CustomerOrders from './components/Customer/order/Orders';
@@ -30,10 +33,11 @@ class Routes extends Component {
     const { user, isLoggedIn } = this.props;
     const role = user ? user.role : null;
     return (
-      <Router>
+      <Router history={history}>
         <div className="container-fluid">
           <Switch>
             <Route path="/" component={Login} exact />
+            <Route path="/logout" component={Logout} />
 
             <Route path="/items" component={Items} />
 

@@ -5,6 +5,7 @@ export default ({
   type,
   className,
   handleChange,
+  ...rest
 }) => {
   return (
     <input 
@@ -12,6 +13,7 @@ export default ({
       type={type ? type : 'text'} 
       className={className ? className : 'form-control' } 
       onChange={handleChange} 
+      {...rest}
     />
   )
 }

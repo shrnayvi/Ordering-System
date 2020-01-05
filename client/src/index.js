@@ -8,6 +8,10 @@ import reducers from './reducers';
 import * as serviceWorker from './serviceWorker';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.min.css';
+// import 'toastr/build/toastr.css'
+import 'react-toastify/dist/ReactToastify.css';
+
 
 import './assets/main.css';
 
