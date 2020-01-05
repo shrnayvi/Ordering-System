@@ -28,9 +28,14 @@ exports.create = async (req, res) => {
         orders[i].quantity = 1;
       }
 
-      const foundItem = await Item.find({ _id: item }).select('price');
-      totalQuantity += orders[i].quantity;
-      totalPrice += orders[i].quantity * foundItem.price;
+      const foundItem = await Item.findOne({ _id: item }).select('price');
+
+      const quantity = orders[i].quantity;
+      const price = quantity * foundItem.price;
+
+      orders[i].price = price;
+      totalQuantity += quantity;
+      totalPrice += price;
     }
 
     const { error } = validateCreate({
@@ -71,7 +76,7 @@ exports.create = async (req, res) => {
 
     return apiResponse.success(res, { message: "added_order", data: newOrder });
   } catch (e) {
-    console.log(e)
+    // console.log(e)
     return apiResponse.serverError(res, { data: e.message });
   }
 }

@@ -15,6 +15,7 @@ const OrderDetailSchema= new Schema({
     type: Number,
     default: 1,
   },
+  price: Number,
 }, { timestamps: true });
 
 module.exports = model('OrderDetail', OrderDetailSchema);
