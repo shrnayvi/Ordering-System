@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Sidebar from '../Sidebar';
 import LabelInput from '../../LabelInput';
 import Button from '../../Button';
+import ImageUpload from '../../ImageUpload';
 import { addUser } from '../../../actions/user';
 
 class AddUser extends Component { 
@@ -73,6 +74,8 @@ class AddUser extends Component {
               defaultValue={this.state.phone}
               label="phone"
             />
+
+            <ImageUpload />
 
             <div className="form-group">
               <select name="role" onChange={this.handleChange}>

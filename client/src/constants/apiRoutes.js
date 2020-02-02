@@ -43,3 +43,8 @@ export const CATEGORY = {
   REMOVE: _id => `/categories/${_id}`,
   EDIT: _id => `/categories/${_id}`,
 }
+
+export const MEDIA = {
+  ADD: '/attachment',
+  GET_BY_ID: _id => `/attachment/${_id}`,
+}

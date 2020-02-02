@@ -107,4 +107,5 @@ export default {
   customer: 'Customer',
   admin: 'Admin',
   role: 'Role',
+  upload_avatar: 'Upload Profile Picture',
 };
