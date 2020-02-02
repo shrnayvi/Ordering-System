@@ -25,6 +25,12 @@ export const USER = {
   REGISTER_ERROR: 'register_error',
   REGISTER_FAILURE: 'register_failure',
 
+  ADD_USER_REQUEST: 'add_user_request',
+  ADD_USER_SUCCESS: 'add_user_success',
+  ADD_USER_FAILURE: 'add_user_failure',
+
+  TOGGLE_EDIT_STATE: 'toggle_edit_state',
+
   EDIT_PROFILE_REQUEST: 'edit_profile_request',
   EDIT_PROFILE_SUCCESS: 'edit_profile_success',
   EDIT_PROFILE_FAILURE: 'edit_profile_failure',

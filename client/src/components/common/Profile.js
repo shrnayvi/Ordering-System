@@ -65,7 +65,7 @@ class Profile extends Component {
             label="phone"
           />
 
-          <Button label="Submit" type="submit" className="btn btn-primary" isLoading={isEditingProfile} />
+          <Button label="submit" type="submit" className="btn btn-primary" isLoading={isEditingProfile} />
 
           <ToastContainer />
 

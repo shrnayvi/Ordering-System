@@ -48,7 +48,7 @@ class Routes extends Component {
             
             <ProtectedRoutes path="/admin" isLoggedIn={isLoggedIn} role={role} component={AdminDashboard} exact />
             <ProtectedRoutes path="/admin/profile" isLoggedIn={isLoggedIn} role={role} component={AdminProfile} />
-            <ProtectedRoutes path="/admin/users" isLoggedIn={isLoggedIn} role={role} component={Users} />
+            <ProtectedRoutes path="/admin/users" isLoggedIn={isLoggedIn} role={role} component={Users} exact />
             <ProtectedRoutes path="/admin/users/add" isLoggedIn={isLoggedIn} role={role} component={AddUser} />
             <ProtectedRoutes path="/admin/users/edit/:_id" isLoggedIn={isLoggedIn} role={role} component={AddUser} />
             <ProtectedRoutes path="/admin/categories/edit/:_id" isLoggedIn={isLoggedIn} role={role} component={AddCategory} />

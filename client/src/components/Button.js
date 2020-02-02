@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 export default ({
   type,
@@ -6,6 +7,7 @@ export default ({
   handleClick,
   isLoading,
   label,
+  icon,
   ...rest
 }) => {
   return (
@@ -15,7 +17,8 @@ export default ({
       onClick={handleClick} 
       {...rest}
     >
-      {label}
+      <FormattedMessage id={label} />
+      { icon ? <i className={`fa fa-${icon}`} /> : '' }
       { isLoading ? <i className="fa fa-spinner fa-spin"></i>: '' }
     </button>
   )
