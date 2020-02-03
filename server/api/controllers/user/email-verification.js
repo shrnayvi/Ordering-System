@@ -15,10 +15,10 @@ module.exports = async (req, res) => {
       }
 
       user.status = 1;
+      user.is_email_verified = 1;
       await user.save();
       return apiResponse.success(res, { message: 'email_verified' })
    } catch(e) {
-      console.log(e)
       return apiResponse.serverError(res);
    }
 }

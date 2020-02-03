@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl';
 
 import Input from '../../Input';
 import Button from '../../Button';
-import { USER as userStatus } from '../../../constants/status';
 
 class UserList extends Component {
   constructor(props) {
@@ -73,8 +72,6 @@ class UserList extends Component {
         </td>
 
         <td><FormattedMessage id={user.role} /></td>
-
-        <td><FormattedMessage id={userStatus[user.status]} /></td>
 
         <td>
           <Button label="edit" className="btn btn-success" icon={isEditing ? '' : 'edit'} onClick={this.handleEdit} />

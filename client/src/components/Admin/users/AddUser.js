@@ -20,7 +20,6 @@ class AddUser extends Component {
         email: '',
         password: '',
         phone: '',
-        status: 0,
         role: 'customer',
       },
     }
@@ -38,7 +37,7 @@ class AddUser extends Component {
 
   handleChange = e => {
     const name = e.target.name;
-    const value = name === 'status' ? +e.target.value : e.target.value;
+    const value = e.target.value;
     this.setState({ user: { ...this.state.user, [name]: value } });
   }
 
@@ -103,17 +102,11 @@ class AddUser extends Component {
               isUploading={mediaUi.isUploading}
             />
 
-            <div className="form-group">
-              <select name="role" onChange={this.handleChange}>
+            <div className="form-group mt-2">
+              <label><FormattedMessage id="role" /> </label>
+              <select name="role" className="form-control" onChange={this.handleChange}>
                 <option value="customer">Customer</option> 
                 <option value="admin">Admin</option> 
-              </select>
-            </div>
-
-            <div className="form-group">
-              <select name="status" onChange={this.handleChange} >
-                <option value="0">Pending</option> 
-                <option value="1">Active</option> 
               </select>
             </div>
 

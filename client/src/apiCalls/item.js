@@ -1,4 +1,4 @@
-import * as http from '../request';
+import * as http from '../helpers/request';
 import { ITEM as item } from '../constants/apiRoutes';
 
 export const getAll = query => http.get(item.GET_ALL(query), false);

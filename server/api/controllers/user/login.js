@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
       } 
 
       let userDoc = await user.findOne({ email: req.body.email })
-         .select({ role: 1, status: 1, password: 1, method: 1 })
+         .select({ role: 1, password: 1, method: 1, is_email_verified: 1 })
 
       if(!userDoc) {
          return apiResponse.notFound(res, { message: 'invalid_email_password' });
@@ -22,9 +22,9 @@ module.exports = async (req, res) => {
       }
 
       const canLogin = await pwd.comparePassword(req.body.password, userDoc.password || ''),
-         { _id, role, status } = userDoc;
+         { _id, role, is_email_verified } = userDoc;
 
-      if(status === -1) {
+      if(!is_email_verified) {
          return apiResponse.badRequest(res, { message: 'email_not_verified' });
       }
 

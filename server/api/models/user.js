@@ -29,6 +29,10 @@ const UserSchema = new mongoose.Schema(
     name: String,
     phone: Number,
     status: Number,
+    is_email_verified: {
+      type: Boolean,
+      default: false,
+    },
     avatar: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Attachment'

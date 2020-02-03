@@ -18,17 +18,13 @@ module.exports = async (req, res) => {
         data.username = data.email.split('@')[0];
       }
 
-      if (data.role !== 'admin' || typeof data.status === 'undefined') {
-        data.status = -1;
-      }
-
       let userDoc = new User(data),
         newUser = await userDoc.save();
 
 
       /* Send verification email */
       const { _id, email, method, role } = newUser;
-      if (method === 'local' && role !== 'admin' && data.status !== 1) {
+      if (method === 'local' && role !== 'admin') {
         let emailData = { _id, email, role };
         sendVerificationEmail(emailData)
           .then(response => {

@@ -7,6 +7,8 @@ import Sidebar from '../Sidebar';
 import UserList from './UserList';
 import { getAll, updateUser, removeUser, toggleEditState } from '../../../actions/user';
 
+import '../../../assets/users.css';
+
 class Users extends Component {
 
   componentDidMount() {
@@ -43,7 +45,6 @@ class Users extends Component {
                 <th> <FormattedMessage id="name" /> </th>
                 <th> <FormattedMessage id="phone" /> </th>
                 <th> <FormattedMessage id="role" /> </th>
-                <th> <FormattedMessage id="status" /> </th>
                 <th> <FormattedMessage id="action" /> </th>
               </tr>
 

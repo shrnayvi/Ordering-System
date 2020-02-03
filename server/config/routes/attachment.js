@@ -6,7 +6,7 @@ const checkToken = require('@middlewares/authenticate');
 const attachmentController = require('@controllers/attachment');
 
 router.get('/', attachmentController.get);
-router.get('/:name', attachmentController.get);
+router.get('/:_id', attachmentController.get);
 router.post('/', attachmentController.create)
 router.delete(
    '/:_id', 
