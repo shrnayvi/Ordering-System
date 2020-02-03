@@ -171,3 +171,13 @@ export const CATEGORY = {
 
   HANDLE_INPUT_CHANGE: 'handle_category_input_change',
 }
+
+export const MEDIA = {
+  ADD_REQUEST: 'add_media_request',
+  ADD_SUCCESS: 'add_media_success',
+  ADD_FAILURE: 'add_media_failure',
+
+  UPDATE_MEDIA: 'update_media',
+
+  CLEAR_UPLOADED_MEDIA: 'clear_uploaded_media',
+}

@@ -1,4 +1,5 @@
 import { USER} from '../constants/actionTypes'
+import { MEDIA } from "../constants/actionTypes";
 import { 
   getById, 
   update, 
@@ -18,6 +19,11 @@ export const getAll = _id => async dispatch => {
       allIds = response.data.users.map(user => user._id);
 
     response.data.users.forEach(user => {
+      if(user.avatar) {
+        const media = user.avatar;
+        user['avatar'] = media._id;
+        dispatch({ type: MEDIA.UPDATE_MEDIA, payload: media });
+      }
       byId[user._id] = user;
     });
 
@@ -47,6 +53,7 @@ export const addUser = data => async dispatch => {
 
   if(response.status === 200) {
     dispatch({ type: USER.ADD_USER_SUCCESS, payload: response.data });
+    dispatch({ type: MEDIA.CLEAR_UPLOADED_MEDIA });
     notify('success', response.message);
   } else {
     dispatch({ type: USER.ADD_USER_FAILURE, error: response.message });

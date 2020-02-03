@@ -12,12 +12,13 @@ module.exports = async (req, res) => {
 
       let userDoc = await user.findOne({ email: req.body.email })
          .select({ role: 1, status: 1, password: 1, method: 1 })
+
       if(!userDoc) {
          return apiResponse.notFound(res, { message: 'invalid_email_password' });
       }
 
       if(userDoc.method !== 'local') {
-         return apiResponse.badRequest(res, { message: `${userDoc.method}_login`});
+         return apiResponse.badRequest(res, { message: `invalid_email_password`});
       }
 
       const canLogin = await pwd.comparePassword(req.body.password, userDoc.password || ''),

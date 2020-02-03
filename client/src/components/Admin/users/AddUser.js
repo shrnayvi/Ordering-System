@@ -8,32 +8,52 @@ import LabelInput from '../../LabelInput';
 import Button from '../../Button';
 import ImageUpload from '../../ImageUpload';
 import { addUser } from '../../../actions/user';
+import { uploadMedia, clearUploadedMedia } from '../../../actions/media';
+
+import '../../../assets/add-user.css';
 
 class AddUser extends Component { 
   constructor() {
     super();
     this.state = {
-      email: '',
-      password: '',
-      phone: '',
-      status: 0,
-      role: 'customer',
+      user: {
+        email: '',
+        password: '',
+        phone: '',
+        status: 0,
+        role: 'customer',
+      },
     }
   }
   
   handleSubmit = e => {
     e.preventDefault();
-    this.props.addUser(this.state);
+    const { uploaded } = this.props.media;
+    const data = {
+      ...this.state.user,
+      avatar: uploaded._id ? uploaded._id : null
+    }
+    this.props.addUser(data);
   }
 
   handleChange = e => {
     const name = e.target.name;
     const value = name === 'status' ? +e.target.value : e.target.value;
-    this.setState({ ...this.state, [name]: value });
+    this.setState({ user: { ...this.state.user, [name]: value } });
+  }
+
+  handleImageChange = e => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('attachment', file)
+
+    this.props.uploadMedia(formData);
   }
 
   render() {
     const { isAdding } = this.props.ui;
+    const { ui: mediaUi, uploaded: uploadedMedia } = this.props.media;
+
     return (
       <React.Fragment>
         <Sidebar />
@@ -47,7 +67,7 @@ class AddUser extends Component {
               name="email"
               type="email"
               handleChange={this.handleChange}
-              defaultValue={this.state.email}
+              value={this.state.email}
               label="enter_email"
             />
 
@@ -55,7 +75,7 @@ class AddUser extends Component {
               name="password"
               type="password"
               handleChange={this.handleChange}
-              defaultValue={this.state.password}
+              value={this.state.password}
               label="password"
             />
 
@@ -63,7 +83,7 @@ class AddUser extends Component {
               name="name"
               type="text"
               handleChange={this.handleChange}
-              defaultValue={this.state.name}
+              value={this.state.name}
               label="name"
             />
 
@@ -71,11 +91,17 @@ class AddUser extends Component {
               name="phone"
               type="text"
               handleChange={this.handleChange}
-              defaultValue={this.state.phone}
+              value={this.state.phone}
               label="phone"
             />
 
-            <ImageUpload />
+            <ImageUpload 
+              name="avatar"
+              handleImageChange={this.handleImageChange}
+              value={uploadedMedia._id}
+              filename={uploadedMedia.filename}
+              isUploading={mediaUi.isUploading}
+            />
 
             <div className="form-group">
               <select name="role" onChange={this.handleChange}>
@@ -103,9 +129,11 @@ class AddUser extends Component {
   }
 }
 
-const mapStateToProps = ({ users }) => ({ ui: users.ui });
+const mapStateToProps = ({ users, media }) => ({ ui: users.ui, media });
 const mapDispatchToProps = {
-  addUser
+  addUser,
+  uploadMedia,
+  clearUploadedMedia,
 };
 
 

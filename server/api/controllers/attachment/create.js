@@ -47,23 +47,21 @@ module.exports = (req, res) => {
 
       const allowedResize = ['jpeg', 'png'];
       const ext = extension(mimetype);
-      apiResponse.success(res, { message: 'created_attachment', data: attachment });
 
       /* Resize only if image */
       if (allowedResize.includes(ext)) {
         for (let key in images) {
-          Jimp.read(`${dest}${filename}`)
+          await Jimp.read(`${dest}${filename}`)
             .then(image => {
               return image
                 .resize(images[key].width, images[key].height)
                 .quality(70)
-                .write(`${dest}${key}-${filename}.${ext}`)
-            })
-            .catch(e => {
-              log(`Resizing Error: ${e.message}`);
+                .write(`${dest}${key}-${filename}`)
             })
         }
       }
+
+      return apiResponse.success(res, { message: 'created_attachment', data: attachment });
     } catch (e) {
       return apiResponse.serverError(res, { data: e.message });
     }

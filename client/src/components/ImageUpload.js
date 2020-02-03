@@ -1,29 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import LabelInput from './LabelInput';
-import Input from './Input';
 
-export default (props) => {
-  const [file, setFile] = useState(null)
-  const [previewUrl, setPreviewUrl] = useState('');
-
-  function handleChange(e) {
-    e.preventDefault();
-    let reader = new FileReader();
-    let file = e.target.files[0];
-    reader.onloadend = () => {
-      setFile(file);
-      setPreviewUrl(reader.result);
-    }
-  }
-  console.log(file);
-
+export default ({
+  type,
+  name,
+  isUploading,
+  handleChange,
+  handleImageChange,
+  filename,
+  ...rest
+}) => {
 
   return (
     <React.Fragment>
-      <LabelInput type="file" label="upload_avatar" handleChange={handleChange} />
-      <Input type="text" name="avatar" label="avatar" hidden={true} />
-      <div id="preview"></div>
+      <LabelInput type="file" label="upload_avatar" handleChange={handleImageChange} />
+      <div class="preview">
+        {
+          isUploading && <i class="fa fa-spin fa-circle-notch"></i>
+        }
+        {
+          filename && <img alt="img" src={`http://localhost:8000/uploads/thumbnail-${filename}`} />
+        }
+      </div>
     </React.Fragment>
   )
 }

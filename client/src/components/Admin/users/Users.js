@@ -14,8 +14,7 @@ class Users extends Component {
   }
 
   render() {
-    const users = this.props.users;
-    console.log(users);
+    const { users, media } = this.props;
 
     const userList = users.allIds.map(_id => (
       <UserList 
@@ -25,6 +24,7 @@ class Users extends Component {
         updateUser={this.props.updateUser}
         removeUser={this.props.removeUser}
         toggleEditState={this.props.toggleEditState}
+        avatar={media.byId[users.byId[_id].avatar]}
       />
     ));
 
@@ -38,6 +38,7 @@ class Users extends Component {
           <table className="table">
             <tbody>
               <tr>
+                <th> <FormattedMessage id="avatar" /> </th>
                 <th> <FormattedMessage id="email" /> </th>
                 <th> <FormattedMessage id="name" /> </th>
                 <th> <FormattedMessage id="phone" /> </th>
@@ -59,7 +60,7 @@ class Users extends Component {
   }
 }
 
-const mapStateToProps = ({ users }) => ({ users });
+const mapStateToProps = ({ users, media }) => ({ users, media });
 const mapDispatchToProps = {
   getAll,
   updateUser, 

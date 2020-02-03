@@ -10,6 +10,7 @@ exports.get = async (req, res) => {
    try {
       const { skip, limit } = pagination(req.query);
       const users = await User.find({})
+         .populate('avatar')
          .skip(skip)
          .limit(limit)
          .sort({ createdAt: 'desc' });

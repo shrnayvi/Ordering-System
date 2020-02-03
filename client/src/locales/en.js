@@ -108,4 +108,6 @@ export default {
   admin: 'Admin',
   role: 'Role',
   upload_avatar: 'Upload Profile Picture',
+  user_exists: 'User Exists',
+  avatar: 'Avatar',
 };

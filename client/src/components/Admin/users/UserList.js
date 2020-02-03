@@ -32,7 +32,7 @@ class UserList extends Component {
   }
 
   handleRemoveClick = _ => {
-    if(window.confirm('Sure?')) {
+    if(window.confirm('Are you sure?')) {
       this.props.removeUser(this.props.user._id);
     } 
   }
@@ -42,11 +42,19 @@ class UserList extends Component {
   }
 
   render() {
-    const { user, idUI = {} } = this.props;
+    const { user, avatar, idUI = {} } = this.props;
     const isEditing = idUI.isEditing;
     const isRemoving = idUI.isDeleting;
     return (
       <tr>
+        <td>
+          {
+            avatar && 
+              <a target="_blank" href={`http://localhost:8000/uploads/${avatar.filename}`} rel="noopener noreferrer">
+                <img alt="avatar" src={`http://localhost:8000/uploads/icon-${avatar.filename}`} />
+              </a>
+          }
+        </td>
         <td>{user.email}</td>
         <td>
           {
