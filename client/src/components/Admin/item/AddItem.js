@@ -1,19 +1,34 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
 import LabelInput from '../../LabelInput';
 import ImageUpload from '../../ImageUpload';
 import Button from '../../Button';
 
-export default _ => {
+import { add } from '../../../actions/item';
+import { uploadMedia } from '../../../actions/media';
+
+const AddItem = props => {
 
   let [name, setName] = useState('');
   let [description, setDescription] = useState('');
   let [category, setCategory] = useState('');
+  let [price, setPrice] = useState(0);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    console.log(name, description, category);
+    props.add({ name, description, category, price: +price });
   }
+
+  const handleImage = e => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('attachment', file)
+
+    props.uploadMedia(formData);
+  }
+
+  const { uploaded, mediaUi } = props;
 
   return (
     <React.Fragment>
@@ -35,6 +50,14 @@ export default _ => {
         />
 
         <LabelInput 
+          name="price"
+          type="text"
+          handleChange={(e) => setPrice(e.target.value)}
+          value={price}
+          label="price"
+        />
+
+        <LabelInput 
           name="category"
           type="text"
           handleChange={(e) => setCategory(e.target.value)}
@@ -44,10 +67,10 @@ export default _ => {
 
         <ImageUpload 
             name="avatar"
-            handleImageChange={() => {console.log('hello')}}
-            value={'test'}
-            filename={'test'}
-            isUploading={false}
+            handleImageChange={handleImage}
+            value={uploaded._id}
+            filename={uploaded.filename}
+            isUploading={mediaUi.isUploading}
         />
 
         <Button type="submit" label="add_item" />
@@ -56,3 +79,12 @@ export default _ => {
     </React.Fragment>
   )
 }
+
+
+const mapStateToProps = ({ media: { uploaded, ui } }) => ({ uploaded, mediaUi: ui });
+const mapDispatchToProps = {
+  add,
+  uploadMedia,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddItem);
