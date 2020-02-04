@@ -110,4 +110,5 @@ export default {
   upload_avatar: 'Upload Profile Picture',
   user_exists: 'User Exists',
   avatar: 'Avatar',
+  add_item: 'Add Item',
 };
