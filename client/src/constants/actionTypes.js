@@ -101,9 +101,13 @@ export const ITEM = {
   REMOVE_SUCCESS: 'remove_item_success',
   REMOVE_FAILURE: 'remove_item_failure',
 
-  UPDATE_REQUEST: 'update_item_request',
-  UPDATE_SUCCESS: 'update_item_success',
-  UPDATE_FAILURE: 'update_item_failure',
+  EDIT_REQUEST: 'update_item_request',
+  EDIT_SUCCESS: 'update_item_success',
+  EDIT_FAILURE: 'update_item_failure',
+  SAVE_EDITED_UPLOAD: 'save_edited_upload',
+  EDIT_UPLOADING: 'item_uploading_avatar',
+
+  TOGGLE_EDIT_STATE: 'toggle_item_edit_state',
 
   RESET_STATUS: 'reset_item_status',
 
@@ -162,6 +166,8 @@ export const CATEGORY = {
   REMOVE_REQUEST: 'remove_category_request',
   REMOVE_SUCCESS: 'remove_category_success',
   REMOVE_FAILURE: 'remove_category_failure',
+
+  UPDATE_CATEGORY_STORE: 'update_category_store',
 
   UPDATE_REQUEST: 'update_category_request',
   UPDATE_SUCCESS: 'update_category_success',

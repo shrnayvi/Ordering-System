@@ -7,7 +7,8 @@ import ItemList from './ItemList';
 import AddItem from './AddItem';
 import Button from '../../Button';
 
-import { getAll } from '../../../actions/item';
+import { getAll, remove, toggleEditState, edit } from '../../../actions/item';
+import { get as getCategory } from '../../../actions/category';
 
 class Items extends Component {
   constructor() {
@@ -18,6 +19,7 @@ class Items extends Component {
   }
 
   componentDidMount() {
+    this.props.getCategory();
     this.props.getAll();
   }
 
@@ -26,18 +28,22 @@ class Items extends Component {
   }
 
   render() {
-    const { allIds, byId, idUI } = this.props.items;
+    const { allIds, byId, idUI, editedUpload } = this.props.items;
     const { byId: mediaById } = this.props.media;
+    const { byId: categoryById } = this.props.categories;
 
     const itemList = allIds.map(_id => (
       <ItemList 
         item={byId[_id]}
         avatar={mediaById[byId[_id].avatar]}
         key={_id}
-        idUI={idUI}
+        idUI={idUI[_id]}
+        category={categoryById[byId[_id].category]}
+        allCategories={this.props.categories}
+        editedUpload={editedUpload[_id]}
       />
     ));
-      console.log(this.state.isAdding)
+
     return (
       <React.Fragment>
         <Sidebar />
@@ -80,9 +86,13 @@ class Items extends Component {
   }
 }
 
-const mapStateToProps = ({ items, media }) => ({ items, media });
+const mapStateToProps = ({ items, media, categories }) => ({ items, media, categories });
 const mapDispatchToProps = {
   getAll,
+  remove,
+  toggleEditState,
+  getCategory,
+  edit,
 }
 
 

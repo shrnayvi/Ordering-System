@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+import { ToastContainer } from 'react-toastify';
 
 import LabelInput from '../../LabelInput';
 import ImageUpload from '../../ImageUpload';
 import Button from '../../Button';
 
 import { add } from '../../../actions/item';
+import { get as getCategory } from '../../../actions/category';
 import { uploadMedia } from '../../../actions/media';
 
 const AddItem = props => {
@@ -13,11 +16,19 @@ const AddItem = props => {
   let [name, setName] = useState('');
   let [description, setDescription] = useState('');
   let [category, setCategory] = useState('');
-  let [price, setPrice] = useState(0);
+  let [price, setPrice] = useState('');
+
 
   const handleSubmit = e => {
     e.preventDefault();
-    props.add({ name, description, category, price: +price });
+    const data = {
+      name,
+      description,
+      category,
+      price: +price,
+      avatar: uploaded._id,
+    }
+    props.add(data);
   }
 
   const handleImage = e => {
@@ -30,21 +41,35 @@ const AddItem = props => {
 
   const { uploaded, mediaUi } = props;
 
+  useEffect(() => {
+    props.getCategory();
+  }, []);
+
+  useEffect(() => {
+    setName('');
+    setDescription('');
+    setPrice('');
+    setCategory('');
+  }, [props.allIds])
+
+  const { allIds: categories, byId: categoryId } = props.categories;
+  const categoryOptions = categories.map(_id => (<option key={_id} value={_id}>{categoryId[_id].name}</option>))
+
   return (
     <React.Fragment>
       <form onSubmit={handleSubmit}>
         <LabelInput 
           name="name"
           type="text"
-          handleChange={(e) => setName(e.target.value)}
-          defaultValue={name}
+          handleChange={e => setName(e.target.value)}
+          value={name}
           label="name"
         />
 
         <LabelInput 
           name="description"
           type="text"
-          handleChange={(e) => setDescription(e.target.value)}
+          handleChange={e => setDescription(e.target.value)}
           value={description}
           label="description"
         />
@@ -52,18 +77,18 @@ const AddItem = props => {
         <LabelInput 
           name="price"
           type="text"
-          handleChange={(e) => setPrice(e.target.value)}
+          handleChange={e => setPrice(e.target.value)}
           value={price}
           label="price"
         />
 
-        <LabelInput 
-          name="category"
-          type="text"
-          handleChange={(e) => setCategory(e.target.value)}
-          value={category}
-          label="category"
-        />
+        <div className="form-group">
+          <label><FormattedMessage id="category" /></label>
+          <select className="form-control" onChange={e => setCategory(e.target.value)}>
+            <option value="">Select Category</option>
+            {categoryOptions}
+          </select>
+        </div>
 
         <ImageUpload 
             name="avatar"
@@ -73,18 +98,30 @@ const AddItem = props => {
             isUploading={mediaUi.isUploading}
         />
 
-        <Button type="submit" label="add_item" />
+        <Button className="btn btn-primary mt-3" type="submit" label="add_item" />
 
       </form>
+      <ToastContainer />
     </React.Fragment>
   )
 }
 
 
-const mapStateToProps = ({ media: { uploaded, ui } }) => ({ uploaded, mediaUi: ui });
+const mapStateToProps = ({ 
+  media: { uploaded, ui },
+  categories,
+  items: { allIds }
+}) => ({ 
+  uploaded, 
+  mediaUi: ui,
+  categories,
+  allIds,
+});
+
 const mapDispatchToProps = {
   add,
   uploadMedia,
+  getCategory,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddItem);

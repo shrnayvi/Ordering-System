@@ -18,9 +18,7 @@ import AdminDashboard from './components/Admin/Dashboard';
 import Users from './components/Admin/users/Users';
 import AdminProfile from './components/Admin/Profile';
 import AddUser from './components/Admin/users/AddUser';
-import AddCategory from './components/Admin/category/AddCategory';
 import Categories from './components/Admin/category/Categories';
-import AddItem from './components/Admin/item/AddItem';
 import AdminItems from './components/Admin/item/Items';
 import Orders from './components/Admin/order/Orders';
 
@@ -51,12 +49,8 @@ class Routes extends Component {
             <ProtectedRoutes path="/admin/users" isLoggedIn={isLoggedIn} role={role} component={Users} exact />
             <ProtectedRoutes path="/admin/users/add" isLoggedIn={isLoggedIn} role={role} component={AddUser} />
             <ProtectedRoutes path="/admin/users/edit/:_id" isLoggedIn={isLoggedIn} role={role} component={AddUser} />
-            <ProtectedRoutes path="/admin/categories/edit/:_id" isLoggedIn={isLoggedIn} role={role} component={AddCategory} />
-            <ProtectedRoutes path="/admin/categories/add" isLoggedIn={isLoggedIn} role={role} component={AddCategory} />
             <ProtectedRoutes path="/admin/categories" isLoggedIn={isLoggedIn} role={role} component={Categories} />
             <ProtectedRoutes path="/admin/orders" isLoggedIn={isLoggedIn} role={role} component={Orders} />
-            <ProtectedRoutes path="/admin/items/edit/:_id" isLoggedIn={isLoggedIn} role={role} component={AddItem} />
-            <ProtectedRoutes path="/admin/items/add" isLoggedIn={isLoggedIn} role={role} component={AddItem} />
             <ProtectedRoutes path="/admin/items" isLoggedIn={isLoggedIn} role={role} component={AdminItems} />
 
             <Route component={NotFound} />

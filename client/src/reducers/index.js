@@ -3,6 +3,7 @@ import profile from './profile';
 import users from './user';
 import media from './media';
 import items from './item';
+import categories from './category';
 
 export default {
   auth,
@@ -10,4 +11,5 @@ export default {
   users,
   media,
   items,
+  categories,
 }

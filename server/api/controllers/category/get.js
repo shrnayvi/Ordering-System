@@ -12,7 +12,7 @@ exports.get = async (req, res) => {
   try {
     let total;
     let { skip, limit } = pagination(req.query);
-    let category;
+    let categories;
     if (req.query.get === 'hierarchical') {
       let query = [
         { $match: { parent: { $exists: false } } },
@@ -31,27 +31,26 @@ exports.get = async (req, res) => {
         { $limit: limit },
 
       ]
-      category = await Category.aggregate(query);
+      categories = await Category.aggregate(query);
       total = await Category.countDocuments({ parent: { $exists: false } })
-      console.log(total)
-      for (let i = 0, parentLength = category.length; i < parentLength; i++) {
-        if (category[i].children.length) {
-          for (let j = 0, childLength = category[i].children.length; j < childLength; j++) {
-            category[i].children[j].children = [];
-            let cat = await Category.find({ parent: category[i].children[j]._id });
-            category[i].children[j].children.push(...cat);
+      for (let i = 0, parentLength = categories.length; i < parentLength; i++) {
+        if (categories[i].children.length) {
+          for (let j = 0, childLength = categories[i].children.length; j < childLength; j++) {
+            categories[i].children[j].children = [];
+            let cat = await Category.find({ parent: categories[i].children[j]._id });
+            categories[i].children[j].children.push(...cat);
           }
         }
       }
     } else {
       total = await Category.countDocuments({});
-      category = await Category.find({})
+      categories = await Category.find({})
         .skip(skip)
         .limit(limit)
         .sort({ createdAt: 'desc' });
       }
 
-    return apiResponse.success(res, { message: 'fetched_category', data: { total, pageCount: Math.ceil(total / dataPerPage), category } });
+    return apiResponse.success(res, { message: 'fetched_category', data: { total, pageCount: Math.ceil(total / dataPerPage), categories } });
   } catch (e) {
     return apiResponse.serverError(res, { data: e.message });
   }

@@ -13,6 +13,7 @@ exports.get = async (req, res) => {
       total = await Item.countDocuments({}),
       items = await Item.find({})
         .populate('category')
+        .populate('avatar')
         .skip(skip)
         .limit(limit)
         .sort({ createdAt: 'desc' });

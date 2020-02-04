@@ -16,6 +16,7 @@ export default (state = initialState, action) => {
         ...state, 
         ui: { ...state.ui, isUploading: false } ,
         uploaded: action.payload,
+        byId: { ...state.byId, [action.payload._id]: action.payload }
       };
 
     case MEDIA.ADD_FAILURE:
