@@ -20,3 +20,38 @@ module.exports = ({ page = 1, size = dataPerPage }) => {
       limit
    }
 }
+
+/*
+module.exports = {
+  getPagingArgs = args => {
+    const skip = args.skip || 0;
+    const limit = args.limit || 10;
+    const query = args.q || {};
+
+    let [field, orderBy] = (args.sort || createdAt:desc).split(":");
+    const sort = { [field: orderBy] };
+
+    return {
+        skip,
+        limit,
+        sort,
+        query,
+    }
+  },
+
+  getPagingResult = (args, data) => {
+    const skip = args.skip || 0;
+    const limit = args.limit || 10;
+    const total = data.total;
+    const endIndex = skip + limit - 1;
+
+    return {
+      total,
+      startIndex: skip,
+      endIndex: endIndex > total - 1 ? total - 1 : endIndex;
+      hasNextPage: skip + limit < total ? true : false,
+    }
+  },
+
+}
+*/
