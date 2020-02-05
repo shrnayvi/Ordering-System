@@ -8,16 +8,17 @@ const pagination = require('@utils/pagination');
  */
 exports.get = async (req, res) => {
    try {
-      const { skip, limit } = pagination(req.query);
+      const { skip, limit, sort, query } = pagination.getPagingArgs(req.query);
       const users = await User.find({})
          .populate('avatar')
          .skip(skip)
          .limit(limit)
-         .sort({ createdAt: 'desc' });
+         .sort(sort);
       
       const total = await User.countDocuments({});
+      const paging = pagination.getPagingResult(req.query, { total });
 
-      return apiResponse.success(res, { message: 'fetched_user', data: { total, pageCount: Math.ceil(total / dataPerPage), users } });
+      return apiResponse.success(res, { message: 'fetched_user', data: { paging, users } });
    } catch(e) {
       return apiResponse.serverError(res, { data: e.message });
    }

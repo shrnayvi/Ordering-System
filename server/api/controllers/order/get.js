@@ -30,16 +30,21 @@ exports.get = async (req, res) => {
     }
 
     //TODO filter by date
-    const { skip, limit } = pagination(req.query),
-      orders = await Order.find(query)
+    const { skip, limit, sort, query: queryParam } = pagination.getPagingArgs(req.query);
+    query = { ...query, ...queryParam };
+
+    const total = await Order.countDocuments(query);
+    const orders = await Order.find(query)
         .populate('user', { name: 1, email: 1, role: 1 })
         .populate('item', { createdAt: 0, updatedAt: 0 })
         .populate('event')
         .skip(skip)
         .limit(limit)
-        .sort({ createdAt: 'desc' });
+        .sort(sort);
 
-    return apiResponse.success(res, { message: 'fetched_order', data: orders });
+    const paging = pagination.getPagingResult(req.query, { total });
+
+    return apiResponse.success(res, { message: 'fetched_order', data: {paging, orders } });
   } catch (e) {
     return apiResponse.serverError(res, { data: e.message });
   }

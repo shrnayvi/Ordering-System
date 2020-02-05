@@ -1,57 +1,58 @@
-/**
- * Get the parameters needed for pagination
- * @param {Object} paginationParm Object required for pagination
- * @param {string|number} paginationParam.page Page number
- * @param {string|number} paginationParam.size Number of data per page
- * @returns {Object} Returns object with skip and limit
- */
-module.exports = ({ page = 1, size = dataPerPage }) => {
-   page = parseInt(page),
-   size = parseInt(size);
+// /**
+//  * Get the parameters needed for pagination
+//  * @param {Object} paginationParm Object required for pagination
+//  * @param {string|number} paginationParam.page Page number
+//  * @param {string|number} paginationParam.size Number of data per page
+//  * @returns {Object} Returns object with skip and limit
+//  */
+// module.exports = ({ page = 1, size = dataPerPage }) => {
+//    page = parseInt(page),
+//    size = parseInt(size);
 
-   let skip = 0;
-      limit = !isNaN(size) ? size : dataPerPage;
+//    let skip = 0;
+//       limit = !isNaN(size) ? size : dataPerPage;
 
-   if(!isNaN(page)) {
-      skip = (page - 1) * limit;
-   }
-   return {
-      skip,
-      limit
-   }
-}
+//    if(!isNaN(page)) {
+//       skip = (page - 1) * limit;
+//    }
+//    return {
+//       skip,
+//       limit
+//    }
+// }
 
-/*
 module.exports = {
-  getPagingArgs = args => {
-    const skip = args.skip || 0;
-    const limit = args.limit || 10;
-    const query = args.q || {};
+  getPagingArgs: args => {
+    let {
+      skip = 0,
+      limit = 10,
+      sort = 'createdAt:desc',
+      ...query
+    } = args;
 
-    let [field, orderBy] = (args.sort || createdAt:desc).split(":");
-    const sort = { [field: orderBy] };
+    let [field, orderBy] = sort.split(":");
+    sort = { [field]: orderBy };
 
     return {
-        skip,
-        limit,
+        skip: +skip,
+        limit: +limit,
         sort,
         query,
     }
   },
 
-  getPagingResult = (args, data) => {
+  getPagingResult: (args, data) => {
     const skip = args.skip || 0;
     const limit = args.limit || 10;
     const total = data.total;
-    const endIndex = skip + limit - 1;
+    const endIndex = +skip + +limit - 1;
 
     return {
       total,
-      startIndex: skip,
-      endIndex: endIndex > total - 1 ? total - 1 : endIndex;
+      startIndex: +skip,
+      endIndex: endIndex > total - 1 ? total - 1 : endIndex,
       hasNextPage: skip + limit < total ? true : false,
     }
   },
 
 }
-*/

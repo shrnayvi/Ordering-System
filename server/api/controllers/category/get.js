@@ -11,7 +11,7 @@ const pagination = require('@utils/pagination');
 exports.get = async (req, res) => {
   try {
     let total;
-    let { skip, limit } = pagination(req.query);
+    const { skip, limit, sort, query } = pagination.getPagingArgs(req.query);
     let categories;
     if (req.query.get === 'hierarchical') {
       let query = [
@@ -44,13 +44,15 @@ exports.get = async (req, res) => {
       }
     } else {
       total = await Category.countDocuments({});
-      categories = await Category.find({})
+      categories = await Category.find(query)
         .skip(skip)
         .limit(limit)
-        .sort({ createdAt: 'desc' });
-      }
+        .sort(sort);
+    }
 
-    return apiResponse.success(res, { message: 'fetched_category', data: { total, pageCount: Math.ceil(total / dataPerPage), categories } });
+    const paging = pagination.getPagingResult(req.query, { total });
+
+    return apiResponse.success(res, { message: 'fetched_category', data: { paging, categories } });
   } catch (e) {
     return apiResponse.serverError(res, { data: e.message });
   }

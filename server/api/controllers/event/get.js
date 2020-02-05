@@ -8,14 +8,15 @@ const pagination = require('@utils/pagination');
  */
 exports.get = async (req, res) => {
   try {
-    const { skip, limit } = pagination(req.query),
-      total = await Event.countDocuments({}),
-      events = await Event.find({})
+    const { skip, limit, sort, query } = pagination.getPagingArgs(req.query),
+      total = await Event.countDocuments(query),
+      events = await Event.find(query)
         .skip(skip)
         .limit(limit)
-        .sort({ createdAt: 'desc' });
+        .sort(sort);
 
-    return apiResponse.success(res, { message: 'fetched_item', data: { total, pageCount: Math.ceil(total / dataPerPage), events } });
+    const paging = pagination.getPagingResult(req.query, { total });
+    return apiResponse.success(res, { message: 'fetched_item', data: { paging, events } });
   } catch (e) {
     return apiResponse.serverError(res, { data: e.message });
   }

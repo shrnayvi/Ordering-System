@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
     const cart = await Cart.find({ user })
       .populate('item');
       
-    return apiResponse.success(res, { message: "fetched_cart", data: cart });
+    return apiResponse.success(res, { message: "fetched_cart", data: { paging: {}, cart } });
   } catch (e) {
     return apiResponse.serverError(res, { data: e.message });
   }
