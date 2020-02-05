@@ -6,7 +6,9 @@ import Sidebar from '../Sidebar';
 import ItemList from './ItemList';
 import AddItem from './AddItem';
 import Button from '../../Button';
+import Pagination from '../../Pagination';
 
+import getPageNumber from '../../../helpers/getPageNumber';
 import { getAll, remove, toggleEditState, edit } from '../../../actions/item';
 import { get as getCategory } from '../../../actions/category';
 
@@ -19,8 +21,9 @@ class Items extends Component {
   }
 
   componentDidMount() {
+    const page = getPageNumber(this.props.history.location)
     this.props.getCategory();
-    this.props.getAll();
+    this.props.getAll(`page=${page}`);
   }
 
   toggleAddClick= () => {
@@ -28,14 +31,14 @@ class Items extends Component {
   }
 
   render() {
-    const { allIds, byId, idUI, editedUpload } = this.props.items;
+    const { allIds, byId, idUI, editedUpload, pageCount } = this.props.items;
     const { byId: mediaById } = this.props.media;
     const { byId: categoryById } = this.props.categories;
 
     const itemList = allIds.map(_id => (
       <ItemList 
         item={byId[_id]}
-        avatar={mediaById[byId[_id].avatar]}
+        avatar={mediaById[byId[_id].avatar] || {}}
         key={_id}
         idUI={idUI[_id]}
         category={categoryById[byId[_id].category]}
@@ -43,6 +46,8 @@ class Items extends Component {
         editedUpload={editedUpload[_id]}
       />
     ));
+
+    const page = getPageNumber(this.props.history.location)
 
     return (
       <React.Fragment>
@@ -78,6 +83,9 @@ class Items extends Component {
             </table>
 
           </div>
+
+          <Pagination currentPage={page} routePath="/admin/items" pageCount={pageCount} action={this.props.getAll} />
+
         </div>
 
       </React.Fragment>

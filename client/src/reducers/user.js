@@ -6,6 +6,7 @@ const initialState = {
   allIds: [],
   idUI: {},
   ui: {},
+  pageCount: null,
 }
 
 export default (state = initialState, action) => {
@@ -42,6 +43,7 @@ export default (state = initialState, action) => {
         byId: { ...state.byId, ...action.payload.byId },
         allIds: action.payload.allIds,
         ui: { ...state.ui, isFetching: false },
+        pageCount: action.payload.pageCount,
       };
     case USER.FETCH_ALL_FAILURE:
       return { ...state, ui: { ...state.ui, isFetching: false } };

@@ -9,10 +9,10 @@ import {
 } from '../apiCalls/user';
 import notify from '../helpers/notification';
 
-export const getAll = _id => async dispatch => {
+export const getAll = (query = null) => async dispatch => {
   dispatch({ type: USER.FETCH_ALL_REQUEST });
 
-  const  { data: response } = await getUsers();
+  const  { data: response } = await getUsers(query);
 
   if(response.status === 200) {
     const byId = {},
@@ -27,7 +27,7 @@ export const getAll = _id => async dispatch => {
       byId[user._id] = user;
     });
 
-    dispatch({ type: USER.FETCH_ALL_SUCCESS, payload: { byId, allIds } });
+    dispatch({ type: USER.FETCH_ALL_SUCCESS, payload: { byId, allIds, pageCount: response.data.pageCount } });
   } else {
     dispatch({ type: USER.FETCH_ALL_FAILURE, error: response.message });
   }

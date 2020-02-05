@@ -10,10 +10,10 @@ import { create as createMedia } from '../apiCalls/attachment';
 
 import notify from '../helpers/notification';
 
-export const getAll = _ => async dispatch => {
+export const getAll = (query = null) => async dispatch => {
   dispatch({ type: ITEM.FETCH_ALL_REQUEST });
 
-  const { data: response } = await getItems();
+  const { data: response } = await getItems(query);
   
   if(response.status === 200) {
     const allIds = [];
@@ -32,7 +32,7 @@ export const getAll = _ => async dispatch => {
       byId[item._id] = item;
     });
 
-    dispatch({ type: ITEM.FETCH_ALL_SUCCESS, payload: { allIds, byId } });
+    dispatch({ type: ITEM.FETCH_ALL_SUCCESS, payload: { allIds, byId, pageCount: response.data.pageCount } });
   } else {
     dispatch({ type: ITEM.FETCH_ALL_FAILURE, payload: response.message });
   }

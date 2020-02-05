@@ -8,6 +8,7 @@ const initialState = {
   ui: {},
   idUI: {},
   editedUpload: {},
+  pageCount: null,
 };
 
 export default (state = initialState, action) => {
@@ -21,6 +22,7 @@ export default (state = initialState, action) => {
         ...state, ui: { ...state.ui, isFetching: false},
         allIds: action.payload.allIds,
         byId: { ...state.byId, ...action.payload.byId },
+        pageCount: action.payload.pageCount,
       }
     case ITEM.FETCH_ALL_FAILURE: 
       return {

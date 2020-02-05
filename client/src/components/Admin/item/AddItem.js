@@ -42,10 +42,6 @@ const AddItem = props => {
   const { uploaded, mediaUi } = props;
 
   useEffect(() => {
-    props.getCategory();
-  }, []);
-
-  useEffect(() => {
     setName('');
     setDescription('');
     setPrice('');
@@ -54,6 +50,7 @@ const AddItem = props => {
 
   const { allIds: categories, byId: categoryId } = props.categories;
   const categoryOptions = categories.map(_id => (<option key={_id} value={_id}>{categoryId[_id].name}</option>))
+  console.log(categories);
 
   return (
     <React.Fragment>

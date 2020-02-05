@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { ToastContainer } from 'react-toastify'
+import Pagination from '../../Pagination';
 
 import Sidebar from '../Sidebar';
 import UserList from './UserList';
+
+import getPageNumber from '../../../helpers/getPageNumber';
 import { getAll, updateUser, removeUser, toggleEditState } from '../../../actions/user';
 
 import '../../../assets/users.css';
@@ -12,11 +15,14 @@ import '../../../assets/users.css';
 class Users extends Component {
 
   componentDidMount() {
-    this.props.getAll();
+    const page = getPageNumber(this.props.history.location)
+    this.props.getAll(`page=${page}`);
   }
 
   render() {
     const { users, media } = this.props;
+    const { pageCount } = users;
+    console.log(users);
 
     const userList = users.allIds.map(_id => (
       <UserList 
@@ -29,6 +35,8 @@ class Users extends Component {
         avatar={media.byId[users.byId[_id].avatar]}
       />
     ));
+
+    const page = getPageNumber(this.props.history.location)
 
     return (
       <React.Fragment>
@@ -52,6 +60,9 @@ class Users extends Component {
 
             </tbody>
           </table>
+
+          <Pagination currentPage={page} routePath="/admin/users" pageCount={pageCount} action={this.props.getAll} />
+
         </div>
 
         <ToastContainer />
