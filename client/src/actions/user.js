@@ -1,3 +1,6 @@
+import qs from 'query-string';
+
+import config from '../constants/config';
 import { USER} from '../constants/actionTypes'
 import { MEDIA } from "../constants/actionTypes";
 import { 
@@ -9,10 +12,10 @@ import {
 } from '../apiCalls/user';
 import notify from '../helpers/notification';
 
-export const getAll = (query = null) => async dispatch => {
+export const getAll = (query = {}) => async dispatch => {
   dispatch({ type: USER.FETCH_ALL_REQUEST });
 
-  const  { data: response } = await getUsers(query);
+  const  { data: response } = await getUsers(qs.stringify(query));
 
   if(response.status === 200) {
     const byId = {},
@@ -27,7 +30,7 @@ export const getAll = (query = null) => async dispatch => {
       byId[user._id] = user;
     });
 
-    dispatch({ type: USER.FETCH_ALL_SUCCESS, payload: { byId, allIds, pageCount: response.data.pageCount } });
+    dispatch({ type: USER.FETCH_ALL_SUCCESS, payload: { byId, allIds, pageCount: Math.ceil(response.data.paging.total / config.dataPerPage ) } });
   } else {
     dispatch({ type: USER.FETCH_ALL_FAILURE, error: response.message });
   }

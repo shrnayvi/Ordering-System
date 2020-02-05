@@ -2,21 +2,24 @@
     display: inline-block;
   }
   
-  .odr-pagination li a {
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
-    transition: background-color .3s;
-    border: 1px solid #ddd;
-    cursor: pointer;
-    color: #083b71;
-    display: block;
-  }
-  
-  .odr-pagination li.active {
-    background-color: #ffe1e1;
-    color: white;
-    border: 1px solid #bb3049;
-  }
-  
-  .odr-pagination li:hover:not(.active) {background-color: #ddd;}
+.odr-pagination li a {
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  color: #083b71;
+  display: block;
+}
+
+.odr-pagination li.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.odr-pagination li.active a {
+  color: white;
+}
+
+.odr-pagination li:hover:not(.active) {background-color: #ddd;}

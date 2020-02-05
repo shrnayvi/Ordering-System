@@ -10,6 +10,7 @@ import Login from './components/Login';
 import Logout from './components/Logout';
 import Dashboard from './components/Customer/Dashboard';
 import Items from './components/Customer/item/Items';
+import SingleItem from './components/Customer/item/SingleItem';
 import CustomerOrders from './components/Customer/order/Orders';
 import Cart from './components/Customer/Cart';
 import Profile from './components/Customer/Profile';
@@ -37,7 +38,8 @@ class Routes extends Component {
             <Route path="/" component={Login} exact />
             <Route path="/logout" component={Logout} />
 
-            <Route path="/items" component={Items} />
+            <Route path="/items" component={Items} exact />
+            <Route path="/items/:id" component={SingleItem} />
 
             <ProtectedRoutes path="/customer" isLoggedIn={isLoggedIn} role={role} component={Dashboard} exact />
             <ProtectedRoutes path="/customer/my-orders" isLoggedIn={isLoggedIn} role={role} component={CustomerOrders} />

@@ -1,19 +1,21 @@
+import qs from 'query-string';
 import { ITEM, MEDIA, CATEGORY } from '../constants/actionTypes';
 import { 
   getAll as getItems,
   addItem,
   removeItem,
   editItem,
+  getBySlug,
 } from '../apiCalls/item';
 
 import { create as createMedia } from '../apiCalls/attachment';
-
 import notify from '../helpers/notification';
+import config from '../constants/config';
 
-export const getAll = (query = null) => async dispatch => {
+export const getAll = (query = {}) => async dispatch => {
   dispatch({ type: ITEM.FETCH_ALL_REQUEST });
 
-  const { data: response } = await getItems(query);
+  const { data: response } = await getItems(qs.stringify(query));
   
   if(response.status === 200) {
     const allIds = [];
@@ -32,9 +34,31 @@ export const getAll = (query = null) => async dispatch => {
       byId[item._id] = item;
     });
 
-    dispatch({ type: ITEM.FETCH_ALL_SUCCESS, payload: { allIds, byId, pageCount: response.data.pageCount } });
+    dispatch({ type: ITEM.FETCH_ALL_SUCCESS, payload: { allIds, byId, pageCount: Math.ceil(response.data.paging.total / config.dataPerPage) } });
   } else {
     dispatch({ type: ITEM.FETCH_ALL_FAILURE, payload: response.message });
+  }
+}
+
+export const getSingle = slug => async dispatch => {
+
+  const { data: response } = await getBySlug(slug);
+  
+  if(response.status === 200) {
+    const item = response.data;
+    const media = item.avatar;
+    if(media) {
+      item.avatar = media._id; 
+      dispatch({ type: MEDIA.UPDATE_MEDIA, payload: media });
+    }
+
+    const category = item.category;
+    item.category = category._id;
+    dispatch({ type: CATEGORY.UPDATE_CATEGORY_STORE, payload: category });
+
+    dispatch({ type: ITEM.FETCH_SINGLE_SUCCESS, payload: item });
+  } else {
+    dispatch({ type: ITEM.FETCH_SINGLE_FAILURE, payload: response.message });
   }
 }
 

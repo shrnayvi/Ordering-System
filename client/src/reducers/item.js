@@ -29,6 +29,20 @@ export default (state = initialState, action) => {
         ...state, ui: { ...state.ui, isFetching: false},
       }
 
+
+    case ITEM.FETCH_SINGLE_SUCCESS: 
+      return {
+        ...state, 
+        ui: { ...state.ui, isFetching: false},
+        byId: { ...state.byId, [action.payload._id]: action.payload },
+      }
+    case ITEM.FETCH_SINGLE_FAILURE: 
+      return {
+        ...state, ui: { ...state.ui, isFetching: false},
+      }
+
+
+
     case ITEM.ADD_REQUEST:
       return {
         ...state, ui: { ...state.ui, isAdding: true },

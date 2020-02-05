@@ -1,13 +1,15 @@
 import ReactPaginate from 'react-paginate';
 import React, { Component } from 'react';
 import history from '../helpers/history';
+import { getPagingArgs } from '../helpers/pagination';
 
 export default class Pagination extends Component {
-  handleClick = (data) => {
+  handleClick = data => {
     let path = this.props.routePath;
     const pageNumber = data.selected + 1;
     history.push(`${path}?page=${pageNumber}`)
-    this.props.action(`page=${pageNumber}`);
+    const pagingArgs = getPagingArgs(history.location);
+    this.props.action(pagingArgs);
   }
 
   render() {

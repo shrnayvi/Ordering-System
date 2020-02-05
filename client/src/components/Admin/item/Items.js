@@ -8,7 +8,7 @@ import AddItem from './AddItem';
 import Button from '../../Button';
 import Pagination from '../../Pagination';
 
-import getPageNumber from '../../../helpers/getPageNumber';
+import { getPagingArgs, getPage } from '../../../helpers/pagination';
 import { getAll, remove, toggleEditState, edit } from '../../../actions/item';
 import { get as getCategory } from '../../../actions/category';
 
@@ -21,9 +21,9 @@ class Items extends Component {
   }
 
   componentDidMount() {
-    const page = getPageNumber(this.props.history.location)
+    const pagingArgs = getPagingArgs(this.props.history.location)
     this.props.getCategory();
-    this.props.getAll(`page=${page}`);
+    this.props.getAll(pagingArgs);
   }
 
   toggleAddClick= () => {
@@ -47,7 +47,7 @@ class Items extends Component {
       />
     ));
 
-    const page = getPageNumber(this.props.history.location)
+    const page = getPage(this.props.history.location)
 
     return (
       <React.Fragment>

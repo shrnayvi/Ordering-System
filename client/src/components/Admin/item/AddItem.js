@@ -50,7 +50,6 @@ const AddItem = props => {
 
   const { allIds: categories, byId: categoryId } = props.categories;
   const categoryOptions = categories.map(_id => (<option key={_id} value={_id}>{categoryId[_id].name}</option>))
-  console.log(categories);
 
   return (
     <React.Fragment>
@@ -81,7 +80,7 @@ const AddItem = props => {
 
         <div className="form-group">
           <label><FormattedMessage id="category" /></label>
-          <select className="form-control" onChange={e => setCategory(e.target.value)}>
+          <select className="form-control" value={category} onChange={e => setCategory(e.target.value)}>
             <option value="">Select Category</option>
             {categoryOptions}
           </select>
