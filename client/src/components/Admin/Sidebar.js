@@ -16,6 +16,7 @@ class Sidebar extends Component {
       ALL_CATEGORIES,
       ALL_ORDERS,
       ALL_ITEMS,
+      ALL_EVENTS,
     } = routes;
 
     const { pathname } = this.props.location;
@@ -47,6 +48,11 @@ class Sidebar extends Component {
           <li className={`sidenav-link ${getSelector('sidenav-active', ALL_CATEGORIES, pathname)}`} >
             <Link to={ALL_CATEGORIES}>
               <FormattedMessage id="categories" />
+            </Link>
+          </li>
+          <li className={`sidenav-link ${getSelector('sidenav-active', ALL_EVENTS, pathname)}`} >
+            <Link to={ALL_EVENTS}>
+              <FormattedMessage id="events" />
             </Link>
           </li>
           <li className={`sidenav-link ${getSelector('sidenav-active', ALL_ORDERS, pathname)}`} >

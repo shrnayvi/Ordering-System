@@ -21,4 +21,5 @@ export default {
   ALL_ITEMS:`/admin/items`,
   NEW_ITEM: '/admin/items/add',
   ITEM_EDIT: _id => `/admin/items/edit/${_id}`,
+  ALL_EVENTS:`/admin/events`,
 };

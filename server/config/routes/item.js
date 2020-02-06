@@ -4,7 +4,7 @@ const authorize = require('@middlewares/authorize');
 const checkToken = require('@middlewares/authenticate');
 const itemController = require('@controllers/item');
 
-router.get('/:slug', itemController.getBySlug);
+router.get('/:_id', itemController.getById);
 router.get('/', itemController.get);
 
 router.post('/', 

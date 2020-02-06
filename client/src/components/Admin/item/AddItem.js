@@ -46,6 +46,7 @@ const AddItem = props => {
     setDescription('');
     setPrice('');
     setCategory('');
+
   }, [props.allIds])
 
   const { allIds: categories, byId: categoryId } = props.categories;

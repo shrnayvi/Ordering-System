@@ -22,6 +22,7 @@ import AddUser from './components/Admin/users/AddUser';
 import Categories from './components/Admin/category/Categories';
 import AdminItems from './components/Admin/item/Items';
 import Orders from './components/Admin/order/Orders';
+import Events from './components/Admin/events/Events';
 
 
 import NotFound from './components/NotFound';
@@ -39,7 +40,7 @@ class Routes extends Component {
             <Route path="/logout" component={Logout} />
 
             <Route path="/items" component={Items} exact />
-            <Route path="/items/:id" component={SingleItem} />
+            <Route path="/items/:_id" component={SingleItem} />
 
             <ProtectedRoutes path="/customer" isLoggedIn={isLoggedIn} role={role} component={Dashboard} exact />
             <ProtectedRoutes path="/customer/my-orders" isLoggedIn={isLoggedIn} role={role} component={CustomerOrders} />
@@ -54,6 +55,7 @@ class Routes extends Component {
             <ProtectedRoutes path="/admin/categories" isLoggedIn={isLoggedIn} role={role} component={Categories} />
             <ProtectedRoutes path="/admin/orders" isLoggedIn={isLoggedIn} role={role} component={Orders} />
             <ProtectedRoutes path="/admin/items" isLoggedIn={isLoggedIn} role={role} component={AdminItems} />
+            <ProtectedRoutes path="/admin/events" isLoggedIn={isLoggedIn} role={role} component={Events} />
 
             <Route component={NotFound} />
           </Switch>

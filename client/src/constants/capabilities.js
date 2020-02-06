@@ -19,4 +19,5 @@ export default {
   '/admin/items': ['admin'],
   '/admin/items/add': ['admin'],
   '/admin/items/edit/:_id': ['admin'],
+  '/admin/events': ['admin'],
 }

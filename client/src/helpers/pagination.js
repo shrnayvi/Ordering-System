@@ -6,7 +6,11 @@ export const getPagingArgs = location => {
   let query = qs.parse(location.search);
   let page = get(query, 'page', 1);
 
-  return { skip: (page - 1) *  config.dataPerPage, limit: config.dataPerPage };
+  return { 
+    currentPage: page,
+    skip: (page - 1) *  config.dataPerPage, 
+    limit: config.dataPerPage 
+  };
 }
 
 export const getPage = location => {

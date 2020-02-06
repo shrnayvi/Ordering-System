@@ -1,4 +1,6 @@
 import qs from 'query-string';
+import pick from 'lodash/pick';
+
 import { ITEM, MEDIA, CATEGORY } from '../constants/actionTypes';
 import { 
   getAll as getItems,
@@ -12,9 +14,10 @@ import { create as createMedia } from '../apiCalls/attachment';
 import notify from '../helpers/notification';
 import config from '../constants/config';
 
-export const getAll = (query = {}) => async dispatch => {
+export const getAll = (args = { currentPage: 1 }) => async dispatch => {
   dispatch({ type: ITEM.FETCH_ALL_REQUEST });
 
+  const query = pick(args, ['skip', 'limit'])
   const { data: response } = await getItems(qs.stringify(query));
   
   if(response.status === 200) {
@@ -34,15 +37,23 @@ export const getAll = (query = {}) => async dispatch => {
       byId[item._id] = item;
     });
 
-    dispatch({ type: ITEM.FETCH_ALL_SUCCESS, payload: { allIds, byId, pageCount: Math.ceil(response.data.paging.total / config.dataPerPage) } });
+    dispatch({ 
+      type: ITEM.FETCH_ALL_SUCCESS, 
+      payload: { 
+        allIds, 
+        byId, 
+        currentPage: args.currentPage,
+        pageCount: Math.ceil(response.data.paging.total / config.dataPerPage),
+      } 
+    });
   } else {
     dispatch({ type: ITEM.FETCH_ALL_FAILURE, payload: response.message });
   }
 }
 
-export const getSingle = slug => async dispatch => {
+export const getSingle = _id => async dispatch => {
 
-  const { data: response } = await getBySlug(slug);
+  const { data: response } = await getBySlug(_id);
   
   if(response.status === 200) {
     const item = response.data;
@@ -53,8 +64,10 @@ export const getSingle = slug => async dispatch => {
     }
 
     const category = item.category;
-    item.category = category._id;
-    dispatch({ type: CATEGORY.UPDATE_CATEGORY_STORE, payload: category });
+    if(category) {
+      item.category = category._id;
+      dispatch({ type: CATEGORY.UPDATE_CATEGORY_STORE, payload: category });
+    }
 
     dispatch({ type: ITEM.FETCH_SINGLE_SUCCESS, payload: item });
   } else {
@@ -68,7 +81,7 @@ export const add = data => async dispatch => {
   const { data: response } = await addItem(data);
   
   if(response.status === 200) {
-    dispatch({ type: ITEM.ADD_SUCCESS, payload: response.data });
+    // dispatch({ type: ITEM.ADD_SUCCESS, payload: response.data });
     dispatch({ type: MEDIA.CLEAR_UPLOADED_MEDIA });
   } else {
     dispatch({ type: ITEM.ADD_FAILURE, payload: response.message });

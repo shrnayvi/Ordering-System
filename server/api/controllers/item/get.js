@@ -30,12 +30,14 @@ exports.get = async (req, res) => {
 /**
  * Get the item by slug
  * @param {Object} [req.param] - Query Object
- * @param {String} [req.params.slug] - Food Item slug
+ * @param {String} [req.params._id] - Food Item slug
  */
-exports.getBySlug = async (req, res) => {
+exports.getById= async (req, res) => {
   try {
-    const item = await Item.findOne({ slug: req.params.slug })
-      .populate('category');
+    const item = await Item.findOne({ _id: req.params._id})
+      .populate('category')
+      .populate('avatar');
+
     return apiResponse.success(res, { message: 'fetched_item', data: item });
   } catch (e) {
     return apiResponse.serverError(res, { data: e.message });

@@ -8,7 +8,7 @@ import AddItem from './AddItem';
 import Button from '../../Button';
 import Pagination from '../../Pagination';
 
-import { getPagingArgs, getPage } from '../../../helpers/pagination';
+import { getPagingArgs } from '../../../helpers/pagination';
 import { getAll, remove, toggleEditState, edit } from '../../../actions/item';
 import { get as getCategory } from '../../../actions/category';
 
@@ -31,7 +31,7 @@ class Items extends Component {
   }
 
   render() {
-    const { allIds, byId, idUI, editedUpload, pageCount } = this.props.items;
+    const { allIds, byId, idUI, editedUpload, pageCount, currentPage } = this.props.items;
     const { byId: mediaById } = this.props.media;
     const { byId: categoryById } = this.props.categories;
 
@@ -46,8 +46,6 @@ class Items extends Component {
         editedUpload={editedUpload[_id]}
       />
     ));
-
-    const page = getPage(this.props.history.location)
 
     return (
       <React.Fragment>
@@ -84,7 +82,7 @@ class Items extends Component {
 
           </div>
 
-          <Pagination currentPage={page} routePath="/admin/items" pageCount={pageCount} action={this.props.getAll} />
+          <Pagination currentPage={currentPage} routePath="/admin/items" pageCount={pageCount} action={this.props.getAll} />
 
         </div>
 

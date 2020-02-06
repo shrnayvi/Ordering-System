@@ -1,4 +1,5 @@
 import qs from 'query-string';
+import pick from 'lodash/pick';
 
 import config from '../constants/config';
 import { USER} from '../constants/actionTypes'
@@ -12,9 +13,10 @@ import {
 } from '../apiCalls/user';
 import notify from '../helpers/notification';
 
-export const getAll = (query = {}) => async dispatch => {
+export const getAll = (args = { currentPage: 1 }) => async dispatch => {
   dispatch({ type: USER.FETCH_ALL_REQUEST });
 
+  const query = pick(args, ['skip', 'limit']);
   const  { data: response } = await getUsers(qs.stringify(query));
 
   if(response.status === 200) {

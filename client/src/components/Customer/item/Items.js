@@ -31,11 +31,10 @@ class Items extends Component {
     const { byId: mediaById } = this.props.media;
 
     const itemList = allIds.map(_id => (
-      <div className="col-md-4 mt-4">
+      <div className="col-md-4 mt-4" key={_id}>
         <ItemList 
           item={byId[_id]}
           avatar={mediaById[byId[_id].avatar] || {}}
-          key={_id}
           idUI={idUI[_id]}
           editedUpload={editedUpload[_id]}
         />

@@ -111,4 +111,5 @@ export default {
   user_exists: 'User Exists',
   avatar: 'Avatar',
   add_item: 'Add Item',
+  single_item: 'Single Item',
 };
