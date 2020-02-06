@@ -8,8 +8,9 @@ import AddItem from './AddItem';
 import Button from '../../Button';
 import Pagination from '../../Pagination';
 
+import config from '../../../constants/config';
 import { getPagingArgs } from '../../../helpers/pagination';
-import { getAll, remove, toggleEditState, edit } from '../../../actions/item';
+import { getAll, fillRemainingDataWhenRemoving } from '../../../actions/item';
 import { get as getCategory } from '../../../actions/category';
 
 class Items extends Component {
@@ -28,6 +29,19 @@ class Items extends Component {
 
   toggleAddClick= () => {
     this.setState({ ...this.state, isAdding: !this.state.isAdding });
+  }
+
+  componentDidUpdate(prevProps) {
+    const { allIds, total, startIndex, endIndex } = this.props.items;
+    const idsLength = allIds.length;
+    if(
+      startIndex + idsLength - 1 < endIndex &&
+      idsLength < prevProps.items.allIds.length && 
+      idsLength < config.dataPerPage && 
+      idsLength < total
+      ) {
+      this.props.fillRemainingDataWhenRemoving({ skip: startIndex + idsLength, limit: config.dataPerPage - idsLength });
+    }
   }
 
   render() {
@@ -95,10 +109,8 @@ class Items extends Component {
 const mapStateToProps = ({ items, media, categories }) => ({ items, media, categories });
 const mapDispatchToProps = {
   getAll,
-  remove,
-  toggleEditState,
   getCategory,
-  edit,
+  fillRemainingDataWhenRemoving,
 }
 
 

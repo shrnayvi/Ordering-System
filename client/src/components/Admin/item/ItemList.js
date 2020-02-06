@@ -3,10 +3,16 @@ import { connect } from 'react-redux';
 import get from 'lodash/get';
 
 import Input from '../../Input';
+import Textarea from '../../Textarea';
 import Button from '../../Button';
 import ImageUpload from '../../ImageUpload';
 
-import { remove, toggleEditState, edit, uploadEditedItemMedia } from '../../../actions/item';
+import { 
+  remove, 
+  toggleEditState, 
+  edit, 
+  uploadEditedItemMedia 
+} from '../../../actions/item';
 
 class ItemList extends Component {
   constructor(props) {
@@ -85,7 +91,8 @@ class ItemList extends Component {
         <td>
           {
             isInEditingState 
-              ? <Input name="description" type="text" onChange={this.handleChange} defaultValue={item.description} />
+              // ? <Input name="description" type="text" onChange={this.handleChange} defaultValue={item.description} />
+              ? <Textarea name="description" onChange={this.handleChange} defaultValue={item.description} />
               : item.description
           }
         </td>

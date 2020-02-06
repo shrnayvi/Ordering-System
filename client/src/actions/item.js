@@ -14,6 +14,30 @@ import { create as createMedia } from '../apiCalls/attachment';
 import notify from '../helpers/notification';
 import config from '../constants/config';
 
+const fetchItems = (data, dispatch) => {
+  const allIds = [];
+  const byId = {};
+
+  data.items.forEach(item => {
+    allIds.push(item._id);
+    const media = item.avatar;
+    if(media) {
+      item.avatar = media._id; 
+      dispatch({ type: MEDIA.UPDATE_MEDIA, payload: media });
+    }
+    const category = item.category;
+    item.category = category._id;
+    dispatch({ type: CATEGORY.UPDATE_CATEGORY_STORE, payload: category });
+    byId[item._id] = item;
+  });
+
+  return {
+    allIds, 
+    byId, 
+  }
+
+}
+
 export const getAll = (args = { currentPage: 1 }) => async dispatch => {
   dispatch({ type: ITEM.FETCH_ALL_REQUEST });
 
@@ -21,31 +45,20 @@ export const getAll = (args = { currentPage: 1 }) => async dispatch => {
   const { data: response } = await getItems(qs.stringify(query));
   
   if(response.status === 200) {
-    const allIds = [];
-    const byId = {};
-
-    response.data.items.forEach(item => {
-      allIds.push(item._id);
-      const media = item.avatar;
-      if(media) {
-        item.avatar = media._id; 
-        dispatch({ type: MEDIA.UPDATE_MEDIA, payload: media });
-      }
-      const category = item.category;
-      item.category = category._id;
-      dispatch({ type: CATEGORY.UPDATE_CATEGORY_STORE, payload: category });
-      byId[item._id] = item;
-    });
+    let data = fetchItems(response.data, dispatch);
+    let paging = response.data.paging;
+    data = {
+      ...data,
+      currentPage: args.currentPage,
+      pageCount: Math.ceil(paging.total / config.dataPerPage),
+      total: paging.total,
+      startIndex: paging.startIndex,
+      endIndex: paging.endIndex,
+    }
 
     dispatch({ 
       type: ITEM.FETCH_ALL_SUCCESS, 
-      payload: { 
-        allIds, 
-        byId, 
-        currentPage: args.currentPage,
-        pageCount: Math.ceil(response.data.paging.total / config.dataPerPage),
-        total: response.data.paging.total,
-      } 
+      payload: data,
     });
   } else {
     dispatch({ type: ITEM.FETCH_ALL_FAILURE, payload: response.message });
@@ -89,7 +102,6 @@ export const add = (data, opts = {}) => async dispatch => {
     }
 
     dispatch({ type: ITEM.ADD_SUCCESS, payload: { item, _id } });
-    // dispatch({ type: ITEM.EDIT_ENTITY_ID, payload: { item, id } });
     dispatch({ type: MEDIA.CLEAR_UPLOADED_MEDIA });
   } else {
     dispatch({ type: ITEM.ADD_FAILURE, payload: response.message });
@@ -138,5 +150,18 @@ export const uploadEditedItemMedia = (_id, file) => async dispatch => {
   } else {
     dispatch({ type: MEDIA.ADD_FAILURE, payload: response.message });
     notify('error', response.message);
+  }
+};
+
+export const fillRemainingDataWhenRemoving = args => async dispatch => {
+  const { data: response } = await getItems(qs.stringify(args));
+  
+  if(response.status === 200) {
+    let data = fetchItems(response.data, dispatch);
+
+    dispatch({ 
+      type: ITEM.FILL_REMAINING_DATA, 
+      payload: data,
+    });
   }
 };

@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { ToastContainer } from 'react-toastify';
 
 import LabelInput from '../../LabelInput';
+import LabelTextarea from '../../LabelTextarea';
 import ImageUpload from '../../ImageUpload';
 import Button from '../../Button';
 
@@ -72,9 +73,16 @@ export default props => {
           label="name"
         />
 
-        <LabelInput 
+        {/* <LabelInput 
           name="description"
           type="text"
+          handleChange={e => setDescription(e.target.value)}
+          value={description}
+          label="description"
+        /> */}
+
+        <LabelTextarea
+          name="description"
           handleChange={e => setDescription(e.target.value)}
           value={description}
           label="description"

@@ -11,7 +11,9 @@ const initialState = {
   editedUpload: {},
   pageCount: null,
   currentPage: null,
-  total: null
+  total: null,
+  startIndex: 0,
+  endIndex: 0,
 };
 
 export default (state = initialState, action) => {
@@ -28,6 +30,8 @@ export default (state = initialState, action) => {
         pageCount: action.payload.pageCount,
         currentPage: +action.payload.currentPage,
         total: action.payload.total,
+        startIndex: action.payload.startIndex,
+        endIndex: action.payload.endIndex,
       }
     case ITEM.FETCH_ALL_FAILURE: 
       return {
@@ -83,6 +87,8 @@ export default (state = initialState, action) => {
           ui: { ...state.ui, isRemoving: false },
           allIds,
           byId,
+          total: state.total - 1,
+          pageCount: Math.ceil((state.total - 1) / config.dataPerPage),
       }
     case ITEM.REMOVE_FAILURE:
       return {
@@ -95,7 +101,9 @@ export default (state = initialState, action) => {
         ...state,
         idUI: { 
           ...state.idUI, 
-          [action.payload._id]: { isInEditingState: !get(state, `idUI.${action.payload._id}.isInEditingState`, false) } 
+          [action.payload._id]: { 
+            isInEditingState: !get(state, `idUI.${action.payload._id}.isInEditingState`, false) 
+          } 
         },
       }
 
@@ -155,12 +163,11 @@ export default (state = initialState, action) => {
       }
 
     case ITEM.FILL_REMAINING_DATA:
+      // console.log(action.payload.allIds, 'reducer');
       return {
         ...state,
-        allIds: [...state.allIds, action.payload.allIds],
+        allIds: [...state.allIds, ...action.payload.allIds],
         byId: { ...state.byId, ...action.payload.byId },
-        pageCount: action.payload.pageCount,
-        currentPage: +action.payload.currentPage,
       }
 
 

@@ -107,6 +107,7 @@ export const ITEM = {
   SAVE_EDITED_UPLOAD: 'save_edited_upload',
   EDIT_UPLOADING: 'item_uploading_avatar',
   REMOVE_LAST_ID: 'remove_last_item_id',
+  FILL_REMAINING_DATA: 'fill_remaining_item_data',
 
   TOGGLE_EDIT_STATE: 'toggle_item_edit_state',
 
