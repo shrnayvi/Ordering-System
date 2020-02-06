@@ -53,12 +53,20 @@ export default (state = initialState, action) => {
       return {
           ...state, 
           ui: { ...state.ui, isAdding: false },
-          allIds: [action.payload._id, ...state.allIds],
-          byId: { ...state.byId, [action.payload._id]: action.payload }
+          allIds: [...action.payload._id, ...state.allIds],
+          byId: { ...state.byId, [action.payload.item._id]: action.payload.item }
       }
     case ITEM.ADD_FAILURE:
       return {
         ...state, ui: { ...state.ui, isAdding: false },
+      }
+
+    case ITEM.REMOVE_LAST_ID:
+      const newIds = [...state.allIds];
+      newIds.splice(newIds.length - 1, 1);
+      return {
+        ...state, 
+        allIds: newIds,
       }
 
     case ITEM.REMOVE_REQUEST:

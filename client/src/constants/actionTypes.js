@@ -106,6 +106,7 @@ export const ITEM = {
   EDIT_FAILURE: 'update_item_failure',
   SAVE_EDITED_UPLOAD: 'save_edited_upload',
   EDIT_UPLOADING: 'item_uploading_avatar',
+  REMOVE_LAST_ID: 'remove_last_item_id',
 
   TOGGLE_EDIT_STATE: 'toggle_item_edit_state',
 

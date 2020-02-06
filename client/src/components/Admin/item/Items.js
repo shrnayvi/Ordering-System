@@ -59,7 +59,7 @@ class Items extends Component {
           <div className="odr-add-item">
             {
               this.state.isAdding && 
-                <AddItem isAdding={this.state.isAdding} />
+                <AddItem isAdding={this.state.isAdding} currentPage={currentPage} />
             }
           </div>
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { ToastContainer } from 'react-toastify';
 
@@ -7,17 +7,24 @@ import LabelInput from '../../LabelInput';
 import ImageUpload from '../../ImageUpload';
 import Button from '../../Button';
 
-import { add } from '../../../actions/item';
-import { get as getCategory } from '../../../actions/category';
+import config from '../../../constants/config';
+import { add, removeLastId } from '../../../actions/item';
 import { uploadMedia } from '../../../actions/media';
 
-const AddItem = props => {
+export default props => {
 
-  let [name, setName] = useState('');
-  let [description, setDescription] = useState('');
-  let [category, setCategory] = useState('');
-  let [price, setPrice] = useState('');
+  const [name, setName] = useState(''),
+    [description, setDescription] = useState(''),
+    [category, setCategory] = useState(''),
+    [price, setPrice] = useState('');
 
+  const {
+    media: { uploaded, ui: mediaUi },
+    categories,
+    items: { allIds, byId },
+  } = useSelector(state => state);
+
+  const dispatch = useDispatch();
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -28,7 +35,7 @@ const AddItem = props => {
       price: +price,
       avatar: uploaded._id,
     }
-    props.add(data);
+    dispatch(add(data, { currentPage: props.currentPage }));
   }
 
   const handleImage = e => {
@@ -36,10 +43,8 @@ const AddItem = props => {
     const formData = new FormData();
     formData.append('attachment', file)
 
-    props.uploadMedia(formData);
+    dispatch(uploadMedia(formData));
   }
-
-  const { uploaded, mediaUi } = props;
 
   useEffect(() => {
     setName('');
@@ -47,10 +52,14 @@ const AddItem = props => {
     setPrice('');
     setCategory('');
 
-  }, [props.allIds])
+    if(props.currentPage === 1 && allIds.length > config.dataPerPage) {
+      dispatch(removeLastId());
+    }
 
-  const { allIds: categories, byId: categoryId } = props.categories;
-  const categoryOptions = categories.map(_id => (<option key={_id} value={_id}>{categoryId[_id].name}</option>))
+  }, [byId, dispatch, allIds, props])
+
+  const { allIds: categoryIds, byId: categoryId } = categories;
+  const categoryOptions = categoryIds.map(_id => (<option key={_id} value={_id}>{categoryId[_id].name}</option>))
 
   return (
     <React.Fragment>
@@ -102,23 +111,3 @@ const AddItem = props => {
     </React.Fragment>
   )
 }
-
-
-const mapStateToProps = ({ 
-  media: { uploaded, ui },
-  categories,
-  items: { allIds }
-}) => ({ 
-  uploaded, 
-  mediaUi: ui,
-  categories,
-  allIds,
-});
-
-const mapDispatchToProps = {
-  add,
-  uploadMedia,
-  getCategory,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddItem);

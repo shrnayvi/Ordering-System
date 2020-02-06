@@ -75,19 +75,28 @@ export const getSingle = _id => async dispatch => {
   }
 }
 
-export const add = data => async dispatch => {
+export const add = (data, opts = {}) => async dispatch => {
   dispatch({ type: ITEM.ADD_REQUEST });
 
   const { data: response } = await addItem(data);
   
   if(response.status === 200) {
-    // dispatch({ type: ITEM.ADD_SUCCESS, payload: response.data });
+    const item = response.data;
+    let _id = [];
+    if(opts.currentPage && opts.currentPage === 1) {
+      _id = [ item._id ];
+    }
+
+    dispatch({ type: ITEM.ADD_SUCCESS, payload: { item, _id } });
+    // dispatch({ type: ITEM.EDIT_ENTITY_ID, payload: { item, id } });
     dispatch({ type: MEDIA.CLEAR_UPLOADED_MEDIA });
   } else {
     dispatch({ type: ITEM.ADD_FAILURE, payload: response.message });
     notify('error', response.message);
   }
 }
+
+export const removeLastId = _ => ({ type: ITEM.REMOVE_LAST_ID });
 
 export const edit = (_id, data) => async dispatch => {
   dispatch({ type: ITEM.EDIT_REQUEST });
