@@ -22,8 +22,8 @@ export default class Pagination extends Component {
     return (
       <div className="odr-pagination">
         {
-          pageCount && pageCount > 1 &&
-            <ReactPaginate
+          pageCount && pageCount > 1 
+            ? <ReactPaginate
               forcePage={currentPage}
               previousLabel={'previous'}
               nextLabel={'next'}
@@ -37,6 +37,7 @@ export default class Pagination extends Component {
               subContainerClassName={'pages pagination'}
               activeClassName={'active'}
             />
+            : ''
         }
       </div>
           

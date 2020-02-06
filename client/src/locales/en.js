@@ -112,4 +112,5 @@ export default {
   avatar: 'Avatar',
   add_item: 'Add Item',
   single_item: 'Single Item',
+  events: 'Events',
 };

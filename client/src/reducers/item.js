@@ -1,6 +1,7 @@
 import get from 'lodash/get';
 
 import { ITEM } from '../constants/actionTypes';
+import config from '../constants/config';
 
 const initialState = {
   allIds: [],
@@ -10,6 +11,7 @@ const initialState = {
   editedUpload: {},
   pageCount: null,
   currentPage: null,
+  total: null
 };
 
 export default (state = initialState, action) => {
@@ -25,6 +27,7 @@ export default (state = initialState, action) => {
         byId: { ...state.byId, ...action.payload.byId },
         pageCount: action.payload.pageCount,
         currentPage: +action.payload.currentPage,
+        total: action.payload.total,
       }
     case ITEM.FETCH_ALL_FAILURE: 
       return {
@@ -54,19 +57,13 @@ export default (state = initialState, action) => {
           ...state, 
           ui: { ...state.ui, isAdding: false },
           allIds: [...action.payload._id, ...state.allIds],
-          byId: { ...state.byId, [action.payload.item._id]: action.payload.item }
+          byId: { ...state.byId, [action.payload.item._id]: action.payload.item },
+          total: state.total + 1,
+          pageCount: Math.ceil((state.total + 1) / config.dataPerPage),
       }
     case ITEM.ADD_FAILURE:
       return {
         ...state, ui: { ...state.ui, isAdding: false },
-      }
-
-    case ITEM.REMOVE_LAST_ID:
-      const newIds = [...state.allIds];
-      newIds.splice(newIds.length - 1, 1);
-      return {
-        ...state, 
-        allIds: newIds,
       }
 
     case ITEM.REMOVE_REQUEST:
@@ -147,6 +144,25 @@ export default (state = initialState, action) => {
           } 
         },
       }
+
+
+    case ITEM.REMOVE_LAST_ID:
+      const newIds = [...state.allIds];
+      newIds.splice(newIds.length - 1, 1);
+      return {
+        ...state, 
+        allIds: newIds,
+      }
+
+    case ITEM.FILL_REMAINING_DATA:
+      return {
+        ...state,
+        allIds: [...state.allIds, action.payload.allIds],
+        byId: { ...state.byId, ...action.payload.byId },
+        pageCount: action.payload.pageCount,
+        currentPage: +action.payload.currentPage,
+      }
+
 
     default:
       return state;

@@ -44,6 +44,7 @@ export const getAll = (args = { currentPage: 1 }) => async dispatch => {
         byId, 
         currentPage: args.currentPage,
         pageCount: Math.ceil(response.data.paging.total / config.dataPerPage),
+        total: response.data.paging.total,
       } 
     });
   } else {
