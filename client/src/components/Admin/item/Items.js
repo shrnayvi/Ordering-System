@@ -39,7 +39,7 @@ class Items extends Component {
       idsLength < prevProps.items.allIds.length && 
       idsLength < config.dataPerPage && 
       idsLength < total
-      ) {
+    ) {
       this.props.fillRemainingDataWhenRemoving({ skip: startIndex + idsLength, limit: config.dataPerPage - idsLength });
     }
   }
