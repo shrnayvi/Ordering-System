@@ -13,6 +13,26 @@ import {
 } from '../apiCalls/user';
 import notify from '../helpers/notification';
 
+const fetchUsers = (data, dispatch) => {
+  const byId = {},
+    allIds = [];
+
+  data.users.forEach(user => {
+    allIds.push(user._id)
+    if(user.avatar) {
+      const media = user.avatar;
+      user['avatar'] = media._id;
+      dispatch({ type: MEDIA.UPDATE_MEDIA, payload: media });
+    }
+    byId[user._id] = user;
+  });
+
+  return {
+    allIds,
+    byId,
+  };
+}
+
 export const getAll = (args = { currentPage: 1 }) => async dispatch => {
   dispatch({ type: USER.FETCH_ALL_REQUEST });
 
@@ -20,19 +40,17 @@ export const getAll = (args = { currentPage: 1 }) => async dispatch => {
   const  { data: response } = await getUsers(qs.stringify(query));
 
   if(response.status === 200) {
-    const byId = {},
-      allIds = response.data.users.map(user => user._id);
+    let data = fetchUsers(response.data, dispatch);
+    const paging = response.data.paging;
+    data = {
+      ...data,
+     pageCount: Math.ceil(paging.total / config.dataPerPage ),
+     total: paging.total,
+     startIndex: paging.startIndex,
+     endIndex: paging.endIndex, 
+    };
 
-    response.data.users.forEach(user => {
-      if(user.avatar) {
-        const media = user.avatar;
-        user['avatar'] = media._id;
-        dispatch({ type: MEDIA.UPDATE_MEDIA, payload: media });
-      }
-      byId[user._id] = user;
-    });
-
-    dispatch({ type: USER.FETCH_ALL_SUCCESS, payload: { byId, allIds, pageCount: Math.ceil(response.data.paging.total / config.dataPerPage ) } });
+    dispatch({ type: USER.FETCH_ALL_SUCCESS, payload: data });
   } else {
     dispatch({ type: USER.FETCH_ALL_FAILURE, error: response.message });
   }
@@ -85,15 +103,29 @@ export const updateUser = (_id, data) => async dispatch => {
 }
 
 export const removeUser = _id => async dispatch => {
-  dispatch({ type: USER.DELETE_REQUEST, payload: { _id } });
+  dispatch({ type: USER.REMOVE_REQUEST, payload: { _id } });
 
   const  { data: response } = await remove(_id);
 
   if(response.status === 200) {
-    dispatch({ type: USER.DELETE_SUCCESS, payload: response.data });
+    dispatch({ type: USER.REMOVE_SUCCESS, payload: response.data });
     notify('success', response.message)
   } else {
-    dispatch({ type: USER.DELETE_FAILURE, error: response.message });
+    dispatch({ type: USER.REMOVE_FAILURE, error: response.message });
     notify('error', response.message)
   }
 }
+
+export const fillRemainingDataWhenRemoving = args => async dispatch => {
+  const { data: response } = await getUsers(qs.stringify(args));
+  console.log(response, args);
+  
+  if(response.status === 200) {
+    let data = fetchUsers(response.data, dispatch);
+
+    dispatch({ 
+      type: USER.FILL_REMAINING_DATA, 
+      payload: data,
+    });
+  }
+};

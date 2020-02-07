@@ -63,9 +63,11 @@ export const USER = {
   FETCH_ALL_SUCCESS: 'fetch_all_user_success',
   FETCH_ALL_FAILURE: 'fetch_all_user_failure',
 
-  DELETE_REQUEST: 'delete_user_request',
-  DELETE_SUCCESS: 'delete_user_success',
-  DELETE_FAILURE: 'delete_user_failure',
+  REMOVE_REQUEST: 'remove_user_request',
+  REMOVE_SUCCESS: 'remove_user_success',
+  REMOVE_FAILURE: 'remove_user_failure',
+
+  FILL_REMAINING_DATA: 'fill_user_remaining_data',
 
   RESET_STATUS: 'reset_user_status',
 

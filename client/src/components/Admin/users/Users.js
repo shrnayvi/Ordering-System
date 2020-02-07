@@ -7,8 +7,15 @@ import Pagination from '../../Pagination';
 import Sidebar from '../Sidebar';
 import UserList from './UserList';
 
+import config from '../../../constants/config';
 import { getPagingArgs, getPage } from '../../../helpers/pagination';
-import { getAll, updateUser, removeUser, toggleEditState } from '../../../actions/user';
+import { 
+  getAll, 
+  updateUser, 
+  removeUser, 
+  toggleEditState,
+  fillRemainingDataWhenRemoving,
+} from '../../../actions/user';
 
 import '../../../assets/users.css';
 
@@ -17,6 +24,20 @@ class Users extends Component {
   componentDidMount() {
     const pagingArgs = getPagingArgs(this.props.history.location)
     this.props.getAll(pagingArgs);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { allIds, total, startIndex, endIndex } = this.props.users;
+    const idsLength = allIds.length;
+    if(
+      startIndex + idsLength - 1 < endIndex &&
+      idsLength < prevProps.users.allIds.length && 
+      idsLength < config.dataPerPage && 
+      idsLength < total
+    ) {
+      this.props.fillRemainingDataWhenRemoving({ skip: startIndex + idsLength, limit: config.dataPerPage - idsLength });
+    }
+
   }
 
   render() {
@@ -75,6 +96,7 @@ const mapDispatchToProps = {
   updateUser, 
   removeUser,
   toggleEditState,
+  fillRemainingDataWhenRemoving,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users);

@@ -1,12 +1,16 @@
 import { USER } from '../constants/actionTypes';
 import get from 'lodash/get';
+import config from '../constants/config';
 
 const initialState = {
   byId: {},
   allIds: [],
   idUI: {},
   ui: {},
-  pageCount: null,
+  pageCount: 0,
+  startIndex: 0,
+  endIndex: 0,
+  total: 0,
 }
 
 export default (state = initialState, action) => {
@@ -44,6 +48,9 @@ export default (state = initialState, action) => {
         allIds: action.payload.allIds,
         ui: { ...state.ui, isFetching: false },
         pageCount: action.payload.pageCount,
+        total: action.payload.total,
+        startIndex: action.payload.startIndex,
+        endIndex: action.payload.endIndex,
       };
     case USER.FETCH_ALL_FAILURE:
       return { ...state, ui: { ...state.ui, isFetching: false } };
@@ -67,7 +74,7 @@ export default (state = initialState, action) => {
     case USER.EDIT_USER_FAILURE:
       return {  ...state, ui: { ...state.ui, isEditing: false } };
 
-    case USER.DELETE_REQUEST:
+    case USER.REMOVE_REQUEST:
       return {  
         ...state, 
         idUI: { 
@@ -75,7 +82,7 @@ export default (state = initialState, action) => {
           [action.payload._id]: { isDeleting: !get(state, `idUI.${action.payload._id}.isDeleting`, false) } 
         },
       };
-    case USER.DELETE_SUCCESS:
+    case USER.REMOVE_SUCCESS:
       let allIds = [...state.allIds];
       let byId = { ...state.byId };
 
@@ -87,12 +94,14 @@ export default (state = initialState, action) => {
         ...state, 
         allIds,
         byId,
+        total: state.total - 1,
+        pageCount: Math.ceil((state.total - 1) / config.dataPerPage),
         idUI: { 
           ...state.idUI, 
           [action.payload._id]: { isDeleting: !get(state, `idUI.${action.payload._id}.isDeleting`, false) } 
         },
       };
-    case USER.DELETE_FAILURE:
+    case USER.REMOVE_FAILURE:
       return {  
         ...state,
         idUI: { 
@@ -100,6 +109,16 @@ export default (state = initialState, action) => {
           [action.payload._id]: { isDeleting: !get(state, `idUI.${action.payload._id}.isDeleting`, false) } 
         },
       };
+
+    case USER.FILL_REMAINING_DATA:
+      console.log(state, 'state')
+      return {
+        ...state,
+        allIds: [...state.allIds, ...action.payload.allIds],
+        byId: {
+          ...state.byId, ...action.payload.byId
+        }
+      }
 
     default:
       return state;
