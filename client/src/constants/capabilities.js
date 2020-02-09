@@ -16,6 +16,7 @@ export default {
   '/admin/categories': ['admin'],
   '/admin/categories/edit/:_id': ['admin'],
   '/admin/orders': ['admin'],
+  '/admin/orders/detail/:orderId': ['admin'],
   '/admin/items': ['admin'],
   '/admin/items/add': ['admin'],
   '/admin/items/edit/:_id': ['admin'],

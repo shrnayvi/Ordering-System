@@ -5,6 +5,8 @@ import media from './media';
 import items from './item';
 import categories from './category';
 import events from './events';
+import orders from './order';
+import orderDetails from './orderDetail';
 
 export default {
   auth,
@@ -14,4 +16,6 @@ export default {
   items,
   categories,
   events,
+  orders,
+  orderDetails,
 }

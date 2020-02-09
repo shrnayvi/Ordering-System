@@ -74,6 +74,9 @@ export const USER = {
   HANDLE_INPUT_CHANGE: 'handle_profile_input_change',
 
   HANDLE_EDIT_INPUT_CHANGE: 'handle_edit_input_change',
+
+  UPDATE_ENTITY: 'update_user_entity',
+
 }
 
 export const MENU = {
@@ -106,8 +109,13 @@ export const ITEM = {
   EDIT_REQUEST: 'update_item_request',
   EDIT_SUCCESS: 'update_item_success',
   EDIT_FAILURE: 'update_item_failure',
+
+  UPDATE_ENTITY: 'update_item_entity',
+
   SAVE_EDITED_UPLOAD: 'save_edited_upload',
+
   EDIT_UPLOADING: 'item_uploading_avatar',
+
   REMOVE_LAST_ID: 'remove_last_item_id',
   FILL_REMAINING_DATA: 'fill_remaining_item_data',
 
@@ -129,10 +137,13 @@ export const ORDER = {
   FETCH_FAILURE: 'fetch_user_order_failure',
   FETCH_ALL_SUCCESS: 'fetch_all_order_success',
 
-  UPDATE_REQUEST: 'update_order_request',
-  UPDATE_SUCCESS: 'update_order_success',
-  UPDATE_FAILURE: 'updat_order_failure',
-  UPDATE_ALL_ORDER_SUCCESS: 'update_admin_order_success',
+  EDIT_REQUEST: 'edit_order_request',
+  EDIT_SUCCESS: 'edit_order_success',
+  EDIT_FAILURE: 'edit_order_failure',
+
+  TOGGLE_EDIT_STATE: 'toggle_order_edit_state',
+
+  UPDATE_ENTITY: 'update_order_entity',
 
   RESET_STATUS: 'update_order_status'
 }
@@ -227,4 +238,12 @@ export const EVENT = {
   RESET_STATUS: 'reset_event_status',
 
   HANDLE_INPUT_CHANGE: 'handle_event_input_change',
+
+  UPDATE_ENTITY: 'update_event_entity',
+}
+
+export const ORDER_DETAIL = {
+  FETCH_REQUEST: 'fetch_order_detail_request',
+  FETCH_SUCCESS: 'fetch_order_detail_success',
+  FETCH_FAILURE: 'fetch_order_detail_failure',
 }

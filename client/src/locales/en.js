@@ -116,4 +116,9 @@ export default {
   events: 'Events',
   price_limit: 'Price Limit',
   add_event: 'Add Event',
+  invalid: 'Invalid',
+  user: 'User',
+  event: 'Event',
+  order_detail: 'Order Details',
+  order: 'Order',
 };

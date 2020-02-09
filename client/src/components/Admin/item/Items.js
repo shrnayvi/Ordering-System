@@ -55,7 +55,7 @@ class Items extends Component {
         avatar={mediaById[byId[_id].avatar] || {}}
         key={_id}
         idUI={idUI[_id]}
-        category={categoryById[byId[_id].category]}
+        category={categoryById[byId[_id].category] || {}}
         allCategories={this.props.categories}
         editedUpload={editedUpload[_id]}
       />

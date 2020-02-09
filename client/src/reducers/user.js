@@ -111,12 +111,19 @@ export default (state = initialState, action) => {
       };
 
     case USER.FILL_REMAINING_DATA:
-      console.log(state, 'state')
       return {
         ...state,
         allIds: [...state.allIds, ...action.payload.allIds],
         byId: {
           ...state.byId, ...action.payload.byId
+        }
+      }
+
+    case USER.UPDATE_ENTITY:
+      return {
+        ...state,
+        byId: {
+          ...state.byId, [action.payload._id]: action.payload,
         }
       }
 

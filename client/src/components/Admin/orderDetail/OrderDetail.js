@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
 import Sidebar from '../Sidebar';
-import OrderList from './OrderList';
+import DetailList from './DetailList';
 import Pagination from '../../Pagination';
 
 import { getPagingArgs } from '../../../helpers/pagination';
-import { get } from '../../../actions/order';
+import { get } from '../../../actions/orderDetail';
 
 export default props => {
 
@@ -19,18 +19,18 @@ export default props => {
     currentPage,
     pageCount,
     idUI,
-  } = useSelector(state => state.orders);
-
+  } = useSelector(state => state.orderDetails);
 
   useEffect(() => {
+    const orderId = props.match.params.orderId;
     const pagingArgs = getPagingArgs(props.history.location);
-    dispatch(get(pagingArgs))
-  }, [dispatch, props.history.location]);
+    dispatch(get({ orderId, ...pagingArgs }))
+  }, [dispatch, props.history.location, props.match.params.orderId]);
 
-  const orderList = allIds.map(_id => (
-    <OrderList
+  const detailList = allIds.map(_id => (
+    <DetailList
       key={_id}
-      order={byId[_id]}
+      detail={byId[_id]}
       idUI={idUI[_id] || {}}
     />
   ));
@@ -39,20 +39,18 @@ export default props => {
     <React.Fragment>
       <Sidebar />
       <div className="main">
-        <h1> <FormattedMessage id="orders" /> </h1>
+        <h1> <FormattedMessage id="order_detail" /> </h1>
 
         <table className="table mt-2">
           <thead>
             <tr>
-              <th><FormattedMessage id="order_number" /></th>
-              <th><FormattedMessage id="user" /></th>
-              <th><FormattedMessage id="event" /></th>
-              <th><FormattedMessage id="status" /></th>
-              <th><FormattedMessage id="action" /></th>
+              <th><FormattedMessage id="order" /></th>
+              <th><FormattedMessage id="item" /></th>
+              <th><FormattedMessage id="price" /></th>
             </tr>
           </thead>
           <tbody>
-            {orderList}
+            {detailList}
           </tbody>
         </table>
 

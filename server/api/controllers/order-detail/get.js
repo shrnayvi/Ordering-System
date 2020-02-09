@@ -1,7 +1,7 @@
 const OrderDetail = require('@models/order-detail');
 const Order = require('@models/order');
 const pagination = require('@utils/pagination');
-const { omit, get } = require('lodash');
+const { get } = require('lodash');
 
 /**
  * @param {Object} [req.query] - Query Object
@@ -9,12 +9,12 @@ const { omit, get } = require('lodash');
  * @param {String} [req.query.size] - Number of data to fetch
  */
 exports.get = async (req, res) => {
-  const { skip, limit } = pagination(req.query);
+  const { skip, limit, sort, query: queryParam } = pagination.getPagingArgs(req.query);
   const { role, userId: user } = req;
   
   try {
-    let query = omit(req.query, ['skip', 'limit', 'page', 'size']);
-    query = { order: req.params._id, ...query };
+
+    query = { order: req.params._id, ...queryParam};
     const found = await Order.findOne({ _id: req.params._id })
       .populate('user');
 
@@ -35,9 +35,11 @@ exports.get = async (req, res) => {
         })
         .skip(skip)
         .limit(limit)
-        .sort({ createdAt: 'desc' });
+        .sort(sort);
 
-    return apiResponse.success(res, { message: 'fetched_item', data: { total, pageCount: Math.ceil(total / dataPerPage), orderDetails: details } });
+    const paging = pagination.getPagingResult(req.query, { total });
+
+    return apiResponse.success(res, { message: 'fetched_item', data: { paging, orderDetails: details } });
   } catch (e) {
     return apiResponse.serverError(res, { data: e.message });
   }
@@ -88,7 +90,7 @@ function _canCRUD(CRUD, found, loggedUser) {
 
   switch(CRUD) {
     case 'Read':
-      if(loggedUser.role === 'administrator' || foundUser === loggedUser._id) {
+      if(loggedUser.role === 'admin' || foundUser === loggedUser._id) {
         return true;
       } else {
         return false;

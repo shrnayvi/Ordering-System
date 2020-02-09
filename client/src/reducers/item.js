@@ -171,6 +171,15 @@ export default (state = initialState, action) => {
       }
 
 
+    case ITEM.UPDATE_ENTITY:
+      return {
+        ...state,
+        byId: {
+          ...state.byId, [action.payload._id]: action.payload,
+        }
+      }
+
+
     default:
       return state;
   }

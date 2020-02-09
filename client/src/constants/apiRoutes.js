@@ -24,7 +24,7 @@ export const ORDER = {
   BULKCREATE: '/orders/bulk',
   ADD: '/orders',
   GET_ORDER: userId => `/users/${userId}/orders`,
-  GET_ALL_ORDER: '/orders',
+  GET_ALL_ORDER: query => query ? `/orders?${query}` : '/orders',
   UPDATE_ORDER: _id => `/orders/${_id}`,
   ORDER_BY_STATUS: (status) => `/orders?status=${status}`,
   FILTER_ORDER: filterData => `/orders?${qs.encode(filterData)}`,
@@ -55,4 +55,8 @@ export const EVENT = {
   GET_ALL_EVENT: query => query ? `/events?${query}` : '/events',
   REMOVE: _id => `/events/${_id}`,
   EDIT: _id => `/events/${_id}`,
+}
+
+export const ORDER_DETAIL = {
+  GET_DETAILS: (orderId, query) => query ? `/orders/${orderId}/order-details?${query}` : `/orders/${orderId}/order-details`,
 }

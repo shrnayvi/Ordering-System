@@ -9,14 +9,17 @@ const OrderSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
+    required: true,
   },
   status: {
     type: Number,
     enum: [-1, 0, 1, 2],
+    default: -1,
   },
   event: {
     type: Schema.Types.ObjectId,
     ref: 'Event',
+    required: true,
   },
   // item: {
   //   type: Schema.Types.ObjectId,
