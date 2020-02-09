@@ -8,8 +8,10 @@ export default class Pagination extends Component {
     let path = this.props.routePath;
     const pageNumber = data.selected + 1;
     history.push(`${path}?page=${pageNumber}`)
-    const pagingArgs = getPagingArgs(history.location);
-    this.props.action(pagingArgs);
+    if(this.props.action) {
+      const pagingArgs = getPagingArgs(history.location);
+      this.props.action(pagingArgs);
+    }
   }
 
   render() {

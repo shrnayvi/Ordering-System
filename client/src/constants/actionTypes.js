@@ -173,9 +173,15 @@ export const CATEGORY = {
 
   UPDATE_CATEGORY_STORE: 'update_category_store',
 
-  UPDATE_REQUEST: 'update_category_request',
-  UPDATE_SUCCESS: 'update_category_success',
-  UPDATE_FAILURE: 'update_category_failure',
+  EDIT_REQUEST: 'edit_category_request',
+  EDIT_SUCCESS: 'edit_category_success',
+  EDIT_FAILURE: 'edit_category_failure',
+
+  TOGGLE_EDIT_STATE: 'toggle_category_edit_state',
+
+  FILL_REMAINING_DATA: 'fill_remaining_category_data',
+
+  REMOVE_LAST_ID: 'category_remove_last_id',
 
   RESET_STATUS: 'reset_category_status',
 
@@ -190,4 +196,35 @@ export const MEDIA = {
   UPDATE_MEDIA: 'update_media',
 
   CLEAR_UPLOADED_MEDIA: 'clear_uploaded_media',
+}
+
+export const EVENT = {
+  ADD_REQUEST: 'add_event_request',
+  ADD_SUCCESS: 'add_event_success',
+  ADD_FAILURE: 'add_event_failure',
+
+  FETCH_REQUEST: 'fetch_event_request',
+  FETCH_ALL_SUCCESS: 'fetch_categories_success',
+  FETCH_SINGLE_SUCCESS: 'fetch_event_success',
+  FETCH_FAILURE: 'fetch_event_failure',
+
+  REMOVE_REQUEST: 'remove_event_request',
+  REMOVE_SUCCESS: 'remove_event_success',
+  REMOVE_FAILURE: 'remove_event_failure',
+
+  UPDATE_EVENT_STORE: 'update_event_store',
+
+  EDIT_REQUEST: 'edit_event_request',
+  EDIT_SUCCESS: 'edit_event_success',
+  EDIT_FAILURE: 'edit_event_failure',
+
+  TOGGLE_EDIT_STATE: 'toggle_event_edit_state',
+
+  FILL_REMAINING_DATA: 'fill_remaining_event_data',
+
+  REMOVE_LAST_ID: 'event_remove_last_id',
+
+  RESET_STATUS: 'reset_event_status',
+
+  HANDLE_INPUT_CHANGE: 'handle_event_input_change',
 }

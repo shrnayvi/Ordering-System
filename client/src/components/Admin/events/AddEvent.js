@@ -1,3 +1,79 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch} from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import { FormattedMessage } from 'react-intl';
 
-export default _ => (<React.Fragment>Add Event</React.Fragment>)
+import LabelInput from '../../LabelInput';
+import LabelTextarea from '../../LabelTextarea';
+import Button from '../../Button';
+
+import { add, removeLastId } from '../../../actions/event';
+import config from '../../../constants/config';
+
+export default props => {
+
+  const [event, setEvent] = useState({ name: '', description: '',status: '', priceLimit: '' });
+  const dispatch = useDispatch();
+
+  const handleChange = e => {
+    setEvent({ ...event, [e.target.name]: e.target.value });
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    dispatch(add(event, { currentPage: props.currentPage }));
+  }
+
+  useEffect(() => {
+    setEvent({ name: '', description: '', status: '', priceLimit: '' });
+
+    if(props.currentPage === 1 && props.allIds.length > config.dataPerPage) {
+      dispatch(removeLastId());
+    }
+
+  }, [props.byId, dispatch, props.allIds, props.currentPage ])
+
+  return(
+    <React.Fragment>
+      <form onSubmit={handleSubmit}>
+        <LabelInput 
+          name="name"
+          type="text"
+          handleChange={handleChange}
+          value={event.name}
+          label="name"
+        />
+
+        <LabelTextarea
+          name="description"
+          handleChange={handleChange}
+          value={event.description}
+          label="description"
+        />
+
+        <div className="form-group">
+          <label><FormattedMessage id="status" /></label>
+          <select name="status" className="form-control" value={event.status} onChange={handleChange}>
+            <option value="">Select Category</option>
+            <option value="1">Active</option>
+            <option value="2">Inactive</option>
+            <option></option>
+          </select>
+        </div>
+
+        <LabelInput 
+          name="priceLimit"
+          type="number"
+          handleChange={handleChange}
+          value={event.priceLimit}
+          label="price_limit"
+        />
+
+        <Button className="btn btn-primary mt-3" type="submit" label="add_event" />
+
+      </form>
+      <ToastContainer />
+    </React.Fragment>
+
+  )
+}

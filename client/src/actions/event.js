@@ -1,24 +1,24 @@
 import qs from 'query-string';
 import pick from 'lodash/pick';
 
-import { CATEGORY } from '../constants/actionTypes';
+import { EVENT } from '../constants/actionTypes';
 import { 
   getAll,
-  addCategory,
-  editCategory,
-  removeCategory,
-} from '../apiCalls/category';
+  addEvent,
+  editEvent,
+  removeEvent,
+} from '../apiCalls/event';
 
 import notify from '../helpers/notification';
 import config from '../constants/config';
 
-const fetchCategories = data => {
+const fetchEvents = data => {
   const allIds = [];
   const byId = {};
 
-  data.categories.forEach(category => {
-    allIds.push(category._id);
-    byId[category._id] = category;
+  data.events.forEach(event => {
+    allIds.push(event._id);
+    byId[event._id] = event;
   });
 
   return { allIds, byId };
@@ -28,12 +28,12 @@ const fetchCategories = data => {
 export const get = (args = { currentPage: 1 }) => async dispatch => {
 
   const query = pick(args, ['skip', 'limit'])
-  dispatch({ type: CATEGORY.FETCH_REQUEST });
+  dispatch({ type: EVENT.FETCH_REQUEST });
 
   const { data: response } = await getAll(qs.stringify(query));
   
   if(response.status === 200) {
-    const data = fetchCategories(response.data, dispatch);
+    const data = fetchEvents(response.data, dispatch);
     const paging = response.data.paging;
     const payload = {
       ...data,
@@ -44,73 +44,73 @@ export const get = (args = { currentPage: 1 }) => async dispatch => {
       endIndex: paging.endIndex,
     };
 
-    dispatch({ type: CATEGORY.FETCH_ALL_SUCCESS, payload });
+    dispatch({ type: EVENT.FETCH_ALL_SUCCESS, payload });
   } else {
-    dispatch({ type: CATEGORY.FETCH_FAILURE, payload: response.message });
+    dispatch({ type: EVENT.FETCH_FAILURE, payload: response.message });
   }
 }
 
 export const add = (data, opts = {}) => async dispatch => {
-  dispatch({ type: CATEGORY.ADD_REQUEST});
+  dispatch({ type: EVENT.ADD_REQUEST});
 
-  const { data: response } = await addCategory(data);
+  const { data: response } = await addEvent(data);
   
   if(response.status === 200) {
-    const category = response.data;
+    const event = response.data;
     let _id = [];
     if(opts.currentPage && opts.currentPage === 1) {
-      _id = [ category._id ];
+      _id = [ event._id ];
     }
 
-    dispatch({ type: CATEGORY.ADD_SUCCESS, payload: { data: category, _id } });
+    dispatch({ type: EVENT.ADD_SUCCESS, payload: { data: event, _id } });
   } else {
-    dispatch({ type: CATEGORY.ADD_FAILURE, payload: response.message });
+    dispatch({ type: EVENT.ADD_FAILURE, payload: response.message });
     notify('error', response.message);
   }
 }
 
 export const edit = (_id, data) => async dispatch => {
-  dispatch({ type: CATEGORY.EDIT_REQUEST, payload: _id });
+  dispatch({ type: EVENT.EDIT_REQUEST, payload: _id });
 
-  const { data: response } = await editCategory(_id, data);
+  const { data: response } = await editEvent(_id, data);
   
   if(response.status === 200) {
-    dispatch({ type: CATEGORY.EDIT_SUCCESS, payload: response.data });
+    dispatch({ type: EVENT.EDIT_SUCCESS, payload: response.data });
   } else {
-    dispatch({ type: CATEGORY.EDIT_FAILURE, payload: { _id, message: response.message } });
+    dispatch({ type: EVENT.EDIT_FAILURE, payload: { _id, message: response.message } });
     notify('error', response.message);
   }
 }
 
 export const remove = _id => async dispatch => {
-  dispatch({ type: CATEGORY.REMOVE_REQUEST, payload: { _id } });
+  dispatch({ type: EVENT.REMOVE_REQUEST, payload: { _id } });
 
-  const { data: response } = await removeCategory(_id);
+  const { data: response } = await removeEvent(_id);
   
   if(response.status === 200) {
-    dispatch({ type: CATEGORY.REMOVE_SUCCESS, payload: response.data });
+    dispatch({ type: EVENT.REMOVE_SUCCESS, payload: response.data });
   } else {
-    dispatch({ type: CATEGORY.REMOVE_FAILURE, payload: { _id, message: response.message } });
+    dispatch({ type: EVENT.REMOVE_FAILURE, payload: { _id, message: response.message } });
     notify('error', response.message);
   }
 }
 
 export const toggleEditState = _id => dispatch =>  {
-  dispatch({ type: CATEGORY.TOGGLE_EDIT_STATE, payload: { _id } });
+  dispatch({ type: EVENT.TOGGLE_EDIT_STATE, payload: { _id } });
 }
 
 export const removeLastId = _id => dispatch => {
-  dispatch({ type: CATEGORY.REMOVE_LAST_ID })
+  dispatch({ type: EVENT.REMOVE_LAST_ID })
 }
 
 export const fillRemainingDataWhenRemoving = args => async dispatch => {
   const { data: response } = await getAll(qs.stringify(args));
   
   if(response.status === 200) {
-    let data = fetchCategories(response.data, dispatch);
+    let data = fetchEvents(response.data, dispatch);
 
     dispatch({ 
-      type: CATEGORY.FILL_REMAINING_DATA, 
+      type: EVENT.FILL_REMAINING_DATA, 
       payload: data,
     });
   }

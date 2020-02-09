@@ -4,6 +4,7 @@ import users from './user';
 import media from './media';
 import items from './item';
 import categories from './category';
+import events from './events';
 
 export default {
   auth,
@@ -12,4 +13,5 @@ export default {
   media,
   items,
   categories,
+  events,
 }

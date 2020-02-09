@@ -65,6 +65,7 @@ export default {
   pending: 'Pending',
   blocked: 'Blocked',
   active: 'Active',
+  closed: 'Closed',
   inactive: 'Inactive',
   cancelled: 'Cancelled',
   confirmed: 'Confirmed',
@@ -113,4 +114,6 @@ export default {
   add_item: 'Add Item',
   single_item: 'Single Item',
   events: 'Events',
+  price_limit: 'Price Limit',
+  add_event: 'Add Event',
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch} from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
@@ -6,7 +6,8 @@ import LabelInput from '../../LabelInput';
 import LabelTextarea from '../../LabelTextarea';
 import Button from '../../Button';
 
-import { add } from '../../../actions/category';
+import { add, removeLastId } from '../../../actions/category';
+import config from '../../../constants/config';
 
 export default props => {
 
@@ -21,6 +22,15 @@ export default props => {
     e.preventDefault();
     dispatch(add(category, { currentPage: props.currentPage }));
   }
+
+  useEffect(() => {
+    setCategory({ name: '', description: '' });
+
+    if(props.currentPage === 1 && props.allIds.length > config.dataPerPage) {
+      dispatch(removeLastId());
+    }
+
+  }, [props.byId, dispatch, props.allIds, props.currentPage ])
 
   return(
     <React.Fragment>

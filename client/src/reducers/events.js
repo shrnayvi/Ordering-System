@@ -1,4 +1,4 @@
-import { CATEGORY } from '../constants/actionTypes';
+import { EVENT } from '../constants/actionTypes';
 import * as reducers from '../helpers/commonReducer';
 
 const initialState = {
@@ -14,65 +14,65 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case CATEGORY.FETCH_REQUEST:
+    case EVENT.FETCH_REQUEST:
       return {
         ...state, ui: { ...state.ui, isFetching: true },
       }
-    case CATEGORY.FETCH_ALL_SUCCESS:
+    case EVENT.FETCH_ALL_SUCCESS:
       return reducers.fetchData(state, action.payload);
 
-    case CATEGORY.FETCH_FAILURE:
+    case EVENT.FETCH_FAILURE:
       return {
         ...state, ui: { ...state.ui, isFetching: false },
       }
 
 
-    case CATEGORY.UPDATE_CATEGORY_STORE:
+    case EVENT.UPDATE_EVENT_STORE:
       return {
         ...state,
         byId: { ...state.byId, [action.payload._id]: action.payload }
       }
 
-    case CATEGORY.ADD_REQUEST:
+    case EVENT.ADD_REQUEST:
       return {
         ...state, ui: { ...state.ui, isAdding: true },
       }
-    case CATEGORY.ADD_SUCCESS:
+    case EVENT.ADD_SUCCESS:
       return reducers.addData(state, action.payload);
 
-    case CATEGORY.ADD_FAILURE:
+    case EVENT.ADD_FAILURE:
       return {
         ...state, ui: { ...state.ui, isAdding: false },
       }
 
 
-    case CATEGORY.EDIT_REQUEST:
+    case EVENT.EDIT_REQUEST:
       return reducers.editRequest(state, action.payload);
       
-    case CATEGORY.EDIT_SUCCESS:
+    case EVENT.EDIT_SUCCESS:
       return reducers.editSuccess(state, action.payload);
 
-    case CATEGORY.EDIT_FAILURE:
+    case EVENT.EDIT_FAILURE:
       return reducers.editFailure(state, action.payload);
 
-    case CATEGORY.TOGGLE_EDIT_STATE:
+    case EVENT.TOGGLE_EDIT_STATE:
       return reducers.toggleEditState(state, action.payload);
 
 
-    case CATEGORY.REMOVE_REQUEST:
+    case EVENT.REMOVE_REQUEST:
       return reducers.removeRequest(state, action.payload);
 
-    case CATEGORY.REMOVE_SUCCESS:
+    case EVENT.REMOVE_SUCCESS:
       return reducers.removeData(state, action.payload);
 
-    case CATEGORY.REMOVE_FAILURE:
+    case EVENT.REMOVE_FAILURE:
       return reducers.removeFailure(state, action.payload);
 
 
-    case CATEGORY.REMOVE_LAST_ID:
+    case EVENT.REMOVE_LAST_ID:
       return reducers.removeLastId(state);
 
-    case CATEGORY.FILL_REMAINING_DATA:
+    case EVENT.FILL_REMAINING_DATA:
       return reducers.fillRemainingData(state, action.payload);
 
     default:

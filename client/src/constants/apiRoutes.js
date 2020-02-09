@@ -48,3 +48,11 @@ export const MEDIA = {
   ADD: '/attachment',
   GET_BY_ID: _id => `/attachment/${_id}`,
 }
+
+export const EVENT = {
+  ADD: '/events',
+  GET_BY_SLUG: slug =>  `/events/${slug}`,
+  GET_ALL_EVENT: query => query ? `/events?${query}` : '/events',
+  REMOVE: _id => `/events/${_id}`,
+  EDIT: _id => `/events/${_id}`,
+}
