@@ -121,4 +121,6 @@ export default {
   event: 'Event',
   order_detail: 'Order Details',
   order: 'Order',
+  total_price: 'Total Price',
+  total_quantity: 'Total Quantity',
 };

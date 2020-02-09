@@ -56,6 +56,8 @@ export default props => {
               : <FormattedMessage id={ORDER[order.status]} />
           }
         </td>
+        <td>{order.totalPrice}</td>
+        <td>{order.totalQuantity}</td>
         <td>
           <Button label="edit" className="btn btn-success" icon={isInEditingState ? '' : 'edit'} onClick={handleEdit} isLoading={isEditing} />
           { 

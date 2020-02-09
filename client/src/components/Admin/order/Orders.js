@@ -48,6 +48,8 @@ export default props => {
               <th><FormattedMessage id="user" /></th>
               <th><FormattedMessage id="event" /></th>
               <th><FormattedMessage id="status" /></th>
+              <th><FormattedMessage id="total_price" /></th>
+              <th><FormattedMessage id="total_quantity" /></th>
               <th><FormattedMessage id="action" /></th>
             </tr>
           </thead>

@@ -21,11 +21,8 @@ const OrderSchema = new Schema({
     ref: 'Event',
     required: true,
   },
-  // item: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'Item',
-  // },
-  // quantity: Number,
+  totalPrice: Number,
+  totalQuantity: Number,
 }, { timestamps: true });
 
 module.exports = mongoose.model('Order', OrderSchema);

@@ -13,7 +13,6 @@ exports.get = async (req, res) => {
   const { role, userId: user } = req;
   
   try {
-
     query = { order: req.params._id, ...queryParam};
     const found = await Order.findOne({ _id: req.params._id })
       .populate('user');

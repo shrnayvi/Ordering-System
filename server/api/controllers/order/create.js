@@ -65,6 +65,8 @@ exports.create = async (req, res) => {
       orderNumber,
       user: req.userId,
       event: data.event,
+      totalPrice,
+      totalQuantity,
     });
 
     const newOrder = await order.save();
