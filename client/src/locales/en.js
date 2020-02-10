@@ -123,4 +123,5 @@ export default {
   order: 'Order',
   total_price: 'Total Price',
   total_quantity: 'Total Quantity',
+  quantity: 'Quantity',
 };

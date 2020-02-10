@@ -161,6 +161,8 @@ export const CART = {
   REMOVE_SUCCESS: 'remove_cart_success',
   REMOVE_FAILURE: 'remove_cart_failure',
 
+  FILL_REMAINING_DATA: 'fill_remaining_cart_data',
+
   CHANGE_QUANTITY: 'change_cart_quantity',
 
   RESET_STATUS: 'reset_cart_status',

@@ -26,46 +26,54 @@ exports.create = async (req, res) => {
   }
 
   try {
+    const item = await Item.findOne({ _id: data.item }).select('price');
+    if(!item) {
+      return apiResponse.notFound(res, { message: 'item_not_found' });
+    }
+
     const cart = await Cart.findOne({ user: data.user, item: data.item }).select('_id');
 
     if(cart) {
       return apiResponse.badRequest(res, { message: "item_exists_in_cart" });
     }
 
-    const userCart = await Cart.find({ user: data.user })
-      .select({ item: 1, quantity: 1, price: 1 })
-      .populate('item');
+    // const userCart = await Cart.find({ user: data.user })
+    //   .select({ item: 1, quantity: 1, price: 1 })
+    //   .populate('item');
   
-    const event = await Event.findOne({ _id: data.event })
-      .select({ status: 1, priceLimit: 1 });
+    // const event = await Event.findOne({ _id: data.event })
+    //   .select({ status: 1, priceLimit: 1 });
 
-    const item = await Item.findOne({ _id: data.item }).select('price'),
-      currentItemPrice = item.price * data.quantity,
-      priceLimit = event.priceLimit;
+    // if(event.status !== 1) {
+    //   return apiResponse.badRequest(res, { message: 'event_closed' });
+    // }
 
-    if(numberOfCombinedOrder > 1) {
-      let calculatedPrice = currentItemPrice;
-      let totalQuantity = data.quantity;
-      if(userCart.length) {
-        for(i = 0; i < userCart.length; i++) {
-          totalQuantity += userCart[i].quantity;
-          calculatedPrice += userCart[i].item.price * userCart.quantity;
-        }
-      }
+      // currentItemPrice = item.price * data.quantity,
+      // priceLimit = event.priceLimit;
 
-      if(totalQuantity > numberOfCombinedOrder) {
-        return apiResponse.badRequest(res, { message: "quantity_greater_than_combined_orders" });
-      }
+    // if(numberOfCombinedOrder > 1) {
+    //   let calculatedPrice = currentItemPrice;
+    //   let totalQuantity = data.quantity;
+    //   if(userCart.length) {
+    //     for(i = 0; i < userCart.length; i++) {
+    //       totalQuantity += userCart[i].quantity;
+    //       calculatedPrice += userCart[i].item.price * userCart.quantity;
+    //     }
+    //   }
 
-      if(calculatedPrice > priceLimit * numberOfCombinedOrder) {
-        return apiResponse.badRequest(res, { message: "price_limit_exceeded" });
-      }
+    //   if(totalQuantity > numberOfCombinedOrder) {
+    //     return apiResponse.badRequest(res, { message: "quantity_greater_than_combined_orders" });
+    //   }
 
-    } else if(userCart.length) {
-      return apiResponse.badRequest(res, { message: "can_add_only_one_item" });
-    } else if(currentItemPrice > priceLimit) {
-      return apiResponse.badRequest(res, { message: "price_limit_exceeded" });
-    }
+    //   if(calculatedPrice > priceLimit * numberOfCombinedOrder) {
+    //     return apiResponse.badRequest(res, { message: "price_limit_exceeded" });
+    //   }
+
+    // } else if(userCart.length) {
+    //   return apiResponse.badRequest(res, { message: "can_add_only_one_item" });
+    // } else if(currentItemPrice > priceLimit) {
+    //   return apiResponse.badRequest(res, { message: "price_limit_exceeded" });
+    // }
     
     const doc = new Cart(data);
     const newCart = await doc.save();

@@ -48,7 +48,12 @@ exports.create = async (req, res) => {
     }
 
 
-    const event = await Event.find({ _id: data.event }).select('priceLimit');
+    const event = await Event.findOne({ _id: data.event })
+      .select({ status: 1, priceLimit: 1 });
+
+    if(event.status !== 1) {
+      return apiResponse.badRequest(res, { message: 'event_closed' });
+    }
 
     if(totalQuantity > numberOfCombinedOrder) {
       return apiResponse.badRequest(res, { message: 'order_exceeded' });

@@ -12,7 +12,7 @@ import Dashboard from './components/Customer/Dashboard';
 import Items from './components/Customer/item/Items';
 import SingleItem from './components/Customer/item/SingleItem';
 import CustomerOrders from './components/Customer/order/Orders';
-import Cart from './components/Customer/Cart';
+import Cart from './components/Customer/cart/Cart';
 import Profile from './components/Customer/Profile';
 
 import AdminDashboard from './components/Admin/Dashboard';

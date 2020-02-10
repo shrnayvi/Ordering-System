@@ -16,7 +16,7 @@ const CartSchema = new Schema({
   event: {
     type: mongoose.Types.ObjectId,
     ref: 'Event',
-    required: true,
+    // required: true,
   },
   quantity: Number,
 }, { timestamps: true });

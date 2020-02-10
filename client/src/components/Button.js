@@ -17,7 +17,7 @@ export default ({
       onClick={handleClick} 
       {...rest}
     >
-      <FormattedMessage id={label} />
+      { label ? <FormattedMessage id={label} /> : '' }
       { icon ? <i className={`fa fa-${icon}`} /> : '' }
       { isLoading ? <i className="fa fa-spinner fa-spin"></i>: '' }
     </button>
