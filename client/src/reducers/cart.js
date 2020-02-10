@@ -10,6 +10,8 @@ const initialState = {
   pageCount: 0,
   total: 0,
   idUI: {},
+  numberOfCombinedOrder: 1,
+  event: null,
 };
 
 export default (state = initialState, action) => {
@@ -31,15 +33,10 @@ export default (state = initialState, action) => {
         ...state, ui: { ...state.ui, isAdding: true },
       }
     case CART.ADD_SUCCESS:
-      // return reducers.addData(state, action.payload);
       return { ...state, ui: { ...state.ui, isAdding: false } };
 
     case CART.ADD_FAILURE:
       return { ...state, ui: { ...state.ui, isAdding: false }, }
-
-
-    case CART.TOGGLE_EDIT_STATE:
-      return reducers.toggleEditState(state, action.payload);
 
 
     case CART.REMOVE_REQUEST:
@@ -51,6 +48,30 @@ export default (state = initialState, action) => {
     case CART.REMOVE_FAILURE:
       return reducers.removeFailure(state, action.payload);
 
+    case CART.CHANGE_QUANTITY:
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [action.payload._id]: {
+            ...state.byId[action.payload._id],
+            quantity: action.payload.quantity,
+          }
+
+        }
+      }
+
+    case CART.SELECT_EVENT:
+      return {
+        ...state,
+        event: action.payload,
+      };
+
+    case CART.CHANGE_COMBINED_ORDER:
+      return {
+        ...state,
+        numberOfCombinedOrder: action.payload,
+      };
 
     case CART.FILL_REMAINING_DATA:
       return reducers.fillRemainingData(state, action.payload);

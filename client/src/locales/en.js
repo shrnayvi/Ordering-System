@@ -124,4 +124,7 @@ export default {
   total_price: 'Total Price',
   total_quantity: 'Total Quantity',
   quantity: 'Quantity',
+  total: 'Total',
+  sub_total: 'Sub Total',
+  number_of_combined_order: 'Number of combined order',
 };

@@ -164,6 +164,8 @@ export const CART = {
   FILL_REMAINING_DATA: 'fill_remaining_cart_data',
 
   CHANGE_QUANTITY: 'change_cart_quantity',
+  CHANGE_COMBINED_ORDER: 'change_combined_order',
+  SELECT_EVENT: 'select_order_event',
 
   RESET_STATUS: 'reset_cart_status',
 

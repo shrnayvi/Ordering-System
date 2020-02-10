@@ -14,13 +14,15 @@ import config from '../constants/config';
 const fetchCart = data => {
   const allIds = [];
   const byId = {};
+  const orders = [];
 
   data.cart.forEach(cart => {
     allIds.push(cart._id);
     byId[cart._id] = cart;
+    orders.push({ item: cart.item._id, quantity: cart.quantity });
   });
 
-  return { allIds, byId };
+  return { allIds, byId, orders };
 
 }
 
@@ -34,6 +36,7 @@ export const get = (args = { currentPage: 1 }) => async dispatch => {
   if(response.status === 200) {
     const data = fetchCart(response.data, dispatch);
     const paging = response.data.paging;
+
     const payload = {
       ...data,
       currentPage: args.currentPage,
@@ -80,6 +83,18 @@ export const remove = _id => async dispatch => {
     dispatch({ type: CART.REMOVE_FAILURE, payload: { _id, message: response.message } });
     notify('error', response.message);
   }
+}
+
+export const editQuantity = (_id, quantity) => dispatch => {
+  dispatch({ type: CART.CHANGE_QUANTITY, payload: { _id, quantity } });
+}
+
+export const selectEvent = event => dispatch => {
+  dispatch({ type: CART.SELECT_EVENT, payload: event });
+}
+
+export const changeCombinedOrder = combinedOrder => dispatch => {
+  dispatch({ type: CART.CHANGE_COMBINED_ORDER, payload: combinedOrder });
 }
 
 export const fillRemainingDataWhenRemoving = args => async dispatch => {

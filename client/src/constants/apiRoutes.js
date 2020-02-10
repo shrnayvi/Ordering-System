@@ -32,7 +32,7 @@ export const ORDER = {
 
 export const CART = {
   ADD: '/cart',
-  GET: '/cart',
+  GET: query => query ? `/cart?${query}` : '/cart',
   REMOVE: _id => `/cart/${_id}`,
 }
 
