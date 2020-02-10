@@ -89,7 +89,7 @@ export const toggleEditState = _id => async dispatch => {
 }
 
 export const updateUser = (_id, data) => async dispatch => {
-  dispatch({ type: USER.EDIT_USER_REQUEST });
+  dispatch({ type: USER.EDIT_USER_REQUEST, paylaod: _id });
 
   const  { data: response } = await update(_id, data);
 

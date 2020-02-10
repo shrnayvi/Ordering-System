@@ -115,3 +115,10 @@ export const removeRequest = (state, payload) => ({
     }
   }
 });
+
+export const updateEntity = (state, payload) => ({
+  ...state,
+  byId: {
+    ...state.byId, [payload._id]: payload,
+  }
+})

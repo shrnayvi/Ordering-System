@@ -101,7 +101,7 @@ export const add = (data, opts = {}) => async dispatch => {
       _id = [ item._id ];
     }
 
-    dispatch({ type: ITEM.ADD_SUCCESS, payload: { item, _id } });
+    dispatch({ type: ITEM.ADD_SUCCESS, payload: { data: item, _id } });
     dispatch({ type: MEDIA.CLEAR_UPLOADED_MEDIA });
   } else {
     dispatch({ type: ITEM.ADD_FAILURE, payload: response.message });

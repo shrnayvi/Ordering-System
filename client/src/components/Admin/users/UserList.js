@@ -17,9 +17,9 @@ class UserList extends Component {
 
   handleEdit = _ => {
     const { idUI = {} } = this.props;
-    const isEditing = idUI.isEditing;
+    const isInEditingState = idUI.isInEditingState;
     const _id = this.props.user._id;
-    if(isEditing) {
+    if(isInEditingState) {
       this.props.updateUser(_id, this.state.user); 
     } else {
       this.props.toggleEditState(_id);
@@ -43,7 +43,8 @@ class UserList extends Component {
   render() {
     const { user, avatar, idUI = {} } = this.props;
     const isEditing = idUI.isEditing;
-    const isRemoving = idUI.isDeleting;
+    const isInEditingState = idUI.isInEditingState;
+    const isRemoving = idUI.isRemoving;
     return (
       <tr>
         <td>
@@ -57,7 +58,7 @@ class UserList extends Component {
         <td>{user.email}</td>
         <td>
           {
-            isEditing 
+            isInEditingState 
               ? <Input name="name" type="text" onChange={this.handleChange} defaultValue={user.name} />
               : user.name
           }
@@ -65,7 +66,7 @@ class UserList extends Component {
 
         <td>
           {
-            isEditing 
+            isInEditingState 
               ? <Input name="phone" type="text" onChange={this.handleChange} defaultValue={user.phone} />
               : user.phone
           }
@@ -74,10 +75,10 @@ class UserList extends Component {
         <td><FormattedMessage id={user.role} /></td>
 
         <td>
-          <Button label="edit" className="btn btn-success" icon={isEditing ? '' : 'edit'} onClick={this.handleEdit} />
+          <Button label="edit" className="btn btn-success" icon={isInEditingState ? '' : 'edit'} onClick={this.handleEdit} isLoading={isEditing} />
           <Button label="remove" className="btn btn-danger" icon="remove" onClick={this.handleRemoveClick} isLoading={isRemoving} />
           { 
-            isEditing ? 
+            isInEditingState ? 
               <Button label="cancel" className="btn btn-danger" onClick={this.handleCancel} />
               : ''
           }
