@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { ToastContainer } from 'react-toastify';
 
 import LabelInput from '../../LabelInput';
 import Button from '../../Button';
@@ -10,6 +11,7 @@ import CartList from './CartList';
 import Pagination from '../../Pagination';
 
 import { get as getCart, changeCombinedOrder } from '../../../actions/cart';
+import { create as createOrder } from '../../../actions/order';
 
 export default props => {
   const dispatch = useDispatch();
@@ -18,7 +20,11 @@ export default props => {
     byId,
     currentPage,
     pageCount,
+    numberOfCombinedOrder,
+    event,
   } = useSelector(({ cart }) => cart);
+
+  const isPlacingOrder = useSelector(({ isAdding }) => isAdding) ;
 
   useEffect(() => {
     const pagingArgs = { skip: 0, limit: 50 };
@@ -27,6 +33,15 @@ export default props => {
 
   const handleCombinedOrder = e => {
     dispatch(changeCombinedOrder(+e.target.value));
+  }
+
+  const placeOrder = _ => {
+    const data = {
+      event,
+      numberOfCombinedOrder,
+      orders: allIds.map(_id => ({ item: byId[_id].item._id, quantity: byId[_id].quantity })),
+    }
+    dispatch(createOrder(data));
   }
 
   const cartList = allIds.map(_id => {
@@ -75,12 +90,13 @@ export default props => {
               </table>
               <SelectEvent />
               <LabelInput type="number" label="number_of_combined_order" handleChange={handleCombinedOrder}/>
-              <Button label="order" />
+              <Button label="order" isLoading={isPlacingOrder} handleClick={placeOrder} />
             </div>
             : 'Cart Empty'
         }
         <Pagination currentPage={currentPage} pageCount={pageCount} />
       </div>
+      <ToastContainer />
     </React.Fragment>
   );
 }

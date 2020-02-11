@@ -33,7 +33,18 @@ export default (state = initialState, action) => {
         byId: { ...state.byId, [action.payload._id]: action.payload }
       }
 
+    /* Place Order */
+    case ORDER.CREATE_REQUEST: 
+      return { ...state, ui: { isAdding: true } };
 
+    case ORDER.CREATE_SUCCESS: 
+      return { ...state, ui: { isAdding: false } };
+
+    case ORDER.CREATE_FAILURE: 
+      return { ...state, ui: { isAdding: false } };
+
+
+    /* Edit Section */
     case ORDER.EDIT_REQUEST:
       return reducers.editRequest(state, action.payload);
       

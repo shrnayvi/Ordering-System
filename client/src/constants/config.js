@@ -1,4 +1,4 @@
 export default {
   authCookie: 'odrData',
-  dataPerPage: 4,
+  dataPerPage: 10,
 }

@@ -6,6 +6,7 @@ export default {
   '/customer/my-orders': ['customer'],
   '/customer/cart': ['customer'],
   '/customer/profile': ['customer'],
+  '/customer/order-detail/:orderId': ['customer'],
 
   '/admin': ['admin'],
   '/admin/profile': ['admin'],

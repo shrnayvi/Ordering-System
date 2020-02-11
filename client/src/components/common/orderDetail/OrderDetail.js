@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
-import Sidebar from '../Sidebar';
+import AdminSidebar from '../../Admin/Sidebar';
+import CustomerSidebar from '../../Customer/Sidebar';
 import DetailList from './DetailList';
 import Pagination from '../../Pagination';
 
@@ -21,6 +22,8 @@ export default props => {
     idUI,
   } = useSelector(state => state.orderDetails);
 
+  const { role } = useSelector(({ auth }) => auth.user);
+
   useEffect(() => {
     const orderId = props.match.params.orderId;
     const pagingArgs = getPagingArgs(props.history.location);
@@ -37,7 +40,9 @@ export default props => {
 
   return (
     <React.Fragment>
-      <Sidebar />
+      {
+        role === 'admin' ? <AdminSidebar /> : <CustomerSidebar />
+      }
       <div className="main">
         <h1> <FormattedMessage id="order_detail" /> </h1>
 

@@ -22,7 +22,7 @@ import AddUser from './components/Admin/users/AddUser';
 import Categories from './components/Admin/category/Categories';
 import AdminItems from './components/Admin/item/Items';
 import Orders from './components/Admin/order/Orders';
-import AdminOrderDetail from './components/Admin/orderDetail/OrderDetail';
+import OrderDetail from './components/common/orderDetail/OrderDetail';
 import Events from './components/Admin/events/Events';
 
 
@@ -47,6 +47,7 @@ class Routes extends Component {
             <ProtectedRoutes path="/customer/my-orders" isLoggedIn={isLoggedIn} role={role} component={CustomerOrders} />
             <ProtectedRoutes path="/customer/cart" isLoggedIn={isLoggedIn} role={role} component={Cart} />
             <ProtectedRoutes path="/customer/profile" isLoggedIn={isLoggedIn} role={role} component={Profile} />
+            <ProtectedRoutes path="/customer/order-detail/:orderId" isLoggedIn={isLoggedIn} role={role} component={OrderDetail} />
             
             <ProtectedRoutes path="/admin" isLoggedIn={isLoggedIn} role={role} component={AdminDashboard} exact />
             <ProtectedRoutes path="/admin/profile" isLoggedIn={isLoggedIn} role={role} component={AdminProfile} />
@@ -54,7 +55,7 @@ class Routes extends Component {
             <ProtectedRoutes path="/admin/users/add" isLoggedIn={isLoggedIn} role={role} component={AddUser} />
             <ProtectedRoutes path="/admin/categories" isLoggedIn={isLoggedIn} role={role} component={Categories} />
             <ProtectedRoutes path="/admin/orders" isLoggedIn={isLoggedIn} role={role} component={Orders} exact />
-            <ProtectedRoutes path="/admin/orders/detail/:orderId" isLoggedIn={isLoggedIn} role={role} component={AdminOrderDetail} />
+            <ProtectedRoutes path="/admin/orders/detail/:orderId" isLoggedIn={isLoggedIn} role={role} component={OrderDetail} />
             <ProtectedRoutes path="/admin/items" isLoggedIn={isLoggedIn} role={role} component={AdminItems} />
             <ProtectedRoutes path="/admin/events" isLoggedIn={isLoggedIn} role={role} component={Events} />
 

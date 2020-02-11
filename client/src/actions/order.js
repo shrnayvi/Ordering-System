@@ -6,9 +6,9 @@ import notify from '../helpers/notification';
 import config from '../constants/config';
 import { 
   getAll,
-  // createOrder,
+  createOrder,
   editOrder,
-  // getUserOrder,
+  getUserOrder,
 } from '../apiCalls/order';
 
 
@@ -72,6 +72,44 @@ export const edit = (_id, data) => async dispatch => {
     dispatch({ type: ORDER.EDIT_SUCCESS, payload });
   } else {
     dispatch({ type: ORDER.EDIT_FAILURE, payload: { _id, message: response.message } });
+    notify('error', response.message);
+  }
+}
+
+export const create = data => async dispatch => {
+  dispatch({ type: ORDER.CREATE_REQUEST });
+
+  const { data: response } = await createOrder(data);
+
+  if(response.status === 200) {
+    dispatch({ type: ORDER.CREATE_SUCCESS, payload: { data: response.data } });
+    notify('success', response.message);
+  } else {
+    dispatch({ type: ORDER.CREATE_FAILURE, payload: response.message });
+    notify('error', response.message);
+  }
+}
+
+export const userOrders = (userId, args = { currentPage: 1 }) => async dispatch => {
+  dispatch({ type: ORDER.FETCH_REQUEST });
+
+  const { data: response } = await getUserOrder(userId);
+
+  if(response.status === 200) {
+    const data = fetchOrders(response.data, dispatch);
+    const paging = response.data.paging;
+    const payload = {
+      ...data,
+      currentPage: args.currentPage,
+      pageCount: Math.ceil(paging.total / config.dataPerPage),
+      total: paging.total,
+      startIndex: paging.startIndex,
+      endIndex: paging.endIndex,
+    };
+
+    dispatch({ type: ORDER.FETCH_SUCCESS, payload });
+  } else {
+    dispatch({ type: ORDER.FETCH_FAILURE, payload: response.message });
     notify('error', response.message);
   }
 }

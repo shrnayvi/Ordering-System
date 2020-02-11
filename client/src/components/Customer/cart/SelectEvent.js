@@ -11,7 +11,7 @@ export default _ => {
   const { allIds, byId }= useSelector(({ events }) => events);
 
   useEffect(() => {
-    dispatch(getEvents({ skip: 0, limit: 100 }));
+    dispatch(getEvents({ skip: 0, limit: 100, status: 1 }));
   }, [dispatch]);
 
   const handleChange = e => {

@@ -127,4 +127,7 @@ export default {
   total: 'Total',
   sub_total: 'Sub Total',
   number_of_combined_order: 'Number of combined order',
+  price_exceeded: 'Price exceeded',
+  order_exceeded: 'Order exceeded',
+  event_closed: 'Event Closed',
 };
