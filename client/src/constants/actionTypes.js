@@ -19,10 +19,8 @@ export const USER = {
   RESET_PASSWORD_ERROR: 'reset_password_error',
   RESET_PASSWORD_FAILURE: 'reset_password_failure',
 
-  REGISTER_CLEAR: 'register_clear',
   REGISTER_REQUEST: 'register_request',
   REGISTER_SUCCESS: 'register_success',
-  REGISTER_ERROR: 'register_error',
   REGISTER_FAILURE: 'register_failure',
 
   ADD_USER_REQUEST: 'add_user_request',

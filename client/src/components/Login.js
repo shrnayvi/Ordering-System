@@ -1,10 +1,15 @@
+import get from 'lodash/get';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loginUser } from '../actions/auth';
+import { ToastContainer } from 'react-toastify';
+import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
+
 import Input from './Input';
 import LabelInput from './LabelInput';
-import get from 'lodash/get';
-import { ToastContainer } from 'react-toastify';
+import GoogleLogin from './GoogleLogin';
+
+import { loginUser } from '../actions/auth';
 
 class Login extends Component {
   constructor(props) {
@@ -53,6 +58,24 @@ class Login extends Component {
           />
 
           <Input type="submit" className="btn btn-primary" />
+
+           <div className="mt-2">
+             <p>
+              <Link to="/forgot-password">
+                <FormattedMessage id="forgot_password" />
+              </Link>
+             </p>
+          </div>
+
+           <div className="mt-2">
+             <p>
+              <FormattedMessage id="sign_up" />:
+              <Link to="/register">
+                <FormattedMessage id="register" />
+              </Link>
+             </p>
+          </div>
+          <GoogleLogin />
           
           <ToastContainer autoClose={3000} />
 

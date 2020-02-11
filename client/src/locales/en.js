@@ -130,4 +130,8 @@ export default {
   price_exceeded: 'Price exceeded',
   order_exceeded: 'Order exceeded',
   event_closed: 'Event Closed',
+  token: 'Token',
+  confirm_password: 'Confirm Password',
+  reset: 'Reset',
+  sign_up: 'Sign Up',
 };

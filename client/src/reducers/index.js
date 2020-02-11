@@ -8,6 +8,8 @@ import events from './events';
 import orders from './order';
 import orderDetails from './orderDetail';
 import cart from './cart';
+import register from './register';
+import password from './password';
 
 export default {
   auth,
@@ -20,4 +22,6 @@ export default {
   orders,
   orderDetails,
   cart,
+  register,
+  password,
 }

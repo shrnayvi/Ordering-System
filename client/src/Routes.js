@@ -7,6 +7,9 @@ import history from './helpers/history';
 import ProtectedRoutes from './components/ProtectedRoutes';
 
 import Login from './components/Login';
+import Register from './components/Register';
+import ForgotPassword from './components/ForgotPassword';
+import ResetPassword from './components/ResetPassword';
 import Logout from './components/Logout';
 import Dashboard from './components/Customer/Dashboard';
 import Items from './components/Customer/item/Items';
@@ -42,6 +45,9 @@ class Routes extends Component {
 
             <Route path="/items" component={Items} exact />
             <Route path="/items/:_id" component={SingleItem} />
+            <Route path="/register" component={Register} />
+            <Route path="/forgot-password" component={ForgotPassword} />
+            <Route path="/reset-password" component={ResetPassword} />
 
             <ProtectedRoutes path="/customer" isLoggedIn={isLoggedIn} role={role} component={Dashboard} exact />
             <ProtectedRoutes path="/customer/my-orders" isLoggedIn={isLoggedIn} role={role} component={CustomerOrders} />

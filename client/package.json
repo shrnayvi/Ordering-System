@@ -12,6 +12,7 @@
     "query-string": "^6.10.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-google-login": "^5.1.0",
     "react-intl": "^3.9.3",
     "react-paginate": "^6.3.2",
     "react-redux": "^7.1.3",

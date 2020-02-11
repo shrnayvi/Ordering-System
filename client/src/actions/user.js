@@ -1,6 +1,7 @@
 import qs from 'query-string';
 import pick from 'lodash/pick';
 
+import history from '../helpers/history';
 import config from '../constants/config';
 import { USER} from '../constants/actionTypes'
 import { MEDIA } from "../constants/actionTypes";
@@ -10,6 +11,8 @@ import {
   getAll as getUsers, 
   register,
   remove,
+  forgotPassword,
+  resetPassword,
 } from '../apiCalls/user';
 import notify from '../helpers/notification';
 
@@ -118,7 +121,6 @@ export const removeUser = _id => async dispatch => {
 
 export const fillRemainingDataWhenRemoving = args => async dispatch => {
   const { data: response } = await getUsers(qs.stringify(args));
-  console.log(response, args);
   
   if(response.status === 200) {
     let data = fetchUsers(response.data, dispatch);
@@ -129,3 +131,48 @@ export const fillRemainingDataWhenRemoving = args => async dispatch => {
     });
   }
 };
+
+export const registerUser = data => async dispatch => {
+  dispatch({ type: USER.REGISTER_REQUEST});
+
+  const  { data: response } = await register(data);
+
+  if(response.status === 200) {
+    dispatch({ type: USER.REGISTER_SUCCESS, payload: response.data });
+    notify('success', response.message);
+  } else {
+    dispatch({ type: USER.REGISTER_FAILURE, error: response.message });
+    notify('error', response.message)
+  }
+}
+
+
+export const requestPasswordChange = data => async dispatch => {
+  dispatch({ type: USER.FORGOT_PASSWORD_REQUEST });
+
+  const  { data: response } = await forgotPassword(data);
+
+  if(response.status === 200) {
+    dispatch({ type: USER.FORGOT_PASSWORD_SUCCESS, payload: response.data });
+    history.push('/reset-password');
+    notify('success', response.message);
+  } else {
+    dispatch({ type: USER.FORGOT_PASSWORD_FAILURE, error: response.message });
+    notify('error', response.message)
+  }
+}
+
+export const resetUserPassword = data => async dispatch => {
+  dispatch({ type: USER.RESET_PASSWORD_REQUEST});
+
+  const  { data: response } = await resetPassword(data);
+
+  if(response.status === 200) {
+    dispatch({ type: USER.RESET_PASSWORD_SUCCESS, payload: response.data });
+    history.push('/');
+    notify('success', response.message);
+  } else {
+    dispatch({ type: USER.RESET_PASSWORD_FAILURE, error: response.message });
+    notify('error', response.message)
+  }
+}
