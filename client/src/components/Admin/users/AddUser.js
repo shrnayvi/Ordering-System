@@ -1,4 +1,3 @@
-import omit from 'lodash/omit';
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { ToastContainer } from 'react-toastify';
@@ -9,7 +8,7 @@ import LabelInput from '../../LabelInput';
 import Button from '../../Button';
 import ImageUpload from '../../ImageUpload';
 
-import { isEmailValid } from '../../../helpers/validation';
+import { isEmailValid, userValidation } from '../../../helpers/validation';
 import { addUser } from '../../../actions/user';
 import { uploadMedia, clearUploadedMedia } from '../../../actions/media';
 
@@ -57,21 +56,9 @@ class AddUser extends Component {
   }
 
   checkValidation = () => {
-    const errors = {};
-    const errorFields = omit(this.state.error, ['email']);
-    Object.keys(errorFields).forEach(field => {
-      if(!this.state.user[field]) {
-        errors[field] = `${field}_required`;
-      }
-    });
-
-    if(!isEmailValid(this.state.user.email)) {
-      errors['email'] = 'email_invalid';
-    }
-
-    this.setState({ error: { ...this.state.error, ...errors } });
-
-    return Object.keys(errors).length ? false : true;
+    const validation = userValidation(this.state);
+    this.setState({ error: { ...this.state.error, ...validation.errors } });
+    return validation.isFormValid;
   }
   
   handleSubmit = e => {

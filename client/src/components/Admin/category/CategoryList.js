@@ -4,7 +4,9 @@ import { useDispatch } from 'react-redux';
 import Button from '../../Button';
 import Input from '../../Input';
 import Textarea from '../../Textarea';
+import ShowError from '../../ShowError';
 
+import { commonValidation } from '../../../helpers/validation';
 import { edit, remove, toggleEditState } from '../../../actions/category';
 
 export default props => {
@@ -12,8 +14,21 @@ export default props => {
 
   const { category } = props;
   const [data, setData] = useState({ name: category.name, description: category.description });
+  const [error, setError] = useState({ name: '', description: '' });
 
   const { isInEditingState, isEditing, isRemoving } = props.idUI;
+
+  const handleBlur = e => {
+    if(e.target.value) {
+      setError({ ...error, [e.target.name]: '' });
+    }
+  }
+
+  const checkValidation = () => {
+    const valObj = commonValidation({ inputs: data, error });
+    setError({ ...error, ...valObj.errors });
+    return valObj.isFormValid;
+  }
 
   const handleRemove = _  => {
     if(window.confirm('Are you sure?')) {
@@ -27,8 +42,11 @@ export default props => {
 
   const handleEdit = _ => {
     if(isInEditingState) {
-      dispatch(edit(category._id, data))  
+      if(checkValidation()) {
+        dispatch(edit(category._id, data))  
+      }
     } else {
+      setError({ name: '', description: '' });
       dispatch(toggleEditState(props.category._id));
     }
   }
@@ -43,14 +61,31 @@ export default props => {
         <td>
           {
             isInEditingState 
-              ? <Input name="name" type="text" onChange={handleChange} defaultValue={props.category.name} />
+              ? <div className="form-group">
+                  <Input 
+                    name="name" 
+                    type="text" 
+                    onChange={handleChange} 
+                    defaultValue={props.category.name} 
+                    onBlur={handleBlur}
+                  />
+                  <ShowError message={error.name} />
+                </div>
               : props.category.name
           }
         </td>
         <td>
           {
             isInEditingState 
-              ? <Textarea name="description" onChange={handleChange} defaultValue={props.category.description} />
+              ? <div className="form-group">
+                  <Textarea 
+                    name="description" 
+                    onChange={handleChange} 
+                    defaultValue={props.category.description} 
+                    onBlur={handleBlur}
+                  />
+                  <ShowError message={error.description} />
+                </div>
               : props.category.description
             
           }

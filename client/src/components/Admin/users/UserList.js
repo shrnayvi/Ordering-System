@@ -5,6 +5,8 @@ import ShowError from '../../ShowError';
 import Input from '../../Input';
 import Button from '../../Button';
 
+import { commonValidation } from '../../../helpers/validation';
+
 class UserList extends Component {
   constructor(props) {
     super(props);
@@ -29,17 +31,9 @@ class UserList extends Component {
   }
 
   checkValidation = () => {
-    const errors = {};
-    const errorFields = ['name', 'phone'];
-    errorFields.forEach(field => {
-      if(!this.state.user[field]) {
-        errors[field] = `${field}_required`;
-      }
-    });
-
-    this.setState({ error: { ...this.state.error, ...errors } });
-
-    return Object.keys(errors).length ? false : true;
+    const valObj = commonValidation({ inputs: this.state.user, error: this.state.error });
+    this.setState({ error: { ...this.state.error, ...valObj.errors} });
+    return valObj.isFormValid;
   }
 
   handleEdit = _ => {
@@ -66,6 +60,7 @@ class UserList extends Component {
   }
 
   handleCancel = _ => {
+    this.setState({ error: { name: '', phone: '' } });
     this.props.toggleEditState(this.props.user._id);
   }
 

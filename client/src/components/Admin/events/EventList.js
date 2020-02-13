@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
+import ShowError from '../../ShowError';
 import Button from '../../Button';
 import Input from '../../Input';
 import Textarea from '../../Textarea';
 
+import { commonValidation } from '../../../helpers/validation';
 import { EVENT } from '../../../constants/status';
 import { edit, remove, toggleEditState } from '../../../actions/event';
 
@@ -20,7 +22,21 @@ export default props => {
     priceLimit: event.priceLimit,
   });
 
+  const [error, setError] = useState({ name: '', description: '', status: '', priceLimit: '' });
+
   const { isInEditingState, isEditing, isRemoving } = props.idUI;
+
+  const handleBlur = e => {
+    if(e.target.value) {
+      setError({ ...error, [e.target.name]: '' });
+    }
+  }
+
+  const checkValidation = () => {
+    const valObj = commonValidation({ inputs: data, error });
+    setError({ ...error, ...valObj.errors });
+    return valObj.isFormValid;
+  }
 
   const handleRemove = _  => {
     if(window.confirm('Are you sure?')) {
@@ -29,14 +45,16 @@ export default props => {
   };
 
   const handleChange = e => {
-    console.log(e.target.name, e.target.value);
     setData({ ...data, [e.target.name]: e.target.value })
   }
 
   const handleEdit = _ => {
     if(isInEditingState) {
-      dispatch(edit(event._id, data))  
+      if(checkValidation()) {
+        dispatch(edit(event._id, data))  
+      }
     } else {
+      setError({ name: '', description: '', status: '', priceLimit: '' });
       dispatch(toggleEditState(props.event._id));
     }
   }
@@ -51,7 +69,16 @@ export default props => {
         <td>
           {
             isInEditingState 
-              ? <Input name="name" type="text" onChange={handleChange} defaultValue={props.event.name} />
+              ? <div className="form-group">
+                  <Input 
+                    name="name" 
+                    type="text" 
+                    onChange={handleChange} 
+                    defaultValue={props.event.name} 
+                    onBlur={handleBlur} 
+                  />
+                  <ShowError message={error.name} />
+                </div>
               : props.event.name
           }
         </td>
@@ -59,7 +86,15 @@ export default props => {
         <td>
           {
             isInEditingState 
-              ? <Textarea name="description" onChange={handleChange} defaultValue={props.event.description} />
+              ? <div className="form-group">
+                <Textarea 
+                  name="description" 
+                  onChange={handleChange} 
+                  defaultValue={props.event.description} 
+                  onBlur={handleBlur} 
+                />
+                  <ShowError message={error.description} />
+                </div>
               : props.event.description
             
           }
@@ -69,10 +104,16 @@ export default props => {
           {
             isInEditingState 
               ? <div className="form-group">
-                <select name="status" className="form-control" defaultValue={(props.event.status || '').toString()} onChange={handleChange}>
+                <select 
+                  name="status" 
+                  className="form-control" 
+                  defaultValue={(props.event.status || '').toString()} 
+                  onChange={handleChange}
+                >
                   <option value="2">Closed</option>
                   <option value="1">Active</option>
                 </select>
+                <ShowError message={error.status} />
               </div>
               : <FormattedMessage id={EVENT[props.event.status] || 'invalid'} />
             
@@ -82,7 +123,16 @@ export default props => {
         <td>
           {
             isInEditingState 
-              ? <Textarea name="priceLimit" onChange={handleChange} defaultValue={props.event.priceLimit} />
+              ? <div className="form-group">
+                  <Input 
+                    type="number" 
+                    name="priceLimit" 
+                    onChange={handleChange} 
+                    defaultValue={props.event.priceLimit} 
+                    onBlur={handleBlur} 
+                  />
+                  <ShowError message={error.priceLimit} />
+                </div>
               : props.event.priceLimit
             
           }

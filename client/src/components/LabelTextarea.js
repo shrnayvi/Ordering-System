@@ -2,12 +2,15 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import Textarea from './Textarea';
+import ShowError from './ShowError';
 
 export default ({
   name,
   className,
   handleChange,
   label,
+  needValidation,
+  errorMessage,
   ...rest
 }) => {
   return (
@@ -21,6 +24,7 @@ export default ({
         handleChange={handleChange}
         {...rest}
       />
+    { needValidation ? <ShowError message={errorMessage} /> : '' }
     </div>
   )
 }

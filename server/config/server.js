@@ -28,7 +28,7 @@ app.use(cors());
 app.use(passport.initialize());
 
 /* Connect to mongodb */
-mongoose.connect(connection, { useNewUrlParser: true, useFindAndModify: false });
+mongoose.connect(connection, { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true });
 mongoose.connection
 .once('open', () => console.log('Database connected'))
 .on('error', (error) => {
