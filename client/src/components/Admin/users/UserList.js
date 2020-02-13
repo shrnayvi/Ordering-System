@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 
+import ShowError from '../../ShowError';
 import Input from '../../Input';
 import Button from '../../Button';
 
@@ -12,7 +13,33 @@ class UserList extends Component {
         name: this.props.user.name,
         phone: this.props.user.phone,
       },
+      error: {
+        name: '',
+        phone: '',
+      }
     }
+  }
+
+  handleBlur = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    if(value) {
+      this.setState({ error: { ...this.state.error, [name]: '' } });
+    }
+  }
+
+  checkValidation = () => {
+    const errors = {};
+    const errorFields = ['name', 'phone'];
+    errorFields.forEach(field => {
+      if(!this.state.user[field]) {
+        errors[field] = `${field}_required`;
+      }
+    });
+
+    this.setState({ error: { ...this.state.error, ...errors } });
+
+    return Object.keys(errors).length ? false : true;
   }
 
   handleEdit = _ => {
@@ -20,7 +47,9 @@ class UserList extends Component {
     const isInEditingState = idUI.isInEditingState;
     const _id = this.props.user._id;
     if(isInEditingState) {
-      this.props.updateUser(_id, this.state.user); 
+      if(this.checkValidation()) {
+        this.props.updateUser(_id, this.state.user); 
+      }
     } else {
       this.props.toggleEditState(_id);
     }
@@ -59,7 +88,10 @@ class UserList extends Component {
         <td>
           {
             isInEditingState 
-              ? <Input name="name" type="text" onChange={this.handleChange} defaultValue={user.name} />
+              ? <div className="form-group">
+                <Input name="name" type="text" onChange={this.handleChange} defaultValue={user.name} onBlur={this.handleBlur} />
+                <ShowError message={this.state.error.name} />
+              </div>
               : user.name
           }
         </td>
@@ -67,7 +99,10 @@ class UserList extends Component {
         <td>
           {
             isInEditingState 
-              ? <Input name="phone" type="text" onChange={this.handleChange} defaultValue={user.phone} />
+              ? <div className="form-group">
+                <Input name="phone" type="text" onChange={this.handleChange} defaultValue={user.phone} onBlur={this.handleBlur} />
+                <ShowError message={this.state.error.phone} />
+              </div>
               : user.phone
           }
         </td>
