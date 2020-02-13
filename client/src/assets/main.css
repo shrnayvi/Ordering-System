@@ -51,3 +51,7 @@
   /* .sidenav {padding-top: 15px;} */
   .sidenav .sidenav-link {font-size: 18px;}
 }
+
+.odr-error-msg {
+  color: red;
+}

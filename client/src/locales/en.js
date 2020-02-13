@@ -1,5 +1,6 @@
 export default {
   email_required: 'Email is required',
+  email_invalid: 'Email Invalid',
   password_required: 'Password is required',
   name_required: 'Name is required',
   phone_required: 'Phone Number is required',

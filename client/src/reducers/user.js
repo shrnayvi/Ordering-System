@@ -16,18 +16,18 @@ export default (state = initialState, action) => {
   switch(action.type) {
     /* add section */
     case USER.ADD_USER_REQUEST:
-      return { ...state, ui: { ...state.ui, isAdding: true } };
+      return { ...state, ui: { ...state.ui, isAdding: true, hasAdded: false } };
     case USER.ADD_USER_SUCCESS:
       return { 
         ...state,
         byId: { ...state.byId, [action.payload._id]: action.payload },
         allIds: state.allIds,
-        ui: { ...state.ui, isAdding: false } 
+        ui: { ...state.ui, isAdding: false, hasAdded: true } 
       };
     case USER.ADD_USER_FAILURE:
       return { 
         ...state,
-        ui: { ...state.ui, isAdding: false } 
+        ui: { ...state.ui, isAdding: false, hasAdded: false } 
       };
 
     /* edit toggle section */

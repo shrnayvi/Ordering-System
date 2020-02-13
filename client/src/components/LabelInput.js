@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
+import ShowError from './ShowError';
 import Input from './Input';
 
 export default ({
@@ -9,6 +10,8 @@ export default ({
   className,
   handleChange,
   label,
+  needValidation,
+  errorMessage,
   ...rest
 }) => {
   return (
@@ -23,6 +26,9 @@ export default ({
         handleChange={handleChange}
         {...rest}
       />
+
+      { needValidation ? <ShowError message={errorMessage} /> : '' }
+
     </div>
   )
 }

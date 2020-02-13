@@ -1,3 +1,4 @@
+import omit from 'lodash/omit';
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { ToastContainer } from 'react-toastify';
@@ -7,6 +8,8 @@ import Sidebar from '../Sidebar';
 import LabelInput from '../../LabelInput';
 import Button from '../../Button';
 import ImageUpload from '../../ImageUpload';
+
+import { isEmailValid } from '../../../helpers/validation';
 import { addUser } from '../../../actions/user';
 import { uploadMedia, clearUploadedMedia } from '../../../actions/media';
 
@@ -20,24 +23,28 @@ class AddUser extends Component {
         email: '',
         password: '',
         phone: '',
+        name: '',
         role: 'customer',
       },
+      error: {
+        email: '',
+        password: '',
+        name: '',
+        phone: '',
+      }
     }
   }
-  
-  handleSubmit = e => {
-    e.preventDefault();
-    const { uploaded } = this.props.media;
-    const data = {
-      ...this.state.user,
-      avatar: uploaded._id ? uploaded._id : null
+
+  componentDidUpdate(prevProps) {
+    if(!prevProps.ui.hasAdded &&this.props.ui.hasAdded) {
+      this.setState({ user: { email: '', password: '', name: '', phone: '' } })
     }
-    this.props.addUser(data);
   }
 
   handleChange = e => {
     const name = e.target.name;
     const value = e.target.value;
+
     this.setState({ user: { ...this.state.user, [name]: value } });
   }
 
@@ -49,8 +56,55 @@ class AddUser extends Component {
     this.props.uploadMedia(formData);
   }
 
+  checkValidation = () => {
+    const errors = {};
+    const errorFields = omit(this.state.error, ['email']);
+    Object.keys(errorFields).forEach(field => {
+      if(!this.state.user[field]) {
+        errors[field] = `${field}_required`;
+      }
+    });
+
+    if(!isEmailValid(this.state.user.email)) {
+      errors['email'] = 'email_invalid';
+    }
+
+    this.setState({ error: { ...this.state.error, ...errors } });
+
+    return Object.keys(errors).length ? false : true;
+  }
+  
+  handleSubmit = e => {
+    e.preventDefault();
+
+    const checkValidation = this.checkValidation();
+
+    if(checkValidation) {
+      const { uploaded } = this.props.media;
+      const data = {
+        ...this.state.user,
+        avatar: uploaded._id ? uploaded._id : null
+      }
+      this.props.addUser(data);
+    }
+  }
+
+  handleBlur = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    if(name === 'email') {
+      if(isEmailValid(value)) {
+        this.setState({ error: { ...this.state.error, email: '' } });
+      }
+    } else {
+      if(value) {
+        this.setState({ error: { ...this.state.error, [name]: '' } });
+      }
+    }
+  }
+
   render() {
-    const { isAdding } = this.props.ui;
+    const { isAdding, hasAdded } = this.props.ui;
     const { ui: mediaUi, uploaded: uploadedMedia } = this.props.media;
 
     return (
@@ -66,39 +120,51 @@ class AddUser extends Component {
               name="email"
               type="email"
               handleChange={this.handleChange}
-              value={this.state.email}
+              value={this.state.user.email}
               label="enter_email"
+              needValidation={true}
+              errorMessage={this.state.error.email}
+              onBlur={this.handleBlur}
             />
 
             <LabelInput 
               name="password"
               type="password"
               handleChange={this.handleChange}
-              value={this.state.password}
+              value={this.state.user.password}
               label="password"
+              needValidation={true}
+              errorMessage={this.state.error.password}
+              onBlur={this.handleBlur}
             />
 
             <LabelInput 
               name="name"
               type="text"
               handleChange={this.handleChange}
-              value={this.state.name}
+              value={this.state.user.name}
               label="name"
+              needValidation={true}
+              errorMessage={this.state.error.name}
+              onBlur={this.handleBlur}
             />
 
             <LabelInput 
               name="phone"
               type="text"
               handleChange={this.handleChange}
-              value={this.state.phone}
+              value={this.state.user.phone}
               label="phone"
+              needValidation={true}
+              errorMessage={this.state.error.phone}
+              onBlur={this.handleBlur}
             />
 
             <ImageUpload 
               name="avatar"
               handleImageChange={this.handleImageChange}
-              value={uploadedMedia._id}
-              filename={uploadedMedia.filename}
+              value={hasAdded ? '': uploadedMedia._id}
+              filename={hasAdded ? '' : uploadedMedia.filename}
               isUploading={mediaUi.isUploading}
             />
 
