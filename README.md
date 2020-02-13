@@ -1,4 +1,5 @@
-# Ordering System for certain events
+# Ordering System
+  Ordering system for a certain event.
 
 > NodeJS, express, REST API with JWT Authentication and mongodb support with mongoose
 
