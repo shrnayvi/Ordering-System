@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
-import { getProfile, updateProfile, handleProfileInput } from '../../actions/profile';
 import Button from '../Button';
 import LabelInput from '../LabelInput';
+
+import { commonValidation } from '../../helpers/validation';
+import { getProfile, updateProfile, handleProfileInput } from '../../actions/profile';
 
 class Profile extends Component {
   constructor(props) {
@@ -12,30 +14,59 @@ class Profile extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {
+      profile: {
+        email: '',
+        name: '',
+        phone: '',
+      },
+      error: {
+        name: '',
+        phone: '',
+      }
+    }
   }
 
   componentDidMount() {
     this.props.getProfile(this.props.user._id);
   }
 
+  componentDidUpdate(prevProps) {
+    if(!prevProps.profile.hasFetched && this.props.profile.hasFetched) {
+      this.setState({ profile: this.props.profile.info });
+    }
+  }
+
+  handleBlur = e => {
+    if(e.target.value) {
+      this.setState({ error: { ...this.state.error, [e.target.name]: '' } });
+    }
+  }
+
+  checkValidation = () => {
+    console.log(this.state.profile, 'state')
+    const { name, phone } = this.state.profile;
+    const valObj = commonValidation({ inputs: { name, phone } });
+    this.setState({ error: { ...this.state.error, ...valObj.errors} });
+    return valObj.isFormValid;
+  }
+
+
   handleChange(e) {
     let { name, value } = e.target;
-    this.props.handleProfileInput(name, value);
+    this.setState({ profile: { ...this.state.profile, [name]: value } });
   }
 
   handleSubmit(e) {
     e.preventDefault();
     let _id = this.props.user._id;
-    this.props.updateProfile(_id, this.props.profile.info );
+    if(this.checkValidation()) {
+      this.props.updateProfile(_id, this.state.profile);
+    }
   }
 
   render() {
     const { isEditingProfile } = this.props.profile;
-    const { 
-      email,
-      name, 
-      phone,
-     } = this.props.profile.info;
 
     return (
       <React.Fragment>
@@ -44,7 +75,7 @@ class Profile extends Component {
             name="email"
             type="email"
             handleChange={this.handleChange}
-            defaultValue={email}
+            defaultValue={this.state.profile.email}
             label="enter_email"
             readOnly
           />
@@ -53,21 +84,27 @@ class Profile extends Component {
             name="name"
             type="text"
             handleChange={this.handleChange}
-            defaultValue={name}
+            defaultValue={this.state.profile.name}
             label="name"
+            needValidation={true}
+            errorMessage={this.state.error.name}
+            onBlur={this.handleBlur}
           />
 
           <LabelInput 
             name="phone"
             type="text"
             handleChange={this.handleChange}
-            defaultValue={phone}
+            defaultValue={this.state.profile.phone}
             label="phone"
+            needValidation={true}
+            errorMessage={this.state.error.phone}
+            onBlur={this.handleBlur}
           />
 
           <Button label="submit" type="submit" className="btn btn-primary" isLoading={isEditingProfile} />
 
-          <ToastContainer />
+          <ToastContainer autoClose={2000} />
 
         </form>
       </React.Fragment>

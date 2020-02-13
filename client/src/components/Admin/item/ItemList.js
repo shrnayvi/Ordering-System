@@ -6,6 +6,9 @@ import Input from '../../Input';
 import Textarea from '../../Textarea';
 import Button from '../../Button';
 import ImageUpload from '../../ImageUpload';
+import ShowError from '../../ShowError';
+
+import { commonValidation } from '../../../helpers/validation';
 
 import { 
   remove, 
@@ -24,7 +27,25 @@ class ItemList extends Component {
         price: this.props.item.price,
         category: this.props.item.category,
       },
+      error: {
+        name: '',
+        description: '',
+        price: '',
+        category: '',
+      }
     }
+  }
+
+  handleBlur = e => {
+    if(e.target.value) {
+      this.setState({ error: { ...this.state.error, [e.target.name]: '' } });
+    }
+  }
+
+  checkValidation = () => {
+    const valObj = commonValidation({ inputs: this.state.item, error: this.state.error });
+    this.setState({ error: { ...this.state.error, ...valObj.errors} });
+    return valObj.isFormValid;
   }
 
   handleEdit = _ => {
@@ -38,8 +59,11 @@ class ItemList extends Component {
     }
     
     if(isInEditingState) {
-      this.props.edit(_id, data); 
+      if(this.checkValidation()) {
+        this.props.edit(_id, data); 
+      }
     } else {
+      this.setState({ error: { name: '', description: '', price: '' } });
       this.props.toggleEditState(_id);
     }
   }
@@ -83,7 +107,16 @@ class ItemList extends Component {
         <td>
           {
             isInEditingState 
-              ? <Input name="name" type="text" onChange={this.handleChange} defaultValue={item.name} />
+              ? <div className="form-group">
+                  <Input 
+                    name="name" 
+                    type="text" 
+                    onChange={this.handleChange} 
+                    defaultValue={item.name} 
+                    onBlur={this.handleBlur}
+                  />
+                  <ShowError message={this.state.error.name} />
+                </div>
               : item.name
           }
         </td>
@@ -91,8 +124,15 @@ class ItemList extends Component {
         <td>
           {
             isInEditingState 
-              // ? <Input name="description" type="text" onChange={this.handleChange} defaultValue={item.description} />
-              ? <Textarea name="description" onChange={this.handleChange} defaultValue={item.description} />
+              ? <div className="form-group">
+                  <Textarea 
+                    name="description" 
+                    onChange={this.handleChange} 
+                    defaultValue={item.description} 
+                    onBlur={this.handleBlur}
+                  />
+                  <ShowError message={this.state.error.description} />
+                </div>
               : item.description
           }
         </td>
@@ -101,7 +141,16 @@ class ItemList extends Component {
         <td>
           {
             isInEditingState 
-              ? <Input name="price" type="text" onChange={this.handleChange} defaultValue={item.price} />
+              ? <div>
+                  <Input 
+                    name="price" 
+                    type="number" 
+                    onChange={this.handleChange} 
+                    defaultValue={item.price} 
+                    onBlur={this.handleBlur}
+                  />
+                  <ShowError message={this.state.error.price} />
+                </div>
               : item.price
           }
         </td>

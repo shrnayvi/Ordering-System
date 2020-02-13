@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { ToastContainer } from 'react-toastify';
@@ -10,10 +10,11 @@ import Sidebar from '../Sidebar';
 import CartList from './CartList';
 import Pagination from '../../Pagination';
 
+import { commonValidation } from '../../../helpers/validation';
 import { get as getCart, changeCombinedOrder } from '../../../actions/cart';
 import { create as createOrder } from '../../../actions/order';
 
-export default props => {
+export default _ => {
   const dispatch = useDispatch();
   const {
     allIds,
@@ -24,12 +25,26 @@ export default props => {
     event,
   } = useSelector(({ cart }) => cart);
 
+  const [error, setError] = useState({ event: '' });
+
   const isPlacingOrder = useSelector(({ isAdding }) => isAdding) ;
 
   useEffect(() => {
     const pagingArgs = { skip: 0, limit: 50 };
     dispatch(getCart(pagingArgs));
   }, [dispatch])
+
+  const checkValidation = _ => {
+    const valObj = commonValidation({ inputs: { event } });
+    setError({ ...error, ...valObj.errors });
+    return valObj.isFormValid;
+  }
+
+  const handleBlur = e => {
+    if(e.target.value) {
+      setError({ ...error, [e.target.name]: '' });
+    }
+  }
 
   const handleCombinedOrder = e => {
     dispatch(changeCombinedOrder(+e.target.value));
@@ -41,7 +56,9 @@ export default props => {
       numberOfCombinedOrder,
       orders: allIds.map(_id => ({ item: byId[_id].item._id, quantity: byId[_id].quantity })),
     }
-    dispatch(createOrder(data));
+    if(checkValidation()) {
+      dispatch(createOrder(data));
+    }
   }
 
   const cartList = allIds.map(_id => {
@@ -88,7 +105,9 @@ export default props => {
                 </tbody>
 
               </table>
-              <SelectEvent />
+
+              <SelectEvent errorMessage={error.event} onBlur={handleBlur} />
+
               <LabelInput type="number" label="number_of_combined_order" handleChange={handleCombinedOrder}/>
               <Button label="order" isLoading={isPlacingOrder} handleClick={placeOrder} />
             </div>
@@ -96,7 +115,8 @@ export default props => {
         }
         <Pagination currentPage={currentPage} pageCount={pageCount} />
       </div>
-      <ToastContainer />
+
+      <ToastContainer autoClose={2000}/>
     </React.Fragment>
   );
 }

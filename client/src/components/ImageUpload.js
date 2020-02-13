@@ -3,15 +3,10 @@ import React from 'react';
 import LabelInput from './LabelInput';
 
 export default ({
-  type,
-  name,
   isUploading,
-  handleChange,
   handleImageChange,
   filename,
-  ...rest
 }) => {
-
   return (
     <React.Fragment>
       <LabelInput type="file" label="upload_avatar" handleChange={handleImageChange} />

@@ -18,7 +18,7 @@ export const loginUser = (data) => {
       notify('success', response.message);
       setTimeout(() => {
         history.push(`/${data.user.role}`)
-      }, 3000);
+      }, 1000);
     } else {
       notify('error', response.message);
       dispatch({ type: USER.LOGIN_FAILURE, payload: {} });

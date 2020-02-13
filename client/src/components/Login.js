@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
-import Input from './Input';
+import Button from './Button';
 import LabelInput from './LabelInput';
 import GoogleLogin from './GoogleLogin';
 
@@ -57,7 +57,7 @@ class Login extends Component {
             label="password"
           />
 
-          <Input type="submit" className="btn btn-primary" />
+          <Button label="login" type="submit" className="btn btn-primary" />
 
            <div className="mt-2">
              <p>
@@ -77,7 +77,7 @@ class Login extends Component {
           </div>
           <GoogleLogin />
           
-          <ToastContainer autoClose={3000} />
+          <ToastContainer autoClose={1000} />
 
         </form>
       </React.Fragment>

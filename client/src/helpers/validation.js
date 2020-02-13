@@ -42,6 +42,7 @@ export const commonValidation = data => {
       errors[field] = `${field}_required`;
     }
   }
+  console.log(data, errors, 'errors');
 
   const isFormValid = Object.keys(errors).length ? false : true;
   return { isFormValid, errors };

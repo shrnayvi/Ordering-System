@@ -28,7 +28,7 @@ const Item = props => {
         </div>
       </div>
 
-      <ToastContainer />
+      <ToastContainer autoClose={2000} />
 
     </React.Fragment>
   )

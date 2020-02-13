@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
+import ShowError from '../../ShowError';
+
 import { get as getEvents } from '../../../actions/event';
 import { selectEvent } from '../../../actions/cart';
 
-export default _ => {
+export default ({ errorMessage, ...rest }) => {
 
   const dispatch = useDispatch();
 
@@ -25,10 +27,11 @@ export default _ => {
   return (
     <React.Fragment>
       <label>Select Event</label>
-      <select onChange={handleChange} className="form-control">
+      <select name="event" onChange={handleChange} className="form-control" {...rest}>
         <option value="">Select</option>
         {eventOptions}
       </select>
+      <ShowError message={errorMessage}/>
     </React.Fragment>
   )
 }

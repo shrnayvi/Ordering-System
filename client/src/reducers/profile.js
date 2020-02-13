@@ -3,11 +3,11 @@ import { USER } from '../constants/actionTypes';
 export default (state = { info: {} }, action) => {
   switch(action.type) {
     case USER.FETCH_PROFILE_REQUEST:
-      return { ...state, isFetchingProfile: true };
+      return { ...state, info: {}, isFetchingProfile: true, hasFetched: false };
     case USER.FETCH_PROFILE_SUCCESS:
-      return { isFetchingProfile: false, info: action.payload };
+      return { isFetchingProfile: false, hasFetched: true, info: action.payload };
     case USER.FETCH_PROFILE_FAILURE:
-      return { ...state, isFetchingProfile: false }
+      return { ...state, isFetchingProfile: false, hasFetched: false }
 
     case USER.EDIT_PROFILE_REQUEST:
       return { ...state, isEditingProfile: true, };
