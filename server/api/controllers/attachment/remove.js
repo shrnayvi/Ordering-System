@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
 
       /** Remove the file if exists */
       const {
-         UPLOAD_PATH: dest 
+         uploadPath: dest 
       } = require('@config/constants');
       fs.unlink(`${dest}${attachment.filename}`, (err) => {
          if(err) {

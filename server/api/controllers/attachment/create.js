@@ -6,7 +6,7 @@ const Attachment = require('@models/attachment');
 const extension = require('@utils/extension');
 const images = require('@config/images');
 const {
-  UPLOAD_PATH: dest
+  uploadPath: dest
 } = require('@config/constants');
 
 

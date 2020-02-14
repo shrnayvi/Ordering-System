@@ -1,6 +1,6 @@
 const Order = require('@models/order');
 const pagination = require('@utils/pagination');
-const { ORDER_STATUS: orderStatus } = require('@config/constants');
+const { orderStatus } = require('@config/constants');
 
 /**
  * Get all orders or the user orders

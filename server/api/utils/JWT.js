@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { SECRET_KEY: secret, JWT_EXPIRATION: exp } = require('@config/constants');
+const { secretKey, jwtExpiration: exp } = require('@config/constants');
 
 /**
  * Generate JWT Token
@@ -15,7 +15,7 @@ function generateToken({ _id, role }) {
          userId: _id,
       }
    };
-   return jwt.sign(payload, secret);
+   return jwt.sign(payload, secretKey);
 }
 
 /**
@@ -24,7 +24,7 @@ function generateToken({ _id, role }) {
  */
 function verifyToken(token) {
    return new Promise((ressolve, reject) => {
-      jwt.verify(token, secret, (err, decoded) => {
+      jwt.verify(token, secretKey, (err, decoded) => {
          if(err) {
             reject(err);
          } else {

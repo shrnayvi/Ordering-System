@@ -2,8 +2,8 @@ const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 
 const {
-  SOCIAL_LOGIN: method,
-  ROLES: roles
+  socialLogin: method,
+  roles,
 } = require('@config/constants');
 
 const pwd = require('@utils/password');
