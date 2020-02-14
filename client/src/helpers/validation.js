@@ -8,12 +8,11 @@ export const isEmailValid = email => {
 /**
  * @param {Object} data 
  * @param {Object} data.user User Inputs
- * @param {Object} data.error Input error messages
  * @returns {Object}
  */
 export const userValidation = data => {
   const errors = {};
-  const errorFields = omit(data.error, ['email']);
+  const errorFields = omit(data.user, ['email']);
   for(let key in errorFields) {
     if(!data.user[key]) {
       errors[key] = `${key}_required`;
@@ -31,7 +30,6 @@ export const userValidation = data => {
 /**
  * @param {Object} data 
  * @param {Object} data.inputs Inputs to be validated
- * @param {Object} data.error Input error messages
  * @returns {Object}
  */
 export const commonValidation = data => {

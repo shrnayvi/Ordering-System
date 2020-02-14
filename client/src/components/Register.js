@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Button from './Button';
 import LabelInput from './LabelInput';
 
+import { isEmailValid, userValidation } from '../helpers/validation';
 import { registerUser } from '../actions/user';
 import { FormattedMessage } from 'react-intl';
 
@@ -17,13 +18,34 @@ export default _ => {
     name: '', password: '', email: '', phone: '',
   });
 
+  const [error, setError] = useState({ name: '', password: '', email: '', phone: '' });
+
+  const checkValidation = _ => {
+    const valObj = userValidation({ user: user, error });
+    setError({ ...error, ...valObj.errors });
+    return valObj.isFormValid;
+  }
+
+  const handleBlur = e => {
+    const { name, value } = e.target;
+    if(name === 'email') {
+      if(isEmailValid(value)) {
+        setError({ ...error, email: '' });
+      }
+    } else if(value){
+      setError({ ...error, [name]: '' });
+    }
+  }
+
   const handleChange = e => {
     setUser({ ...user, [e.target.name]: e.target.value });
   }
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(registerUser(user));
+    if(checkValidation()) {
+      dispatch(registerUser(user));
+    }
   }
 
   useEffect(() => {
@@ -45,6 +67,9 @@ export default _ => {
           handleChange={handleChange}
           value={user.email}
           label="enter_email"
+          needValidation={true}
+          errorMessage={error.email}
+          onBlur={handleBlur} 
         />
 
         <LabelInput 
@@ -53,6 +78,9 @@ export default _ => {
           handleChange={handleChange}
           value={user.password}
           label="password"
+          needValidation={true}
+          errorMessage={error.password}
+          onBlur={handleBlur} 
         />
 
         <LabelInput 
@@ -61,6 +89,9 @@ export default _ => {
           handleChange={handleChange}
           value={user.name}
           label="name"
+          needValidation={true}
+          errorMessage={error.name}
+          onBlur={handleBlur} 
         />
 
         <LabelInput 
@@ -69,6 +100,9 @@ export default _ => {
           handleChange={handleChange}
           value={user.phone}
           label="phone"
+          needValidation={true}
+          errorMessage={error.phone}
+          onBlur={handleBlur} 
         />
 
         <Button label="register" type="submit" className="btn btn-primary" isLoading={isRegistering} />

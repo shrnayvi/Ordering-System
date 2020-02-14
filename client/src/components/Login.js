@@ -9,14 +9,21 @@ import Button from './Button';
 import LabelInput from './LabelInput';
 import GoogleLogin from './GoogleLogin';
 
+import { isEmailValid, userValidation } from '../helpers/validation';
 import { loginUser } from '../actions/auth';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      auth: {
+        email: '',
+        password: '',
+      },
+      error: {
+        email: '',
+        password: '',
+      }
     }
 
     if(this.props.auth.isLoggedIn) {
@@ -28,13 +35,32 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  handleBlur = e => {
+    const { name, value } = e.target;
+    if(name === 'email') {
+      if(isEmailValid(value)) {
+        this.setState({ error: { ...this.state.error, email: '' } })
+      }
+    } else if(value) {
+      this.setState({ error: { ...this.state.error, [name]: '' } })
+    }
+  }
+
+  checkValidation = () => {
+    const validation = userValidation({ user: this.state.auth });
+    this.setState({ error: { ...this.state.error, ...validation.errors } });
+    return validation.isFormValid;
+  }
+
   handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value })
+    this.setState({ auth: { ...this.state.auth, [e.target.name]: e.target.value } })
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.loginUser(this.state)
+    if(this.checkValidation()) {
+      this.props.loginUser(this.state.auth)
+    }
   }
 
   render() {
@@ -45,16 +71,22 @@ class Login extends Component {
             name="email"
             type="email"
             handleChange={this.handleChange}
-            value={this.state.email}
+            value={this.state.auth.email}
             label="enter_email"
+            needValidation={true}
+            errorMessage={this.state.error.email}
+            onBlur={this.handleBlur}
           />
 
           <LabelInput 
             name="password"
             type="password"
             handleChange={this.handleChange}
-            value={this.state.password}
+            value={this.state.auth.password}
             label="password"
+            needValidation={true}
+            errorMessage={this.state.error.password}
+            onBlur={this.handleBlur}
           />
 
           <Button label="login" type="submit" className="btn btn-primary" />
