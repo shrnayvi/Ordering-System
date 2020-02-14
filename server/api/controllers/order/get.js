@@ -18,17 +18,6 @@ exports.get = async (req, res) => {
       query = { user: req.params.user };
     }
 
-    if (req.query.status) {
-      const status = orderStatus[req.query.status];
-      if (typeof status !== 'undefined') {
-        query['status'] = status;
-      }
-    }
-
-    if(req.query.event) {
-      query = { ...query, event: req.query.event };
-    }
-
     //TODO filter by date
     const { skip, limit, sort, query: queryParam } = pagination.getPagingArgs(req.query);
     query = { ...query, ...queryParam };

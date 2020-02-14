@@ -1,5 +1,4 @@
 import qs from 'query-string';
-import pick from 'lodash/pick';
 
 import { ORDER, USER, EVENT } from '../constants/actionTypes';
 import notify from '../helpers/notification';
@@ -36,7 +35,7 @@ const fetchOrders = (data, dispatch) => {
 
 export const get = (args = { currentPage: 1 }) => async dispatch => {
 
-  const query = pick(args, ['skip', 'limit'])
+  const { currentPage, ...query } = args;
   dispatch({ type: ORDER.FETCH_REQUEST });
 
   const { data: response } = await getAll(qs.stringify(query));
@@ -46,7 +45,7 @@ export const get = (args = { currentPage: 1 }) => async dispatch => {
     const paging = response.data.paging;
     const payload = {
       ...data,
-      currentPage: args.currentPage,
+      currentPage: currentPage,
       pageCount: Math.ceil(paging.total / config.dataPerPage),
       total: paging.total,
       startIndex: paging.startIndex,

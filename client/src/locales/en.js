@@ -144,4 +144,6 @@ export default {
   confirm_password: 'Confirm Password',
   reset: 'Reset',
   sign_up: 'Sign Up',
+  select_event: 'Select Event',
+  select_status: 'Select Status',
 };
