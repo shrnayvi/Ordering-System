@@ -9,6 +9,7 @@ export const USER = {
   RESET_PASSWORD: '/users/reset-password',
   FORGOT_PASSWORD: '/users/forgot-password',
   DELETE: _id => `/users/${_id}`,
+  VERIFY: `/users/verify`,
 };
 
 export const ITEM = {

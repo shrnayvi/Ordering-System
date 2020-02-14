@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
  * @param {String} password Password
  */
 function generateHash(password) {
+  console.log(password);
   return bcrypt.hash(password, bcrypt.genSaltSync(10));
 }
 

@@ -6,6 +6,7 @@ module.exports = async (req, res) => {
    try {
       const { context: { userId } } = await verifyToken(token);
       const user = await User.findOne({ _id: userId });
+      console.log(user.email, user.password, 'old');
       if(!user) {
          apiResponse.notFound(res, { message: 'user_not_found' });
       }
@@ -16,7 +17,8 @@ module.exports = async (req, res) => {
 
       user.status = 1;
       user.is_email_verified = 1;
-      await user.save();
+      const savedUser = await user.save();
+      console.log(savedUser.email, savedUser.password, 'new')
       return apiResponse.success(res, { message: 'email_verified' })
    } catch(e) {
       return apiResponse.serverError(res);

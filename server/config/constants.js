@@ -6,6 +6,7 @@ module.exports = {
   socialLogin: ["google", "local"],
   roles: ["admin", "customer"],
   uploadPath: `${__dirname}/../uploads/`,
+  clientUrl: process.env.CLIENT_URL,
   orderStatus: {
     pending: -1,
     cancelled: 0,

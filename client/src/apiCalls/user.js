@@ -10,3 +10,4 @@ export const register = data => http.post(user.REGISTER, data, false);
 export const forgotPassword = data => http.post(user.FORGOT_PASSWORD, data, false);
 export const resetPassword = data => http.post(user.RESET_PASSWORD, data, false);
 export const remove = _id => http.remove(user.DELETE(_id));
+export const verify = data => http.post(user.VERIFY, data, false);

@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
+import qs from 'query-string';
 
 import Button from './Button';
 import LabelInput from './LabelInput';
 import GoogleLogin from './GoogleLogin';
 
 import { isEmailValid, userValidation } from '../helpers/validation';
-import { loginUser } from '../actions/auth';
+import { loginUser, verifyEmail } from '../actions/auth';
 
 class Login extends Component {
   constructor(props) {
@@ -33,6 +34,13 @@ class Login extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    const query = qs.parse(this.props.location.search);
+    if(query.verify) {
+      this.props.verifyEmail({ token: query.verify });
+    }
   }
 
   handleBlur = e => {
@@ -120,6 +128,7 @@ class Login extends Component {
 const mapStateToProps = ({ auth }) => ({ auth })
 const mapDispatchToProps = {
   loginUser, 
+  verifyEmail,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

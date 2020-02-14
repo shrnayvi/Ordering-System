@@ -53,9 +53,10 @@ export const USER = {
   EDIT_REQUEST: 'edit_user_request',
   EDIT_FAILURE: 'edit_user_failure',
 
+  VERIFICATION_REQUEST: 'verification_request',
   VERIFICATION_SUCCESS: 'verification_success',
-  VERIFICATION_ERROR: 'verification_error',
-  VERIFICATION_CLEAR: 'verification_clear',
+  VERIFICATION_FAILURE: 'verification_failure',
+  VERIFICATION_CONFLICT: 'verification_conflict',
 
   FETCH_ALL_REQUEST: 'fetch_all_user_request',
   FETCH_ALL_SUCCESS: 'fetch_all_user_success',

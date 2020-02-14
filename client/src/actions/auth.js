@@ -1,5 +1,5 @@
 import { USER} from '../constants/actionTypes'
-import { login, loginWithGoogle } from '../apiCalls/user';
+import { login, loginWithGoogle, verify } from '../apiCalls/user';
 import config from '../constants/config';
 import { setCookie, destroyCookie } from '../helpers/cookie';
 import history from '../helpers/history';
@@ -46,6 +46,27 @@ export const googleLogin = accessToken => async dispatch => {
     }
   } catch (e) {
     dispatch({ type: USER.LOGIN_FAILURE, payload: e.message });
+  }
+}
+
+export const verifyEmail = data => async dispatch => {
+  dispatch({ type: USER.VERIFICATION_REQUEST });
+
+  try {
+    const { data: response } = await verify(data);
+    if(response.status === 200) {
+      notify('success', response.message);
+      dispatch({ type: USER.VERIFICATION_SUCCESS });
+    } else if(response.status === 409) {
+      dispatch({ type: USER.VERIFICATION_CONFLICT });
+      notify('info', response.message);
+    } else {
+      dispatch({ type: USER.VERIFICATION_FAILURE });
+      notify('error', response.message);
+    }
+  } catch (e) {
+    dispatch({ type: USER.VERIFICATION_FAILURE });
+    notify('error', e.message);
   }
 }
 

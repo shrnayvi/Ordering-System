@@ -17,6 +17,14 @@ export default (state = initialState, action) => {
       return { ...state, isLoggingOut: true };
     case USER.LOGOUT_SUCCESS:
       return { ...state, isLoggingOut: false, isLoggedIn: false, user: {} };
+
+    case USER.VERIFICATION_REQUEST:
+      return { ...state, isVerifying: true };
+    case USER.VERIFICATION_SUCCESS:
+    case USER.VERIFICATION_FAILURE:
+    case USER.VERIFICATION_CONFLICT:
+      return { ...state, isVerifying: false };
+
     default: 
       return state;
   }

@@ -1,7 +1,6 @@
 const mail = require('@emails/mail');
 const { generateToken }= require('@utils/JWT');
-
-const baseURL = '//localhost:8000/';
+const { clientUrl } = require('@config/constants');
 
 /**
  * @param {Object} data - user document 
@@ -17,7 +16,7 @@ module.exports = async ({ _id, email, role }) => {
          heading: 'Thank you for registering on our site.',
          bodyData: `
          <p>Please click on the following link to verify your email: </p> 
-         <a href="${baseURL}users/verify?token=${token}">Verify Email</a>
+         <a href="${clientUrl}?verify=${token}">Verify Email</a>
          `,
       }
    }

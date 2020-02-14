@@ -1,4 +1,3 @@
-const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 
 const {
@@ -42,19 +41,6 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-UserSchema.pre('save', async function () {
-  try {
-    if (this.method === 'local') {
-      if (this.password) {
-        this.password = await pwd.generateHash(this.password);
-        console.log(this.password);
-      }
-    }
-  } catch (e) {
-    return Promise.reject({ message: e.message });
-  }
-});
 
 UserSchema.pre('findOneAndUpdate', async function () {
   const password = this._update.password;

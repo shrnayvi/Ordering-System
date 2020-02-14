@@ -20,7 +20,6 @@ module.exports = async (req, res) => {
       .then(token => {
         found['resetPasswordToken'] = token;
         found['resetPasswordExpires'] = forgotPasswordExpiration;
-        console.log(resetPasswordExpires);
         return found.save()
           .then(_ => token)
       })

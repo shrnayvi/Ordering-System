@@ -21,6 +21,7 @@ module.exports = async (req, res) => {
          return apiResponse.badRequest(res, { message: `invalid_email_password`});
       }
 
+      console.log(userDoc.password, 'password');
       const canLogin = await pwd.comparePassword(req.body.password, userDoc.password || ''),
          { _id, role, is_email_verified } = userDoc;
 
