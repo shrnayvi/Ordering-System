@@ -7,10 +7,12 @@ export const uploadMedia = data => async dispatch => {
 
   const { data: response } = await create(data);
 
+  console.log(response, 'response');
   if (response.status === 200) {
     dispatch({ type: MEDIA.ADD_SUCCESS, payload: response.data });
   } else {
     dispatch({ type: MEDIA.ADD_FAILURE, payload: response.message });
+    console.log(response.message);
     notify('error', response.message);
   }
 };

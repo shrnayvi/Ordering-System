@@ -50,15 +50,20 @@ module.exports = (req, res) => {
 
       /* Resize only if image */
       if (allowedResize.includes(ext)) {
+        const promises = [];
         for (let key in images) {
-          await Jimp.read(`${dest}${filename}`)
-            .then(image => {
-              return image
-                .resize(images[key].width, images[key].height)
-                .quality(70)
-                .write(`${dest}${key}-${filename}`)
-            })
+          promises.push(
+            Jimp.read(`${dest}${filename}`)
+              .then(image => {
+                return image
+                  .resize(images[key].width, images[key].height)
+                  .quality(70)
+                  .write(`${dest}${key}-${filename}`)
+              })
+          );
         }
+
+        await Promise.all(promises);
       }
 
       return apiResponse.success(res, { message: 'created_attachment', data: attachment });
