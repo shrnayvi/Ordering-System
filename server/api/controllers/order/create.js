@@ -6,7 +6,7 @@ const Event = require("@models/event");
 const validateCreate = require("@validations/order/create");
 const randomString = require("@utils/random-string");
 
-exports.create = async (req, res) => {
+exports.create = async (req, res, next) => {
   try {
     const data = req.body;
     const numberOfCombinedOrder = data.numberOfCombinedOrder || 1;
@@ -30,6 +30,10 @@ exports.create = async (req, res) => {
 
       const foundItem = await Item.findOne({ _id: item }).select('price');
 
+      if(!foundItem) {
+        apiResponse.notFound({ message: 'item_not_found', data: [{ item }] });
+      }
+
       const quantity = orders[i].quantity;
       const price = quantity * foundItem.price;
 
@@ -44,7 +48,7 @@ exports.create = async (req, res) => {
     });
 
     if (error) {
-      return apiResponse.badRequest(res, { data: error });
+      apiResponse.badRequest({ data: error });
     }
 
 
@@ -52,15 +56,15 @@ exports.create = async (req, res) => {
       .select({ status: 1, priceLimit: 1 });
 
     if(event.status !== 1) {
-      return apiResponse.badRequest(res, { message: 'event_closed' });
+      apiResponse.badRequest({ message: 'event_closed' });
     }
 
     if(totalQuantity > numberOfCombinedOrder) {
-      return apiResponse.badRequest(res, { message: 'order_exceeded' });
+      apiResponse.badRequest({ message: 'order_exceeded' });
     }
 
     if(totalPrice > event.priceLimit * numberOfCombinedOrder) {
-      return apiResponse.badRequest(res, { message: 'price_exceeded' })    
+      apiResponse.badRequest({ message: 'price_exceeded' })    
     }
       
     const rand = randomString(10);
@@ -83,7 +87,6 @@ exports.create = async (req, res) => {
 
     return apiResponse.success(res, { message: "added_order", data: newOrder });
   } catch (e) {
-    // console.log(e)
-    return apiResponse.serverError(res, { data: e.message });
+    return next(e);;;
   }
 }

@@ -8,7 +8,7 @@ const pagination = require('@utils/pagination');
  * @param {string|number} [req.query.page] - Page Number
  * @param {string|number} [req.query.size] - Number of data to fetch
  */
-exports.get = async (req, res) => {
+exports.get = async (req, res, next) => {
   try {
     let total;
     const { skip, limit, sort, query } = pagination.getPagingArgs(req.query);
@@ -54,16 +54,16 @@ exports.get = async (req, res) => {
 
     return apiResponse.success(res, { message: 'fetched_category', data: { paging, categories } });
   } catch (e) {
-    return apiResponse.serverError(res, { data: e.message });
+    return next(e);;
   }
 };
 
 
-exports.getBySlug = async (req, res) => {
+exports.getBySlug = async (req, res, next) => {
   try {
     let category = await Category.findOne({ slug: req.params.slug });
     return apiResponse.success(res, { message: 'fetched_category', data: category });
   } catch (e) {
-    return apiResponse.serverError(res, { data: e.message });
+    return next(e);;
   }
 };

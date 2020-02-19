@@ -8,7 +8,7 @@ const { get } = require('lodash');
  * @param {String} [req.query.page] - Page Number Query parameter
  * @param {String} [req.query.size] - Number of data to fetch
  */
-exports.get = async (req, res) => {
+exports.get = async (req, res, next) => {
   const { skip, limit, sort, query: queryParam } = pagination.getPagingArgs(req.query);
   const { role, userId: user } = req;
   
@@ -19,7 +19,7 @@ exports.get = async (req, res) => {
 
     const canCrud = _canCRUD('Read', found, { role, _id: user });
     if(!canCrud) {
-      return apiResponse.unauthorized(res);
+      apiResponse.forbidden({});
     }
 
     const total = await OrderDetail.countDocuments(query),
@@ -40,14 +40,14 @@ exports.get = async (req, res) => {
 
     return apiResponse.success(res, { message: 'fetched_item', data: { paging, orderDetails: details } });
   } catch (e) {
-    return apiResponse.serverError(res, { data: e.message });
+    return next(e);;
   }
 }
 
 /**
  * @param {String} [req.params._id] - ID of the order detail
  */
-exports.getById = async (req, res) => {
+exports.getById = async (req, res, next) => {
   try {
     const { role, userId: user } = req;
     const orderDetail = await OrderDetail.findOne({ _id: req.params._id })
@@ -58,16 +58,20 @@ exports.getById = async (req, res) => {
         { path: 'user', select: '-password' },
         { path: 'item' },
       ]
-    })
+    });
+
+    if(!orderDetail) {
+      apiResponse.notFound({ message: 'order_detail_not_found' });
+    }
 
     const canCrud = _canCRUD('Read', orderDetail.order, { role, _id: user });
     if(!canCrud) {
-      return apiResponse.unauthorized(res);
+      apiResponse.forbidden({});
     }
 
     return apiResponse.success(res, { message: 'fetched_order_detail', data: { orderDetail } });
   } catch (e) {
-    return apiResponse.serverError(res, { data: e.message });
+    return next(e);;
   }
 }
 
@@ -81,10 +85,6 @@ exports.getById = async (req, res) => {
  * @returns {Boolean}
  */
 function _canCRUD(CRUD, found, loggedUser) {
-  if(!found) {
-    return false;
-  }
-
   const foundUser = get(found, 'user.id')
 
   switch(CRUD) {

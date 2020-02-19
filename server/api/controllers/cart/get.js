@@ -3,7 +3,7 @@ const Cart = require("@models/cart");
 /**
  * Fetch the carts of loggedin user
  */
-module.exports = async (req, res) => {
+module.exports = async (req, res, next) => {
   try {
     const user = req.userId;
     const cart = await Cart.find({ user })
@@ -11,6 +11,6 @@ module.exports = async (req, res) => {
       
     return apiResponse.success(res, { message: "fetched_cart", data: { paging: {}, cart } });
   } catch (e) {
-    return apiResponse.serverError(res, { data: e.message });
+    return next(e);;
   }
 };

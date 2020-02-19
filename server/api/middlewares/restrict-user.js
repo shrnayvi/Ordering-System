@@ -17,6 +17,6 @@ module.exports = (req, res, next) => {
    if(String(loggedInUser) === String(requestingUser) || role === 'admin') {
       next();
    } else {
-      return apiResponse.unauthorized(res);
+      apiResponse.forbidden({});
    }
 }

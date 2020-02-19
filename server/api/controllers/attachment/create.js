@@ -26,9 +26,9 @@ const storage = multer.diskStorage({
   }
 })
 
-module.exports = (req, res) => {
+module.exports = (req, res, next) => {
   const upload = multer({ storage }).single('attachment')
-  upload(req, res, async (err) => {
+  upload(req, res, next, async (err) => {
     if (err) {
       return res.send(err);
     }
@@ -68,7 +68,7 @@ module.exports = (req, res) => {
 
       return apiResponse.success(res, { message: 'created_attachment', data: attachment });
     } catch (e) {
-      return apiResponse.serverError(res, { data: e.message });
+      return next(e);;
     }
   });
 }

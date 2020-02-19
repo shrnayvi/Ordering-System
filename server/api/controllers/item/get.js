@@ -7,7 +7,7 @@ const pagination = require('@utils/pagination');
  * @param {String} [req.query.page] - Page Number Query parameter
  * @param {String} [req.query.size] - Number of data to fetch
  */
-exports.get = async (req, res) => {
+exports.get = async (req, res, next) => {
   try {
     const { skip, limit, sort, query } = pagination.getPagingArgs(req.query),
       total = await Item.countDocuments(query),
@@ -22,7 +22,7 @@ exports.get = async (req, res) => {
 
     return apiResponse.success(res, { message: 'fetched_item', data: { paging, items } });
   } catch (e) {
-    return apiResponse.serverError(res, { data: e.message });
+    return next(e);;
   }
 }
 
@@ -32,7 +32,7 @@ exports.get = async (req, res) => {
  * @param {Object} [req.param] - Query Object
  * @param {String} [req.params._id] - Food Item slug
  */
-exports.getById= async (req, res) => {
+exports.getById= async (req, res, next) => {
   try {
     const item = await Item.findOne({ _id: req.params._id})
       .populate('category')
@@ -40,7 +40,7 @@ exports.getById= async (req, res) => {
 
     return apiResponse.success(res, { message: 'fetched_item', data: item });
   } catch (e) {
-    return apiResponse.serverError(res, { data: e.message });
+    return next(e);;
   }
 }
 
@@ -49,7 +49,7 @@ exports.getById= async (req, res) => {
  * @param {Object} req - Request Object
  * @param {String} req.params._id Category ID 
  */
-exports.getMenuItems = async (req, res) => {
+exports.getMenuItems = async (req, res, next) => {
   try {
 
     const slug = req.params.slug;
@@ -64,6 +64,6 @@ exports.getMenuItems = async (req, res) => {
 
     return apiResponse.success(res, { message: 'fetched_category_item', data: [...items, ...childItems] });
   } catch (e) {
-    return apiResponse.serverError(res, { data: e.message });
+    return next(e);;
   }
 }

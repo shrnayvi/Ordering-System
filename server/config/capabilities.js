@@ -9,6 +9,7 @@ module.exports = {
    'remove_attachment': ['admin'],
    
    /* Category Resource*/
+   'get_category': ['admin', 'customer'],
    'add_category': ['admin'],
    'edit_category': ['admin'],
    'remove_category': ['admin'],
@@ -27,8 +28,8 @@ module.exports = {
    'get_order': ['admin', 'customer'],
    'add_order': ['admin', 'customer'],
    'update_order': ['admin', 'customer'],
-
-   /* Order Detail Resource*/
+   
+   /* Order detail Resource*/
    'get_order_detail': ['admin', 'customer'],
 
    /* Cart Resource*/

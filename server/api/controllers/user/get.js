@@ -6,29 +6,33 @@ const pagination = require('@utils/pagination');
  * @param {String} [req.query.page] - Page Number Query parameter
  * @param {String} [req.query.size] - Number of data to fetch
  */
-exports.get = async (req, res) => {
+exports.get = async (req, res, next) => {
    try {
       const { skip, limit, sort, query } = pagination.getPagingArgs(req.query);
-      const users = await User.find({})
+      const users = await User.find(query)
          .populate('avatar')
          .skip(skip)
          .limit(limit)
          .sort(sort);
       
-      const total = await User.countDocuments({});
+      const total = await User.countDocuments(query);
       const paging = pagination.getPagingResult(req.query, { total });
 
       return apiResponse.success(res, { message: 'fetched_user', data: { paging, users } });
    } catch(e) {
-      return apiResponse.serverError(res, { data: e.message });
+      return next(e);;
    }
 }
 
-exports.getById = async (req, res) => {
+exports.getById = async (req, res, next) => {
    try {
-      const users = await User.findOne({ _id: req.params._id });
-      return apiResponse.success(res, { message: 'fetched_user', data: users });
+      const user = await User.findOne({ _id: req.params._id });
+      if(!user) {
+         apiResponse.notFound({ message: 'user_not_found' });
+      }
+
+      return apiResponse.success(res, { message: 'fetched_user', data: user });
    } catch(e) {
-      return apiResponse.serverError(res, { data: e.message });
+      return next(e);;
    }
 }

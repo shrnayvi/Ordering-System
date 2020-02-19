@@ -1,6 +1,6 @@
 const User = require('@models/user');
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, next) => {
   try {
     let users = await User.findOneAndRemove({ _id: req.params._id })
       .select({
@@ -10,10 +10,10 @@ module.exports = async (req, res) => {
       })
 
     if (!users) {
-      return apiResponse.notFound(res);
+      apiResponse.notFound({});
     }
     return apiResponse.success(res, { message: 'deleted_user', data: users });
   } catch (e) {
-    return apiResponse.serverError(res, { data: e.message });
+    return next(e);;
   }
 }

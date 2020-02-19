@@ -9,7 +9,11 @@ const { getMenuItems }= require('@controllers/item');
 router.get('/:slug/items', getMenuItems);
 
 router.get('/:slug', categoryController.getBySlug);
-router.get('/', categoryController.get);
+router.get(
+   '/', 
+   [checkToken, authorize(cap['get_category'])], 
+   categoryController.get
+);
 
 router.post('/', 
    [checkToken, authorize(cap['add_category'])], 

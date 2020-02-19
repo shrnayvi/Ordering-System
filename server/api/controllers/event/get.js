@@ -6,7 +6,7 @@ const pagination = require('@utils/pagination');
  * @param {String} [req.query.page] - Page Number Query parameter
  * @param {String} [req.query.size] - Number of data to fetch
  */
-exports.get = async (req, res) => {
+exports.get = async (req, res, next) => {
   try {
     const { skip, limit, sort, query } = pagination.getPagingArgs(req.query),
       total = await Event.countDocuments(query),
@@ -18,7 +18,7 @@ exports.get = async (req, res) => {
     const paging = pagination.getPagingResult(req.query, { total });
     return apiResponse.success(res, { message: 'fetched_item', data: { paging, events } });
   } catch (e) {
-    return apiResponse.serverError(res, { data: e.message });
+    return next(e);;
   }
 }
 
@@ -28,11 +28,11 @@ exports.get = async (req, res) => {
  * @param {Object} [req.param] - Query Object
  * @param {String} [req.params.slug] - Food Item slug
  */
-exports.getBySlug = async (req, res) => {
+exports.getBySlug = async (req, res, next) => {
   try {
     const event = await Event.findOne({ slug: req.params.slug });
     return apiResponse.success(res, { message: 'fetched_event', data: event });
   } catch (e) {
-    return apiResponse.serverError(res, { data: e.message });
+    return next(e);;
   }
 }

@@ -4,16 +4,16 @@ const sendToken = require('@emails/user/forgot-password');
 const { validateForgotPasswordInput } = require('@validations/user/forgot-password');
 const { forgotPasswordSize, forgotPasswordExpiration } = require('@config/constants');
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, next) => {
   const { error } = validateForgotPasswordInput(req.body);
-  if (error) {
-    return apiResponse.badRequest(res, { message: error.name, data: error.details })
-  }
-
   try {
+    if (error) {
+      apiResponse.badRequest({ message: error.name, data: error.details })
+    }
+
     const found = await User.findOne({ email: req.body.email });
     if(!found) {
-      return apiResponse.notFound(res, { message: 'user_not_found' });
+      apiResponse.notFound({ message: 'user_not_found' });
     }
 
     crypto.createRandomBytes(forgotPasswordSize)
@@ -31,9 +31,9 @@ module.exports = async (req, res) => {
         return apiResponse.success(res, { message: 'token_sent' });
       })
       .catch(e => {
-        return apiResponse.serverError(res, { data: e.message });
+        return next(e);;
       })
   } catch (e) {
-    return apiResponse.serverError(res, { data: e.message });
+    return next(e);;
   }
 }

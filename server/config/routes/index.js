@@ -1,5 +1,7 @@
 const app           = module.exports = require('express')();
 
+const APIError      = require('@utils/APIError');
+
 const attachment    = require('./attachment');
 const cart          = require('./cart');
 const category      = require('./category');
@@ -22,6 +24,15 @@ app.use('/cart', cart);
 app.use('/events', event);
 app.use('/order-details', orderDetail);
 
-app.use('*', (req, res, next) => {
-    return res.send({ status: 404, messaege: 'Endpoint not found'});
+app.use((req, res, next) => {
+  const err = new APIError({ status: 404, message: 'endpoint_not_found' });
+  next(err);
+})
+
+app.use((err, req, res, next) => {
+  return res.json({
+    status: err.status || 500,
+    message: err.message || '',
+    errors: err.errors || [],
+  });
 })
