@@ -7,9 +7,9 @@ const { secretKey, jwtExpiration: exp } = require('@config/constants');
  * @param {String} user._id - User's ID
  * @param {String} user.role - User's role 
  */
-function generateToken({ _id, role }) {
+function generateToken(expiresAt, { _id, role }) {
    const payload = {
-      exp,
+      exp: expiresAt,
       context: { 
          role,
          userId: _id,

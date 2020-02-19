@@ -3,6 +3,7 @@ const GoogleStrategy = require('passport-google-plus-token');
 
 const User = require('@models/user')
 const { generateToken } = require('@utils/JWT');
+const { jwtExpiration } = require('@config/constants');
 
 passport.use(
   new GoogleStrategy({
@@ -14,7 +15,7 @@ passport.use(
       const user = await User.findOne({ googleId: id });
       if (user) {
         const { _id, role } = user;
-        const token = generateToken({ _id, role });
+        const token = generateToken(jwtExpiration, { _id, role });
         return done(null, { user: { _id, role }, token });
       }
       try {
@@ -28,7 +29,7 @@ passport.use(
         });
         const newUser = doc.save();
         const { _id, role } = newUser;
-        const token = generateToken({ _id, role });
+        const token = generateToken(jwtExpiration, { _id, role });
         done(null, { user: { _id, role }, token });
       } catch (e) {
         // done(null, { error: e.message });

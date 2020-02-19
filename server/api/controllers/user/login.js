@@ -2,6 +2,7 @@ const user                 = require('@models/user');
 const { generateToken }    = require('@utils/JWT');
 const pwd                  = require('@utils/password');
 const validateLoginInput   = require('@validations/user/login');
+const { jwtExpiration } = require('@config/constants');
 
 module.exports = async (req, res, next) => {
    try {
@@ -33,7 +34,7 @@ module.exports = async (req, res, next) => {
          apiResponse.badRequest({ message: 'invalid_email_password' });
       }
 
-      const token = generateToken({ _id, role });
+      const token = generateToken(jwtExpiration, { _id, role });
       return apiResponse.success(res, { message: 'login_successful', data: { user: { _id, role }, token }});
    } catch (e) {
       return next(e);;

@@ -1,6 +1,7 @@
 const mail = require('@emails/mail');
 const { generateToken } = require('@utils/JWT');
 const { clientUrl } = require('@config/constants');
+const { jwtExpiration } = require('@config/constants');
 
 /**
  * @param {Object} data - user document 
@@ -8,7 +9,7 @@ const { clientUrl } = require('@config/constants');
  * @param {String} data.role - Receipent Role
  */
 module.exports = async ({ _id, email, role }) => {
-  const token = generateToken({ _id, role });
+  const token = generateToken(jwtExpiration, { _id, role });
   const args = {
     emailData: {
       to: email,
