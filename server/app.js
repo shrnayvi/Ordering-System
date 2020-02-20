@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const express = require('express');
 const mongoose = require('mongoose');
-const morgan = require('morgan');
 const path = require('path');
 
 const app = express();
@@ -19,11 +18,14 @@ const { log } = require('@utils/logs');
 const dataPerPage	= +process.env.DATA_PER_PAGE;
 const response= require('@server/api/responses/');
 
+const logger = require('@config/logger');
+
 /* Global variables */
 global.log = log;
 global.dataPerPage = dataPerPage;
 global.apiResponse = response;
 global.cap = require('@config/capabilities');
+global.logger = logger;
 mongoose.Promise = global.Promise;
 
 
@@ -33,13 +35,20 @@ app.use(passport.initialize());
 /* Connect to mongodb */
 mongoose.connect(connection, { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true });
 mongoose.connection
-.once('open', () => console.log('Database connected'))
+.once('open', () => logger.info({ message: 'Database Connected' }))
 .on('error', (error) => {
- 	console.log(error,'error');
+	logger.error({
+		message: 'Error Connecting to the database',
+		data: error,
+	});
 });
 
-/* Logger */
-app.use(morgan('dev'));
+process.on('unhandledRejection', error => {
+	logger.error({
+		message: 'Unhandled Rejection',
+		data: error,
+	});
+})
 
 app.use(bodyParser.urlencoded({limit : '500kb','extended': 'true'}));
 app.use(bodyParser.json({limit : '500kb'}));

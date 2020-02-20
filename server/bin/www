@@ -1,6 +1,7 @@
 const app = require('../app');
+const logger = require('../config/logger');
 
 const port = 8000;
 app.listen(port, () => {
-    console.log(`Server started running at port ${port}`);
+    logger.info({ message: `Server started running at port ${port}` })
 });
