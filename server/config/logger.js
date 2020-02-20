@@ -28,7 +28,7 @@ const formatter = winston.format.printf(({ level, message, timestamp, data }) =>
 });
 
 const options = {
-  levels,
+  level: 'silly',
   format: winston.format.combine(
     winston.format.colorize(),
     winston.format.timestamp({
@@ -41,7 +41,6 @@ const options = {
     new winston.transports.File({ filename: '.log/.error.log', level: 'error' }),
   ],
   exitOnError: false,
-  colorize: true,
 }
 
 winston.addColors(customColors);
@@ -65,7 +64,7 @@ module.exports = {
 
   warn: (logData = { message, data }) => {
     logger.log({
-      level: levels.warn,
+      level: 'warn',
       ...logData,
     });
   },

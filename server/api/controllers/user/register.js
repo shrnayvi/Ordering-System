@@ -6,7 +6,6 @@ const validateRegisterInput = require('@validations/user/register');
 module.exports = async (req, res, next) => {
   const { error } = validateRegisterInput(req.body);
   try {
-
     if (error) {
       apiResponse.badRequest({ message: error.name, data: error.details });
     } 
@@ -40,8 +39,14 @@ module.exports = async (req, res, next) => {
         });
     }
 
+    logger.info({ message: 'New user registered' });
+
     return apiResponse.success(res, { message: 'registration_successful', data: { _id, role } });
   } catch (e) {
+		logger.error({ 
+			message: `Error while registering, ${e.message}`,
+			data: e,
+		});
     return next(e);;
   }
 }

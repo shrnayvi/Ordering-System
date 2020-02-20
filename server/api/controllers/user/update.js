@@ -12,6 +12,14 @@ module.exports = async (req, res, next) => {
     }
     return apiResponse.success(res, { message: 'updated_user', data: users });
   } catch (e) {
+    if(e.status === 404) {
+      logger.warn({ message: 'User not found' });
+    } else {
+      logger.error({
+        message: 'Error resetting password',
+        data: e,
+      });
+    }
     return next(e);;
   }
 }

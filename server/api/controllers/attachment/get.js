@@ -18,6 +18,10 @@ module.exports = async (req, res, next) => {
       }
       return apiResponse.success(res, { message: 'fetched_attachment', data: attachment});
    } catch(e) {
+      logger.error({ 
+        message: 'Error fetching media',
+        data: e,
+      });
       return next(e);;
    }
 }

@@ -28,12 +28,23 @@ module.exports = async (req, res, next) => {
           .then(_ => console.log('Forgot Password Token sent'))
           .catch(err => console.log(err))
 
+        logger.info({ message: 'Forgot password token sent' });
         return apiResponse.success(res, { message: 'token_sent' });
       })
       .catch(e => {
         return next(e);;
       })
   } catch (e) {
+    if(e.status === 404) {
+      logger.warn({
+        message: 'User not found, operation: forgotPassword()',
+      }); 
+    } else {
+      logger.error({
+        message: 'Error fetching user, Operaton: getById()',
+        data: e,
+      });
+    }
     return next(e);;
   }
 }

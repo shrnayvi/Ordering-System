@@ -7,7 +7,6 @@ module.exports = async (req, res, next) => {
 		if (!attachment) {
 			apiResponse.notFound({});
 		}
-		apiResponse.success(res, { message: 'deleted_attachment', data: attachment });
 
 		/** Remove the file if exists */
 		const {
@@ -19,7 +18,15 @@ module.exports = async (req, res, next) => {
 			}
 		});
 
+		logger.info({ message: `Media with _id ${req.params._id} deleted` });
+
+		return apiResponse.success(res, { message: 'deleted_attachment', data: attachment });
+
 	} catch (e) {
+		logger.error({ 
+			message: 'Error removing media',
+			data: e,
+		});
 		return next(e);;
 	}
 }

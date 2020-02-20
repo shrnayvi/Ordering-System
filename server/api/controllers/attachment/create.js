@@ -66,8 +66,14 @@ module.exports = (req, res, next) => {
         await Promise.all(promises);
       }
 
+      logger.info({ message: 'Media Created' });
+
       return apiResponse.success(res, { message: 'created_attachment', data: attachment });
     } catch (e) {
+      logger.error({ 
+        message: 'Error Creating Media',
+        data: e,
+      });
       return next(e);;
     }
   });

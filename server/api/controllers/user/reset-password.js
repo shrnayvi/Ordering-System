@@ -3,11 +3,11 @@ const { validateResetPasswordInput } = require('@validations/user/forgot-passwor
 
 module.exports = async (req, res, next) => {
   const { error } = validateResetPasswordInput(req.body);
-  if (error) {
-    return res.send({ status: 400, message: error.name, error: error.details });
-  }
-
   try {
+    if (error) {
+      apiResponse.badRequest({ data: error });
+    }
+
     const token = req.body.token,
       password = req.body.password;
 
@@ -20,8 +20,14 @@ module.exports = async (req, res, next) => {
     if (!user) {
       apiResponse.badRequest({ message: 'token_expired' });
     }
+
+    logger.info({ message: 'Password reset successful' });
     return apiResponse.success(res, { message: 'reset_password_successful', data: { _id: user._id } });
   } catch (e) {
+    logger.error({
+      message: `Error resetting password, ${e.message}`,
+      data: e,
+    });
     return next(e);;
   }
 }
